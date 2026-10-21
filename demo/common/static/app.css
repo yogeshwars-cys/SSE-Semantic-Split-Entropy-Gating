@@ -1,0 +1,64 @@
+/* app.css: the shared look for the three demo dashboards (no build step, plain CSS). */
+:root {
+  --bg: #0b1020; --panel: #141a2e; --panel2: #1b2340; --ink: #e8ecf7; --muted: #93a0c0;
+  --line: #273255; --ok: #34d399; --warn: #fbbf24; --bad: #f87171; --accent: #60a5fa;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+header.top {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  padding: 12px 20px; background: var(--panel); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5;
+}
+header.top h1 { font-size: 17px; margin: 0; font-weight: 650; }
+header.top .sub { color: var(--muted); font-size: 12px; }
+.spacer { flex: 1; }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; background: var(--muted); }
+.dot.on { background: var(--ok); } .dot.off { background: var(--bad); }
+main { padding: 16px 20px; display: grid; gap: 16px; }
+@media (min-width: 900px) { main.cols2 { grid-template-columns: 1fr 1fr; } main.cols3 { grid-template-columns: 1fr 1fr 1fr; } }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+.panel h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 10px; }
+.kpis { display: flex; gap: 10px; flex-wrap: wrap; }
+.kpi { background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; min-width: 96px; }
+.kpi .v { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+.kpi.big .v { font-size: 34px; }
+.v.ok { color: var(--ok); } .v.bad { color: var(--bad); } .v.warn { color: var(--warn); }
+button {
+  font: inherit; color: var(--ink); background: var(--panel2); border: 1px solid var(--line);
+  border-radius: 8px; padding: 7px 12px; cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+button.active { background: var(--accent); color: #06122b; border-color: var(--accent); font-weight: 650; }
+button.danger:hover { border-color: var(--bad); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+select, input[type=text] { font: inherit; color: var(--ink); background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--mono); font-size: 12px; }
+.tag { display: inline-block; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+.tag.ok { background: rgba(52,211,153,.15); color: var(--ok); }
+.tag.bad { background: rgba(248,113,113,.15); color: var(--bad); }
+.tag.warn { background: rgba(251,191,36,.15); color: var(--warn); }
+.tag.mut { background: var(--panel2); color: var(--muted); }
+tr.poison td { background: rgba(248,113,113,.10); }
+.bar { height: 10px; border-radius: 6px; background: var(--panel2); overflow: hidden; }
+.bar > span { display: block; height: 100%; background: var(--bad); }
+.scroll { max-height: 320px; overflow: auto; }
+.ticker li { list-style: none; padding: 4px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+ul.plain { margin: 0; padding: 0; } ul.plain li { list-style: none; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 999px; background: var(--panel2); border: 1px solid var(--line); font-size: 12px; }
+.chip i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+.z { font-variant-numeric: tabular-nums; }
+.over { color: var(--bad); font-weight: 700; }
+.under { color: var(--muted); }
+.spark { display: flex; align-items: flex-end; gap: 2px; height: 48px; }
+.spark > span { flex: 1; background: var(--bad); border-radius: 1px 1px 0 0; min-height: 1px; }
+.fade { animation: fade 1.2s ease-out; }
+@keyframes fade { from { background: rgba(96,165,250,.18); } to { background: transparent; } }

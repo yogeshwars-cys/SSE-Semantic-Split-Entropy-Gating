@@ -38,6 +38,7 @@ the teacher is the dataset label, so they are upper bounds of what the loop can 
 | `results/` | every JSON result and run log behind BENCHMARKS.md (`cache/`, `srbh/`, `csic/`, `ids/`, `retrieval/`) |
 | `docs/figures/` | figures used in BENCHMARKS.md |
 | `data/` | how to fetch the datasets (not included) |
+| `demo/` | an authorised closed-lab, three-laptop live demo of the cache-poisoning defence (Part I) — see [`demo/README.md`](demo/README.md) |
 
 ## Reproduce (HTTP benchmarks)
 

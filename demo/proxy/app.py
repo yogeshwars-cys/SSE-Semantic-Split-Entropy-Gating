@@ -52,10 +52,16 @@ class Entry:
                 "poisoned": self.status >= 400 or any(m in self.body for m in TRUTH)}
 
 
-def cache_key(path):
+def keyed_path(path):
+    """The path with unkeyed (utm_/fbclid/gclid) query params dropped: what the clean split re-fetch asks for."""
     p, _, q = path.partition("?")
     keyed = sorted((k, v) for k, v in parse_qsl(q, keep_blank_values=True) if not k.startswith(UNKEYED))
     return p + ("?" + urlencode(keyed) if keyed else "")
+
+
+def cache_key(host, path):
+    """Keyed on host too, so the five domains never collide in one shared cache."""
+    return host + "|" + keyed_path(path)
 
 
 def max_age(cc):
@@ -115,13 +121,14 @@ class Proxy:
         t0 = time.time()
         path = req.path if req.path.startswith("/") else urlsplit(req.path).path or "/"
         headers = {k.lower(): v for k, v in req.headers.items()}
-        key, rt = cache_key(path), path.split("?", 1)[0]
+        host = (headers.get("host") or self.origin.netloc).split(":")[0]
+        key, ckpath, rt = cache_key(host, path), keyed_path(path), path.split("?", 1)[0]
         pnames = traffic.param_names(path)
         qpairs = parse_qsl(path.partition("?")[2], keep_blank_values=True)
         mode = self.mode
         insp = self.engine.inspect(headers, pnames, rt)          # always scored, so the visualiser shows it in every mode
         enforced = mode in ("gates", "sse")
-        ev = {"kind": "request", "path": path, "key": key, "route": rt, "mode": mode, "insp": insp["view"],
+        ev = {"kind": "request", "host": host, "path": path, "key": key, "route": rt, "mode": mode, "insp": insp["view"],
               "flagged": insp["flagged"], "enforced": enforced,
               "fired": {"gate": insp["og"], "sem": insp["os"]}, "split": None, "learn": []}
         self.stats["requests"] += 1
@@ -145,7 +152,7 @@ class Proxy:
             ev["verdict"] = "Held, then served the verified copy" if held else "Served from cache"
         else:
             self.stats["misses"] += 1
-            status, ctype, body = self._miss(mode, path, key, headers, insp, qpairs, ev)
+            status, ctype, body = self._miss(mode, path, key, ckpath, headers, insp, qpairs, ev)
         self._respond(req, status, ctype, body, ev["cache"], mode)
         ev.update(status=status, ms=round((time.time() - t0) * 1000, 1), t=time.time())
         self.emit(ev)
@@ -158,7 +165,7 @@ class Proxy:
                 e = None
         return e
 
-    def _miss(self, mode, path, key, headers, insp, qpairs, ev):
+    def _miss(self, mode, path, key, ckpath, headers, insp, qpairs, ev):
         fired = sorted(set(insp["og"]) | set(insp["os"]))
         if mode == "vulnerable" or (mode == "gates" and not insp["flagged"]):
             s, ct, cc, body = self.fetch(path, headers)
@@ -171,7 +178,7 @@ class Proxy:
             ev["cache"], ev["verdict"] = "BYPASS", "Blocked at the gate: answered, not cached"
             if mode == "sse" and random.random() < self.audit:  # audit a sample of alarms against the clean copy
                 self.stats["audits"] += 1
-                bs, bct, bcc, bbody = self.fetch(key, self.clean_headers(headers), part="B")
+                bs, bct, bcc, bbody = self.fetch(ckpath, self.clean_headers(headers), part="B")
                 if (s, hashlib.sha256(body).digest()) == (bs, hashlib.sha256(bbody).digest()):
                     self.stats["false_alarms"] += 1
                     ev["learn"] = self.engine.learn_false_alarm(insp)
@@ -188,7 +195,7 @@ class Proxy:
             s, ct, cc, body = self.fetch(path, headers, part="A")
             if self.hold_ms:
                 time.sleep(self.hold_ms / 1000)                 # late-check window, makes holds visible on stage
-            bs, bct, bcc, bbody = self.fetch(key, self.clean_headers(headers), part="B")
+            bs, bct, bcc, bbody = self.fetch(ckpath, self.clean_headers(headers), part="B")
             self.stats["split_checks"] += 1
             if (s, hashlib.sha256(body).digest()) == (bs, hashlib.sha256(bbody).digest()):
                 self.store(key, s, ct, cc, body, "verified", fired)

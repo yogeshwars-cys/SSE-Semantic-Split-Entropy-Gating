@@ -52,7 +52,7 @@ class Engine:
             rows = [{"name": k, "value": v if len(v) <= 160 else v[:157] + "...", "len": len(v),
                      "zg": _r(zg.get(k)), "tg": _r(cal.thr(rt, "gate", k, g.thr, now)),
                      "zs": _r(zs.get(k)), "ts": _r(cal.thr(rt, "sem", k, s.thr, now)) if k in zs else None,
-                     "fg": k in og, "fs": k in os_} for k in h]
+                     "fg": k in og, "fs": k in os_} for k, v in h.items()]
             req = {"z": _r(zg["_req"]), "t": _r(cal.thr(rt, "gate", "_req", g.thr, now)), "fired": "_req" in og}
         return {"h": h, "pn": pnames, "rt": rt, "zg": zg, "zs": zs, "og": og, "os": os_,
                 "flagged": bool(og or os_), "view": {"rows": rows, "req": req, "params": pnames}}

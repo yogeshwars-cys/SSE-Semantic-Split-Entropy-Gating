@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cache dashboard · SSE demo</title>
+<link rel="stylesheet" href="/shared/app.css">
+</head>
+<body>
+<header class="top">
+  <h1>Reverse-proxy cache</h1>
+  <span class="sub">Laptop B · is the cache poisoned?</span>
+  <span class="spacer"></span>
+  <span class="row" id="modes"></span>
+  <button id="purge" class="danger">Purge</button>
+  <button id="reset" class="danger">Reset learning</button>
+  <span class="chip"><span class="dot" id="vizdot"></span> visualiser</span>
+</header>
+
+<main class="cols2">
+  <section class="panel" style="grid-column: 1 / -1">
+    <h2>Traffic</h2>
+    <div class="kpis">
+      <div class="kpi big"><div class="v" id="k_hit">–</div><div class="l">hit ratio</div></div>
+      <div class="kpi"><div class="v" id="k_rps">–</div><div class="l">req / s</div></div>
+      <div class="kpi"><div class="v" id="k_req">–</div><div class="l">requests</div></div>
+      <div class="kpi"><div class="v" id="k_fills">–</div><div class="l">fills</div></div>
+      <div class="kpi"><div class="v bad" id="k_blocked">–</div><div class="l">blocked at gate</div></div>
+      <div class="kpi"><div class="v ok" id="k_caught">–</div><div class="l">split caught</div></div>
+      <div class="kpi"><div class="v warn" id="k_held">–</div><div class="l">views held</div></div>
+      <div class="kpi"><div class="v" id="k_tight">–</div><div class="l">thresholds tightened</div></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Cache contents (<span id="n_entries">0</span>)</h2>
+    <div class="scroll">
+      <table><thead><tr><th>key</th><th>state</th><th class="num">age</th><th class="num">hits</th><th>poison</th></tr></thead>
+      <tbody id="cache"></tbody></table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Request log</h2>
+    <div class="scroll">
+      <table><thead><tr><th>host</th><th>path</th><th>cache</th><th>verdict</th></tr></thead>
+      <tbody id="log"></tbody></table>
+    </div>
+  </section>
+</main>
+
+<script src="/shared/sse.js"></script>
+<script>
+const { el, node, post, fmt, pct } = SSE;
+const MODE_HELP = { vulnerable: "plain cache, no defence", gates: "gate blocks flagged fills",
+  split: "clean re-fetch verifies every fill", sse: "gates + split + calibration" };
+let modes = [];
+
+function renderModes(active) {
+  const box = el("#modes"); if (box.childElementCount === modes.length && box.dataset.a === active) return;
+  box.innerHTML = ""; box.dataset.a = active;
+  modes.forEach((m) => {
+    const b = node("button", { class: m === active ? "active" : "", title: MODE_HELP[m] || "" }, [m]);
+    b.onclick = () => post("/api/mode", { mode: m });
+    box.appendChild(b);
+  });
+}
+
+function stateColour(s) { return s === "healed" ? "ok" : s === "verified" ? "ok" : s === "unchecked" ? "mut" : "warn"; }
+
+function onState(s) {
+  modes = s.modes || modes; renderModes(s.mode);
+  el("#k_hit").textContent = s.hit_ratio == null ? "–" : s.hit_ratio;
+  el("#k_rps").textContent = s.rps ?? "–";
+  const st = s.stats || {};
+  el("#k_req").textContent = fmt(st.requests);
+  el("#k_fills").textContent = fmt(st.fills);
+  el("#k_blocked").textContent = fmt(st.blocked);
+  el("#k_caught").textContent = fmt(st.split_caught);
+  el("#k_held").textContent = fmt(st.held);
+  el("#k_tight").textContent = fmt(st.tightened);
+  el("#vizdot").className = "dot " + (s.viz_ok ? "on" : s.viz_ok === false ? "off" : "");
+  const cache = s.cache || []; el("#n_entries").textContent = cache.length;
+  const body = el("#cache"); body.innerHTML = "";
+  cache.forEach((e) => {
+    const tr = node("tr", { class: e.poisoned ? "poison" : "" }, [
+      node("td", { class: "mono", title: e.key }, [e.key.length > 34 ? e.key.slice(0, 33) + "…" : e.key]),
+      node("td", {}, [node("span", { class: "tag " + stateColour(e.state) }, [e.state])]),
+      node("td", { class: "num" }, [e.age + "s"]),
+      node("td", { class: "num" }, [fmt(e.hits)]),
+      node("td", {}, [e.poisoned ? node("span", { class: "tag bad" }, ["poisoned"]) : node("span", { class: "tag mut" }, ["clean"])]),
+    ]);
+    body.appendChild(tr);
+  });
+}
+
+const log = el("#log");
+function onRequest(ev) {
+  const cls = { HIT: "mut", HELD: "warn", MISS: "mut", BYPASS: "bad" }[ev.cache] || "mut";
+  const tr = node("tr", { class: "fade" }, [
+    node("td", { class: "mono" }, [ev.host || ""]),
+    node("td", { class: "mono", title: ev.path }, [ev.path.length > 28 ? ev.path.slice(0, 27) + "…" : ev.path]),
+    node("td", {}, [node("span", { class: "tag " + cls }, [ev.cache || "?"])]),
+    node("td", {}, [ev.verdict || ""]),
+  ]);
+  log.insertBefore(tr, log.firstChild);
+  while (log.childElementCount > 60) log.removeChild(log.lastChild);
+}
+
+el("#purge").onclick = () => post("/api/purge");
+el("#reset").onclick = () => post("/api/reset");
+
+SSE.stream((ev) => {
+  if (ev.kind === "state") onState(ev);
+  else if (ev.kind === "request") onRequest(ev);
+});
+fetch("/api/state").then((r) => r.json()).then(onState).catch(() => {});
+</script>
+</body>
+</html>

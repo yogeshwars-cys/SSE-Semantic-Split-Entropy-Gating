@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client &amp; attacker · SSE demo</title>
+<link rel="stylesheet" href="/shared/app.css">
+</head>
+<body>
+<header class="top">
+  <h1>Victims &amp; attacker</h1>
+  <span class="sub">Laptop C · how many users got poison</span>
+  <span class="spacer"></span>
+  <button id="toggle">Start victims</button>
+  <span class="chip">proxy <b id="proxy" class="mono">–</b></span>
+</header>
+
+<main class="cols2">
+  <section class="panel">
+    <h2>Victims</h2>
+    <div class="kpis">
+      <div class="kpi big"><div class="v" id="k_pois">–</div><div class="l">% served poison</div></div>
+      <div class="kpi"><div class="v" id="k_rps">–</div><div class="l">req / s</div></div>
+      <div class="kpi"><div class="v" id="k_served">–</div><div class="l">pages served</div></div>
+      <div class="kpi"><div class="v bad" id="k_bad">–</div><div class="l">poisoned pages</div></div>
+    </div>
+    <h3 style="color:var(--muted);font-size:12px;margin:14px 0 4px">% poison over time</h3>
+    <div class="spark" id="spark"></div>
+    <h3 style="color:var(--muted);font-size:12px;margin:14px 0 4px">by site</h3>
+    <ul class="plain" id="byhost"></ul>
+  </section>
+
+  <section class="panel">
+    <h2>Attacker console</h2>
+    <div class="row" style="margin-bottom:8px">
+      <label>vector <select id="vector"></select></label>
+      <label>target <select id="host"></select></label>
+    </div>
+    <div class="row" style="margin-bottom:10px">
+      <label>search term <input type="text" id="term" value="savings account" size="18"></label>
+      <button id="fire">Fire attack</button>
+    </div>
+    <div id="result"></div>
+    <h3 style="color:var(--muted);font-size:12px;margin:14px 0 4px">attack log</h3>
+    <div class="scroll" style="max-height:260px">
+      <table><thead><tr><th>time</th><th>vector</th><th>target</th><th>landed</th></tr></thead>
+      <tbody id="attacks"></tbody></table>
+    </div>
+  </section>
+</main>
+
+<script src="/shared/sse.js"></script>
+<script>
+const { el, node, post, fmt, pct, clock } = SSE;
+let running = false, sites = [];
+
+fetch("/api/vectors").then((r) => r.json()).then((vs) => {
+  const sel = el("#vector");
+  Object.entries(vs).forEach(([k, label]) => sel.appendChild(node("option", { value: k }, [label])));
+});
+
+function fillHosts(cat) {
+  if (!cat || !cat.length || el("#host").childElementCount) return;
+  sites = cat;
+  const sel = el("#host");
+  cat.filter((c) => c.kind !== "search").forEach((c) =>
+    sel.appendChild(node("option", { value: c.host }, [c.host + " — " + c.brand])));
+}
+
+function spark(hist) {
+  const box = el("#spark"); box.innerHTML = "";
+  if (!hist || hist.length < 2) return;
+  const pts = [];
+  for (let i = 1; i < hist.length; i++) {
+    const d = hist[i].served - hist[i - 1].served, p = hist[i].poisoned - hist[i - 1].poisoned;
+    pts.push(d > 0 ? p / d : 0);
+  }
+  pts.slice(-80).forEach((f) => box.appendChild(node("span", { style: `height:${Math.max(2, f * 100)}%`,
+    title: Math.round(f * 100) + "%" })));
+}
+
+function onState(s) {
+  running = s.running; el("#toggle").textContent = running ? "Stop victims" : "Start victims";
+  el("#toggle").className = running ? "active" : "";
+  el("#proxy").textContent = s.proxy || "–";
+  const bad = s.poison_pct > 0;
+  const kp = el("#k_pois"); kp.textContent = pct(s.poison_pct); kp.className = "v " + (bad ? "bad" : "ok");
+  el("#k_rps").textContent = s.rps ?? "–";
+  el("#k_served").textContent = fmt(s.served);
+  el("#k_bad").textContent = fmt(s.poisoned);
+  fillHosts(s.sites);
+  spark(s.history);
+  const bh = el("#byhost"); bh.innerHTML = "";
+  Object.entries(s.by_host || {}).sort((a, b) => b[1] - a[1]).forEach(([h, c]) => {
+    const colour = (sites.find((x) => x.host === h) || {}).colour || "#888";
+    bh.appendChild(node("li", {}, [node("span", { class: "chip" },
+      [node("i", { style: "background:" + colour }), h + " · " + fmt(c)])]));
+  });
+  const tb = el("#attacks"); tb.innerHTML = "";
+  (s.attacks || []).forEach((a) => tb.appendChild(node("tr", {}, [
+    node("td", { class: "mono" }, [clock(a.t)]),
+    node("td", {}, [a.vector]),
+    node("td", { class: "mono" }, [a.host]),
+    node("td", {}, [a.landed == null
+      ? node("span", { class: "tag warn" }, ["error"])
+      : node("span", { class: "tag " + (a.landed ? "bad" : "ok") }, [a.landed ? "poisoned cache" : "blocked"])]),
+  ])));
+}
+
+el("#toggle").onclick = () => post("/api/toggle", { running: !running }).then(onState);
+el("#fire").onclick = async () => {
+  const r = await post("/api/attack", { vector: el("#vector").value, host: el("#host").value,
+    term: el("#term").value.trim().replace(/\s+/g, "+") || "savings+account" });
+  const box = el("#result"); box.innerHTML = "";
+  if (!r.ok) box.appendChild(node("span", { class: "tag warn" }, ["error: " + (r.error || "failed")]));
+  else box.appendChild(node("span", { class: "tag " + (r.landed ? "bad" : "ok") },
+    [r.landed ? `poison landed in cache (${r.cache}, status ${r.status})` : `blocked — cache stayed clean (${r.cache})`]));
+};
+
+SSE.stream((ev) => { if (ev.kind === "state") onState(ev); });
+fetch("/api/state").then((r) => r.json()).then(onState).catch(() => {});
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SSE visualiser · demo</title>
+<link rel="stylesheet" href="/shared/app.css">
+</head>
+<body>
+<header class="top">
+  <h1>SSE gate</h1>
+  <span class="sub">Laptop A · what the gate is thinking</span>
+  <span class="spacer"></span>
+  <span class="chip">gate thr <b id="gthr" class="mono">–</b></span>
+  <span class="chip">sem thr <b id="sthr" class="mono">–</b></span>
+  <span class="chip">baseline <b id="bn" class="mono">–</b></span>
+  <span class="chip">overrides <b id="nov" class="mono">0</b></span>
+</header>
+
+<main class="cols2">
+  <section class="panel" style="grid-column: 1 / -1">
+    <h2>Last request scored — <span id="rq_host" class="mono"></span> <span id="rq_path" class="mono muted"></span></h2>
+    <div class="row" style="margin-bottom:8px">
+      <span class="chip">req score <b id="rq_z" class="mono">–</b> / thr <b id="rq_t" class="mono">–</b></span>
+      <span id="rq_flag"></span>
+      <span id="rq_split"></span>
+    </div>
+    <div class="scroll" style="max-height:260px">
+      <table><thead><tr><th>field</th><th>value</th><th class="num">len</th>
+        <th class="num">gate z / thr</th><th class="num">sem z / thr</th><th>fired</th></tr></thead>
+      <tbody id="rows"></tbody></table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Calibration ticker</h2>
+    <ul class="plain ticker scroll" id="ticker"></ul>
+  </section>
+
+  <section class="panel">
+    <h2>Learned state</h2>
+    <h3 style="color:var(--muted);font-size:12px">boosted 3-grams per field</h3>
+    <ul class="plain" id="boosted"></ul>
+    <h3 style="color:var(--muted);font-size:12px;margin-top:10px">route threshold overrides (latest)</h3>
+    <div class="scroll" style="max-height:200px">
+      <table><thead><tr><th>route</th><th>layer</th><th>field</th><th class="num">thr</th><th class="num">base</th></tr></thead>
+      <tbody id="overrides"></tbody></table>
+    </div>
+  </section>
+</main>
+
+<script src="/shared/sse.js"></script>
+<script>
+const { el, node, fmt } = SSE;
+
+function zcell(z, t) {
+  if (z == null) return node("td", { class: "num under" }, ["–"]);
+  const over = t != null && z > t;
+  return node("td", { class: "num z " + (over ? "over" : "under") }, [z + (t != null ? " / " + t : "")]);
+}
+
+function onRequest(ev) {
+  const v = ev.insp || {};
+  el("#rq_host").textContent = ev.host || "";
+  el("#rq_path").textContent = ev.path || "";
+  if (v.req) { el("#rq_z").textContent = v.req.z; el("#rq_t").textContent = v.req.t; }
+  el("#rq_flag").innerHTML = "";
+  el("#rq_flag").appendChild(node("span", { class: "tag " + (ev.flagged ? "bad" : "ok") },
+    [ev.flagged ? "flagged" : "clean"]));
+  el("#rq_split").innerHTML = "";
+  if (ev.split) {
+    const sp = ev.split, cls = sp.match ? "ok" : "bad";
+    el("#rq_split").appendChild(node("span", { class: "tag " + cls },
+      ["split: " + sp.action + (sp.blamed && sp.blamed.length ? " → " + sp.blamed.map((b) => b[1]).join(", ") : "")]));
+  }
+  const body = el("#rows"); body.innerHTML = "";
+  (v.rows || []).forEach((r) => {
+    body.appendChild(node("tr", { class: (r.fg || r.fs) ? "poison" : "" }, [
+      node("td", { class: "mono" }, [r.name]),
+      node("td", { class: "mono", title: r.value }, [r.value.length > 40 ? r.value.slice(0, 39) + "…" : r.value]),
+      node("td", { class: "num" }, [fmt(r.len)]),
+      zcell(r.zg, r.tg), zcell(r.zs, r.ts),
+      node("td", {}, [(r.fg || r.fs)
+        ? node("span", { class: "tag bad" }, [[r.fg && "gate", r.fs && "sem"].filter(Boolean).join("+")])
+        : node("span", { class: "tag mut" }, ["–"])]),
+    ]));
+  });
+  (ev.learn || []).forEach(tick);
+}
+
+const ticker = el("#ticker");
+function tick(c) {
+  let txt;
+  if (c.type === "weight") txt = `weight ↑ ${c.field}: ${c.old} → ${c.new}`;
+  else if (c.type === "tighten") txt = `tighten ${c.layer} ${c.field} @ ${c.route}: ${c.old} → ${c.new}`;
+  else if (c.type === "loosen") txt = `loosen ${c.layer} ${c.field} @ ${c.route}: ${c.old} → ${c.new}`;
+  else if (c.type === "sharpen") txt = `sharpen rare 3-grams of ${c.field}`;
+  else if (c.type === "note") txt = c.field;
+  else txt = JSON.stringify(c);
+  const cls = c.type === "loosen" ? "ok" : c.type === "note" ? "mut" : "bad";
+  const li = node("li", { class: "fade" }, [node("span", { class: "tag " + cls }, [c.type]), " " + txt]);
+  ticker.insertBefore(li, ticker.firstChild);
+  while (ticker.childElementCount > 80) ticker.removeChild(ticker.lastChild);
+}
+
+function onState(s) {
+  const e = s.engine || s;  // proxy state event carries .engine
+  const g = e.engine || e;
+  if (g.gate_thr != null) el("#gthr").textContent = g.gate_thr;
+  if (g.sem_thr != null) el("#sthr").textContent = g.sem_thr;
+  if (g.baseline_n != null) el("#bn").textContent = fmt(g.baseline_n);
+  const ov = g.overrides || [];
+  el("#nov").textContent = fmt(ov.length);
+  const bl = el("#boosted"); bl.innerHTML = "";
+  Object.entries(g.boosted || {}).forEach(([k, n]) =>
+    bl.appendChild(node("li", {}, [node("span", { class: "chip" }, [k + " : " + n])])));
+  const ob = el("#overrides"); ob.innerHTML = "";
+  ov.slice(-40).reverse().forEach((o) => ob.appendChild(node("tr", {}, [
+    node("td", { class: "mono" }, [o.route]), node("td", {}, [o.layer]),
+    node("td", { class: "mono" }, [o.field]), node("td", { class: "num" }, [o.thr]),
+    node("td", { class: "num under" }, [o.base]),
+  ])));
+}
+
+SSE.stream((ev) => {
+  if (ev.kind === "request") onRequest(ev);
+  else if (ev.kind === "state") onState(ev);
+  else if (ev.kind === "note") tick({ type: "note", field: ev.text });
+});
+fetch("/api/state").then((r) => r.json()).then((s) => { if (s && (s.engine || s.gate_thr != null)) onState(s); }).catch(() => {});
+</script>
+</body>
+</html>
