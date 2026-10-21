@@ -1,0 +1,28 @@
+Proprietary License
+
+Copyright (c) 2026 Yogeshwar S (GitHub: @yogeshwars-cys). All rights reserved.
+
+This repository, including the source code, benchmark harnesses, benchmark results, documentation,
+diagrams, and presentation material authored for it (the "Software"), is the proprietary work of
+Yogeshwar S.
+
+No licence or other right, express or implied, is granted to any person to use, copy, modify, merge,
+publish, distribute, sublicense, sell, reverse engineer, or create derivative works of the Software, or
+to use it to train, evaluate, or benchmark other systems, except with the prior written permission of the
+copyright holder.
+
+Viewing the Software where it has been made visible (for example on a code-hosting service or in a
+competition or project submission) does not grant any licence to it.
+
+Patent rights: nothing in this repository grants any licence under any patent or patent application owned
+or filed by the copyright holder.
+
+Third-party components: the public datasets used by the benchmarks (SR-BH 2020, CSIC 2010, CIC-IDS2017,
+BEIR SciFact, Natural Questions) are not included and remain under their own licences and terms. This
+licence does not restrict rights those licences grant.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM, OUT OF, OR IN
+CONNECTION WITH THE SOFTWARE OR ITS USE.
+
+Permission requests: yogeshwarsetg@gmail.com

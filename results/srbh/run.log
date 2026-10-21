@@ -1,0 +1,234 @@
+{
+ "rows": 907813,
+ "label_counts": {
+  "000 - Normal": 525193,
+  "272 - Protocol Manipulation": 9153,
+  "242 - Code Injection": 15827,
+  "88 - OS Command Injection": 7482,
+  "126 - Path Traversal": 20992,
+  "66 - SQL Injection": 250311,
+  "16 - Dictionary-based Password Attack": 1847,
+  "310 - Scanning for Vulnerable Software": 2718,
+  "153 - Input Data Manipulation": 2272,
+  "248 - Command Injection": 1,
+  "274 - HTTP Verb Tampering": 5437,
+  "194 - Fake the Source of Data": 56145,
+  "34 - HTTP Response Splitting": 19738,
+  "33 - HTTP Request Smuggling": 1059
+ },
+ "src_ips_all_rows": [
+  [
+   "172.26.0.1",
+   907813
+  ]
+ ]
+}
+
+=== time_disjoint/sse_stock
+{
+ "eval_benign": 20000,
+ "eval_attack": 21862,
+ "as_shipped": {
+  "entropy_gate": {
+   "tpr": 0.9572317262830482,
+   "fpr": 0.92485,
+   "precision": 0.5308187905844156,
+   "f1": 0.6829292171132069
+  },
+  "semantic_gate": {
+   "tpr": 0.307199707254597,
+   "fpr": 0.0646,
+   "precision": 0.8386613386613386,
+   "f1": 0.44968195513893544
+  },
+  "cascade": {
+   "tpr": 0.9573232092214802,
+   "fpr": 0.92515,
+   "precision": 0.5307618178129438,
+   "f1": 0.6829053414689856
+  }
+ },
+ "matched_fpr": {
+  "baseline_uri_body_length": {
+   "auc": 0.7100740874576892,
+   "tpr@fpr1%": 0.17400054889763059,
+   "tpr@fpr2%": 0.26534626292196506,
+   "tpr@fpr5%": 0.3521178300247004
+  },
+  "entropy_gate": {
+   "auc": 0.49561115977495196,
+   "tpr@fpr1%": 0.013768182234013356,
+   "tpr@fpr2%": 0.013768182234013356,
+   "tpr@fpr5%": 0.03046381849785015
+  },
+  "semantic_gate": {
+   "auc": 0.6289761618333181,
+   "tpr@fpr1%": 0.265849419083341,
+   "tpr@fpr2%": 0.2740371420730034,
+   "tpr@fpr5%": 0.29439209587411946
+  },
+  "combined": {
+   "auc": 0.6376859036227244,
+   "tpr@fpr1%": 0.265849419083341,
+   "tpr@fpr2%": 0.2740371420730034,
+   "tpr@fpr5%": 0.29439209587411946
+  }
+ }
+}
+
+=== time_disjoint/sse_plus_request_fields
+{
+ "eval_benign": 20000,
+ "eval_attack": 21862,
+ "as_shipped": {
+  "entropy_gate": {
+   "tpr": 1.0,
+   "fpr": 0.9806,
+   "precision": 0.5271254279789748,
+   "f1": 0.6903498800050524
+  },
+  "semantic_gate": {
+   "tpr": 0.9989479462080322,
+   "fpr": 0.96905,
+   "precision": 0.5298156234837458,
+   "f1": 0.6924003677752767
+  },
+  "cascade": {
+   "tpr": 1.0,
+   "fpr": 0.98105,
+   "precision": 0.5270110647735217,
+   "f1": 0.6902517957218407
+  }
+ },
+ "matched_fpr": {
+  "baseline_uri_body_length": {
+   "auc": 0.7100740874576892,
+   "tpr@fpr1%": 0.17400054889763059,
+   "tpr@fpr2%": 0.26534626292196506,
+   "tpr@fpr5%": 0.3521178300247004
+  },
+  "entropy_gate": {
+   "auc": 0.4277591345714024,
+   "tpr@fpr1%": 0.020675144085628032,
+   "tpr@fpr2%": 0.020995334370139968,
+   "tpr@fpr5%": 0.10529686213521178
+  },
+  "semantic_gate": {
+   "auc": 0.6947207380386058,
+   "tpr@fpr1%": 0.0,
+   "tpr@fpr2%": 0.0,
+   "tpr@fpr5%": 0.276049766718507
+  },
+  "combined": {
+   "auc": 0.6930374416796268,
+   "tpr@fpr1%": 0.0,
+   "tpr@fpr2%": 0.0,
+   "tpr@fpr5%": 0.276049766718507
+  }
+ }
+}
+
+=== same_window/sse_stock
+{
+ "eval_benign": 20000,
+ "eval_attack": 21881,
+ "as_shipped": {
+  "entropy_gate": {
+   "tpr": 0.07024359032950962,
+   "fpr": 0.0072,
+   "precision": 0.9143367043426531,
+   "f1": 0.1304643069348952
+  },
+  "semantic_gate": {
+   "tpr": 0.06745578355651022,
+   "fpr": 0.0103,
+   "precision": 0.8775267538644471,
+   "f1": 0.12528116114246915
+  },
+  "cascade": {
+   "tpr": 0.10040674557835565,
+   "fpr": 0.01685,
+   "precision": 0.867008681925809,
+   "f1": 0.17997132910096253
+  }
+ },
+ "matched_fpr": {
+  "baseline_uri_body_length": {
+   "auc": 0.713239033864997,
+   "tpr@fpr1%": 0.16978200265070154,
+   "tpr@fpr2%": 0.25958594214158404,
+   "tpr@fpr5%": 0.3551483021799735
+  },
+  "entropy_gate": {
+   "auc": 0.6059028746400987,
+   "tpr@fpr1%": 0.07188885334308304,
+   "tpr@fpr2%": 0.07760157214021297,
+   "tpr@fpr5%": 0.12801060280608748
+  },
+  "semantic_gate": {
+   "auc": 0.6346828435629085,
+   "tpr@fpr1%": 0.06741008180613317,
+   "tpr@fpr2%": 0.06992367807687035,
+   "tpr@fpr5%": 0.11759060372012248
+  },
+  "combined": {
+   "auc": 0.6290302225675244,
+   "tpr@fpr1%": 0.06462227503313377,
+   "tpr@fpr2%": 0.10077235958137197,
+   "tpr@fpr5%": 0.11004981490791098
+  }
+ }
+}
+
+=== same_window/sse_plus_request_fields
+{
+ "eval_benign": 20000,
+ "eval_attack": 21881,
+ "as_shipped": {
+  "entropy_gate": {
+   "tpr": 0.08212604542753987,
+   "fpr": 0.00765,
+   "precision": 0.9215384615384615,
+   "f1": 0.15081196760522012
+  },
+  "semantic_gate": {
+   "tpr": 0.2291028746400987,
+   "fpr": 0.00825,
+   "precision": 0.9681344148319815,
+   "f1": 0.3705236704978011
+  },
+  "cascade": {
+   "tpr": 0.26283076641835385,
+   "fpr": 0.0152,
+   "precision": 0.9497935590421139,
+   "f1": 0.4117268041237114
+  }
+ },
+ "matched_fpr": {
+  "baseline_uri_body_length": {
+   "auc": 0.713239033864997,
+   "tpr@fpr1%": 0.16978200265070154,
+   "tpr@fpr2%": 0.25958594214158404,
+   "tpr@fpr5%": 0.3551483021799735
+  },
+  "entropy_gate": {
+   "auc": 0.67906621383849,
+   "tpr@fpr1%": 0.08354279968922809,
+   "tpr@fpr2%": 0.10058955257986381,
+   "tpr@fpr5%": 0.1845893697728623
+  },
+  "semantic_gate": {
+   "auc": 0.8846778118001919,
+   "tpr@fpr1%": 0.23842603171701476,
+   "tpr@fpr2%": 0.2870069923678077,
+   "tpr@fpr5%": 0.5964535441707417
+  },
+  "combined": {
+   "auc": 0.8600338341483479,
+   "tpr@fpr1%": 0.12727937480005483,
+   "tpr@fpr2%": 0.2820255015767104,
+   "tpr@fpr5%": 0.38581417668296697
+  }
+ }
+}
+wrote sse_srbh2020_results.json

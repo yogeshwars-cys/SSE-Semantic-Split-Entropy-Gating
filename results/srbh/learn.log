@@ -1,0 +1,14 @@
+== gates_learn: precalibrating on 150710 requests of 17 Jul
+    precal 50000/150710 tpr=0.762 fpr=0.027 15s
+    precal 100000/150710 tpr=0.797 fpr=0.026 38s
+    precal 150000/150710 tpr=0.688 fpr=0.025 60s
+   precal tpr=0.688 fpr=0.026 wrong=37152
+    pass1 50000/384629 tpr=0.470 fpr=0.159 32s
+    pass1 100000/384629 tpr=0.534 fpr=0.078 74s
+    pass1 150000/384629 tpr=0.454 fpr=0.043 129s
+    pass1 200000/384629 tpr=0.444 fpr=0.038 184s
+    pass1 250000/384629 tpr=0.539 fpr=0.036 264s
+    pass1 300000/384629 tpr=0.647 fpr=0.037 326s
+    pass1 350000/384629 tpr=0.692 fpr=0.037 403s
+   pass1 gates_learn: {'tpr': 0.6801, 'fpr': 0.0572, 'precision': 0.964, 'wrong': 91950, 'flipped_rate': 0.062}
+wrote learn_results.json

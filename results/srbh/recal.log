@@ -1,0 +1,16 @@
+fit on 10000 benign; replaying 463979 requests (382619 attacks) in time order
+  0/463979  static: tpr=0.000 fpr=0.000  recal_hl120s: tpr=0.000 fpr=0.000  recal_hl600s: tpr=0.000 fpr=0.000  recal_hl3600s: tpr=0.000 fpr=0.000
+  50000/463979  static: tpr=0.128 fpr=0.034  recal_hl120s: tpr=0.244 fpr=0.090  recal_hl600s: tpr=0.329 fpr=0.106  recal_hl3600s: tpr=0.370 fpr=0.109
+  100000/463979  static: tpr=0.139 fpr=0.022  recal_hl120s: tpr=0.269 fpr=0.070  recal_hl600s: tpr=0.334 fpr=0.081  recal_hl3600s: tpr=0.361 fpr=0.083
+  150000/463979  static: tpr=0.099 fpr=0.020  recal_hl120s: tpr=0.221 fpr=0.066  recal_hl600s: tpr=0.292 fpr=0.079  recal_hl3600s: tpr=0.333 fpr=0.081
+  200000/463979  static: tpr=0.089 fpr=0.022  recal_hl120s: tpr=0.222 fpr=0.099  recal_hl600s: tpr=0.289 fpr=0.144  recal_hl3600s: tpr=0.329 fpr=0.170
+  250000/463979  static: tpr=0.079 fpr=0.017  recal_hl120s: tpr=0.226 fpr=0.081  recal_hl600s: tpr=0.291 fpr=0.116  recal_hl3600s: tpr=0.328 fpr=0.135
+  300000/463979  static: tpr=0.076 fpr=0.015  recal_hl120s: tpr=0.223 fpr=0.067  recal_hl600s: tpr=0.283 fpr=0.100  recal_hl3600s: tpr=0.317 fpr=0.111
+  350000/463979  static: tpr=0.105 fpr=0.014  recal_hl120s: tpr=0.250 fpr=0.064  recal_hl600s: tpr=0.308 fpr=0.102  recal_hl3600s: tpr=0.340 fpr=0.113
+  400000/463979  static: tpr=0.170 fpr=0.015  recal_hl120s: tpr=0.293 fpr=0.064  recal_hl600s: tpr=0.348 fpr=0.102  recal_hl3600s: tpr=0.377 fpr=0.113
+  450000/463979  static: tpr=0.201 fpr=0.016  recal_hl120s: tpr=0.315 fpr=0.064  recal_hl600s: tpr=0.364 fpr=0.099  recal_hl3600s: tpr=0.393 fpr=0.110
+static {'tpr': 0.21314937313620078, 'fpr': 0.015609636184857424, 'precision': 0.984666465439179, 'blames': 0, 'tightened': 0, 'verified': 0, 'verify_fail': 0, 'blame_no_field': 0, 'calibration_entries': 0}
+recal_hl120s {'tpr': 0.32507272247326974, 'fpr': 0.06095132743362832, 'precision': 0.9616585999474245, 'blames': 258240, 'tightened': 515887, 'verified': 258240, 'verify_fail': 0, 'blame_no_field': 0, 'calibration_entries': 462660}
+recal_hl600s {'tpr': 0.3737007310144034, 'fpr': 0.09438298918387414, 'precision': 0.9490322837572347, 'blames': 239634, 'tightened': 478735, 'verified': 239634, 'verify_fail': 0, 'blame_no_field': 0, 'calibration_entries': 449582}
+recal_hl3600s {'tpr': 0.401480323768553, 'fpr': 0.10542035398230089, 'precision': 0.9471179041993699, 'blames': 229005, 'tightened': 457642, 'verified': 229005, 'verify_fail': 0, 'blame_no_field': 0, 'calibration_entries': 443917}
+wrote recal_results.json

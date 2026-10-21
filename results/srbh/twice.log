@@ -1,0 +1,7 @@
+precal {'tpr': 0.4192553255480223, 'fpr': 0.022337420275504557, 'wrong': 68350, 'overrides': 135383}
+replay features ready: 384629 requests, 266246 attacks
+pass1_learning {'tpr': 0.6573, 'fpr': 0.3896, 'precision': 0.7914, 'wrong': 137358, 'corrected': 137358, 'overrides': 354785}
+pass2_frozen {'tpr': 0.9632, 'fpr': 0.0718, 'precision': 0.9679, 'wrong': 18292, 'corrected': 0, 'overrides': 354785}
+pass2_learning {'tpr': 0.9892, 'fpr': 0.0411, 'precision': 0.9819, 'wrong': 7749, 'corrected': 7749, 'overrides': 354987}
+pass3_learning {'tpr': 0.9893, 'fpr': 0.0413, 'precision': 0.9818, 'wrong': 7756, 'corrected': 7756, 'overrides': 355039}
+wrote twice_results.json

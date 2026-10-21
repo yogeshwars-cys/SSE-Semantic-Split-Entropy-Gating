@@ -1,0 +1,86 @@
+{
+ "detector": "gates_learn",
+ "belt_requests": 384629,
+ "laps": {
+  "1": {
+   "tpr": 0.6800590431405542,
+   "fpr": 0.05716192358700151,
+   "precision": 0.9639727413086302,
+   "wrong": 91950
+  },
+  "2": {
+   "tpr": 0.4470602375246952,
+   "fpr": 0.017367358488972234,
+   "precision": 0.9830200521951703,
+   "wrong": 149274,
+   "flipped_rate": 0.010716677829872739,
+   "seconds": 841.8,
+   "per_class_tpr": {
+    "126 - Path Traversal": 0.2810810810810811,
+    "153 - Input Data Manipulation": 0.9678819444444444,
+    "16 - Dictionary-based Password Attack": 0.7701949860724234,
+    "194 - Fake the Source of Data": 0.7779816513761468,
+    "242 - Code Injection": 0.8671937818279282,
+    "272 - Protocol Manipulation": 0.260284126003706,
+    "274 - HTTP Verb Tampering": 1.0,
+    "310 - Scanning for Vulnerable Software": 1.0,
+    "33 - HTTP Request Smuggling": 0.5429650613786591,
+    "34 - HTTP Response Splitting": 0.2828047421217955,
+    "66 - SQL Injection": 0.4271685528453744,
+    "88 - OS Command Injection": 0.4013972689742775
+   }
+  }
+ },
+ "converged_at_lap": 2,
+ "state": {
+  "gate_field_weights": {
+   "user-agent": 0.6309991839978834,
+   "@path": 1.244976797784565,
+   "cookie": 3.0,
+   "host": 0.5,
+   "accept": 2.321342812499999,
+   "@body": 3.0,
+   "referer": 1.7962108177151352,
+   "@query": 2.6872444733203116,
+   "content-type": 1.990261293867186,
+   "accept-language": 2.321342812499999,
+   "connection": 3.0,
+   "dnt": 3.0,
+   "@method": 3.0,
+   "accept-encoding": 1.4035826715996098,
+   "origin": 2.6532977051444226
+  },
+  "baseline_N": 14699,
+  "semantic_boosted_grams": {
+   "user-agent": 115,
+   "referer": 489,
+   "host": 8,
+   "cookie": 1103,
+   "@method": 7,
+   "@path": 3178,
+   "@query": 1280,
+   "accept": 1,
+   "accept-encoding": 0,
+   "connection": 0,
+   "content-type": 14,
+   "@body": 2892,
+   "accept-language": 0
+  },
+  "semantic_learned_normal_values": {
+   "user-agent": 0,
+   "referer": 0,
+   "host": 0,
+   "cookie": 0,
+   "@method": 0,
+   "@path": 0,
+   "@query": 0,
+   "accept": 0,
+   "accept-encoding": 0,
+   "connection": 0,
+   "content-type": 0,
+   "@body": 0,
+   "accept-language": 1
+  },
+  "route_overrides": 0
+ }
+}

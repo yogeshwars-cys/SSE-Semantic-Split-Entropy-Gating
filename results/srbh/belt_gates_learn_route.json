@@ -1,0 +1,174 @@
+{
+ "detector": "gates_learn_route",
+ "belt_requests": 384629,
+ "laps": {
+  "1": {
+   "tpr": 0.7673354717066172,
+   "fpr": 0.050742082900416444,
+   "precision": 0.9714369944890089,
+   "wrong": 67953
+  },
+  "2": {
+   "tpr": 0.8560691991616776,
+   "fpr": 0.03331559429985724,
+   "precision": 0.9829903954388038,
+   "wrong": 42265,
+   "flipped_rate": 1.0,
+   "seconds": 324.0,
+   "per_class_tpr": {
+    "126 - Path Traversal": 0.9903271692745377,
+    "153 - Input Data Manipulation": 0.9939236111111112,
+    "16 - Dictionary-based Password Attack": 0.9575208913649025,
+    "194 - Fake the Source of Data": 0.8440366972477065,
+    "242 - Code Injection": 0.9974537657464487,
+    "272 - Protocol Manipulation": 0.9004323656578135,
+    "274 - HTTP Verb Tampering": 0.9990802060338484,
+    "310 - Scanning for Vulnerable Software": 1.0,
+    "33 - HTTP Request Smuggling": 0.9716713881019831,
+    "34 - HTTP Response Splitting": 0.9117438443611308,
+    "66 - SQL Injection": 0.8321293054851561,
+    "88 - OS Command Injection": 0.9884090187361066
+   }
+  },
+  "3": {
+   "tpr": 0.9641534520706414,
+   "fpr": 0.028804811501651418,
+   "precision": 0.9868902626560866,
+   "wrong": 12954,
+   "flipped_rate": 1.0,
+   "seconds": 314.1,
+   "per_class_tpr": {
+    "126 - Path Traversal": 0.9917496443812234,
+    "153 - Input Data Manipulation": 0.9930555555555556,
+    "16 - Dictionary-based Password Attack": 0.9317548746518106,
+    "194 - Fake the Source of Data": 0.8541284403669724,
+    "242 - Code Injection": 0.9971857410881801,
+    "272 - Protocol Manipulation": 0.8980852378011118,
+    "274 - HTTP Verb Tampering": 0.9990802060338484,
+    "310 - Scanning for Vulnerable Software": 1.0,
+    "33 - HTTP Request Smuggling": 0.9792256846081209,
+    "34 - HTTP Response Splitting": 0.985966156652143,
+    "66 - SQL Injection": 0.9614300534825223,
+    "88 - OS Command Injection": 0.9909495077802477
+   }
+  },
+  "4": {
+   "tpr": 0.9710681099434357,
+   "fpr": 0.025510419570377505,
+   "precision": 0.9884540244606462,
+   "wrong": 10723,
+   "flipped_rate": 1.0,
+   "seconds": 481.0,
+   "per_class_tpr": {
+    "126 - Path Traversal": 0.9854907539118065,
+    "153 - Input Data Manipulation": 0.9939236111111112,
+    "16 - Dictionary-based Password Attack": 0.9220055710306406,
+    "194 - Fake the Source of Data": 0.8504587155963302,
+    "242 - Code Injection": 0.9983248458858215,
+    "272 - Protocol Manipulation": 0.9083384805435454,
+    "274 - HTTP Verb Tampering": 0.9990802060338484,
+    "310 - Scanning for Vulnerable Software": 1.0,
+    "33 - HTTP Request Smuggling": 0.9735599622285175,
+    "34 - HTTP Response Splitting": 0.9810011146012767,
+    "66 - SQL Injection": 0.9702790660217815,
+    "88 - OS Command Injection": 0.9904731660844712
+   }
+  },
+  "5": {
+   "tpr": 0.9843115013934481,
+   "fpr": 0.02393924803392379,
+   "precision": 0.9893017444121056,
+   "wrong": 7011,
+   "flipped_rate": 1.0,
+   "seconds": 447.6,
+   "per_class_tpr": {
+    "126 - Path Traversal": 0.9917496443812234,
+    "153 - Input Data Manipulation": 0.9939236111111112,
+    "16 - Dictionary-based Password Attack": 0.9282729805013927,
+    "194 - Fake the Source of Data": 0.8431192660550458,
+    "242 - Code Injection": 0.998525864379523,
+    "272 - Protocol Manipulation": 0.920568252007412,
+    "274 - HTTP Verb Tampering": 0.9990802060338484,
+    "310 - Scanning for Vulnerable Software": 1.0,
+    "33 - HTTP Request Smuggling": 0.9745042492917847,
+    "34 - HTTP Response Splitting": 0.9904245617590435,
+    "66 - SQL Injection": 0.9857127292192689,
+    "88 - OS Command Injection": 0.9912670689107653
+   }
+  },
+  "6": {
+   "tpr": 0.9820053634608595,
+   "fpr": 0.025206321853644527,
+   "precision": 0.9887157340634324,
+   "wrong": 7775,
+   "flipped_rate": 1.0,
+   "seconds": 666.8,
+   "per_class_tpr": {
+    "126 - Path Traversal": 0.993172119487909,
+    "153 - Input Data Manipulation": 0.9956597222222222,
+    "16 - Dictionary-based Password Attack": 0.850974930362117,
+    "194 - Fake the Source of Data": 0.8238532110091743,
+    "242 - Code Injection": 0.9986598767086572,
+    "272 - Protocol Manipulation": 0.9218035824583076,
+    "274 - HTTP Verb Tampering": 0.9990802060338484,
+    "310 - Scanning for Vulnerable Software": 1.0,
+    "33 - HTTP Request Smuggling": 0.9735599622285175,
+    "34 - HTTP Response Splitting": 0.9847502279866248,
+    "66 - SQL Injection": 0.9836710137993434,
+    "88 - OS Command Injection": 0.9919021911718006
+   }
+  }
+ },
+ "converged_at_lap": 6,
+ "state": {
+  "gate_field_weights": {
+   "user-agent": 0.5,
+   "@path": 1.9727773112036955,
+   "cookie": 0.5290557897618473,
+   "host": 0.55125,
+   "accept": 2.673825046231669,
+   "@body": 1.3949564452775238,
+   "referer": 1.8883438951423344,
+   "origin": 2.918523554161861,
+   "@query": 0.525,
+   "content-type": 3.0,
+   "accept-language": 2.5656946874999993,
+   "connection": 2.962687031835644,
+   "dnt": 2.8357678125,
+   "@method": 0.7079519315299844,
+   "accept-encoding": 1.1025
+  },
+  "baseline_N": 28115,
+  "semantic_boosted_grams": {
+   "user-agent": 294,
+   "referer": 420,
+   "host": 8,
+   "cookie": 1456,
+   "@method": 11,
+   "@path": 2709,
+   "@query": 799,
+   "accept": 0,
+   "accept-encoding": 0,
+   "connection": 0,
+   "content-type": 6,
+   "@body": 1124,
+   "accept-language": 0
+  },
+  "semantic_learned_normal_values": {
+   "user-agent": 0,
+   "referer": 0,
+   "host": 0,
+   "cookie": 0,
+   "@method": 0,
+   "@path": 0,
+   "@query": 0,
+   "accept": 0,
+   "accept-encoding": 0,
+   "connection": 0,
+   "content-type": 0,
+   "@body": 0,
+   "accept-language": 0
+  },
+  "route_overrides": 257455
+ }
+}

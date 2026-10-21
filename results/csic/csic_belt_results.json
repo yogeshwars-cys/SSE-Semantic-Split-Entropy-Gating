@@ -1,0 +1,179 @@
+{
+ "protocol": "CSIC 2010 conveyor belt: each scanner keeps scanning the same 61,065-request CSIC stream, learning every lap.\n\n  brand_new          fresh SSE hybrid fit on CSIC normal training traffic\n  rebaselined_gains  SR-BH lap-3 scanner rebaselined on CSIC (fresh baseline + carried 3-gram gains)\n  srbh_as_is         SR-BH lap-3 scanner carried over unchanged\nSame stream, order and fit sample as csic_lap.py / csic_rebaseline.py. Lap 1 is the unseen-traffic figure;\nlater laps show convergence on this belt.",
+ "stream": 61065,
+ "laps": 8,
+ "brand_new": {
+  "1": {
+   "tpr": 0.8775982445641333,
+   "fpr": 0.0965,
+   "precision": 0.8636095952259433,
+   "wrong": 6542,
+   "corrected": 6542
+  },
+  "2": {
+   "tpr": 0.8985437861559944,
+   "fpr": 0.08963888888888889,
+   "precision": 0.8746747446502777,
+   "wrong": 5770,
+   "corrected": 5770
+  },
+  "3": {
+   "tpr": 0.9086774386594854,
+   "fpr": 0.07855555555555556,
+   "precision": 0.8895485080456179,
+   "wrong": 5117,
+   "corrected": 5117
+  },
+  "4": {
+   "tpr": 0.9167364851386396,
+   "fpr": 0.07005555555555555,
+   "precision": 0.9010980392156863,
+   "wrong": 4609,
+   "corrected": 4609
+  },
+  "5": {
+   "tpr": 0.9243965689208059,
+   "fpr": 0.06177777777777778,
+   "precision": 0.9124202567535639,
+   "wrong": 4119,
+   "corrected": 4119
+  },
+  "6": {
+   "tpr": 0.9314183123877917,
+   "fpr": 0.05563888888888889,
+   "precision": 0.9209830762554736,
+   "wrong": 3722,
+   "corrected": 3722
+  },
+  "7": {
+   "tpr": 0.9358069020546579,
+   "fpr": 0.051916666666666667,
+   "precision": 0.9261994076999013,
+   "wrong": 3478,
+   "corrected": 3478
+  },
+  "8": {
+   "tpr": 0.9430680231398364,
+   "fpr": 0.04702777777777778,
+   "precision": 0.9331648967668075,
+   "wrong": 3120,
+   "corrected": 3120
+  }
+ },
+ "rebaselined_gains": {
+  "1": {
+   "tpr": 0.8751246758428087,
+   "fpr": 0.09791666666666667,
+   "precision": 0.8615475255302435,
+   "wrong": 6655,
+   "corrected": 6655
+  },
+  "2": {
+   "tpr": 0.8933173748254538,
+   "fpr": 0.09313888888888888,
+   "precision": 0.8697560596643878,
+   "wrong": 6027,
+   "corrected": 6027
+  },
+  "3": {
+   "tpr": 0.9060442848593656,
+   "fpr": 0.08022222222222222,
+   "precision": 0.8871786858348308,
+   "wrong": 5243,
+   "corrected": 5243
+  },
+  "4": {
+   "tpr": 0.9139836425294235,
+   "fpr": 0.07175,
+   "precision": 0.8986740938333595,
+   "wrong": 4739,
+   "corrected": 4739
+  },
+  "5": {
+   "tpr": 0.9218432076600838,
+   "fpr": 0.06394444444444444,
+   "precision": 0.9093986146095718,
+   "wrong": 4261,
+   "corrected": 4261
+  },
+  "6": {
+   "tpr": 0.9297027727907441,
+   "fpr": 0.05669444444444444,
+   "precision": 0.9194681186868687,
+   "wrong": 3803,
+   "corrected": 3803
+  },
+  "7": {
+   "tpr": 0.9399960103730302,
+   "fpr": 0.04961111111111111,
+   "precision": 0.9295380123880538,
+   "wrong": 3290,
+   "corrected": 3290
+  },
+  "8": {
+   "tpr": 0.9460602433672451,
+   "fpr": 0.04402777777777778,
+   "precision": 0.9373468258360345,
+   "wrong": 2937,
+   "corrected": 2937
+  }
+ },
+ "srbh_as_is": {
+  "1": {
+   "tpr": 0.7419509275882705,
+   "fpr": 0.17872222222222223,
+   "precision": 0.7429587311733451,
+   "wrong": 12902,
+   "corrected": 12902
+  },
+  "2": {
+   "tpr": 0.7652104528226611,
+   "fpr": 0.16833333333333333,
+   "precision": 0.7599049128367671,
+   "wrong": 11945,
+   "corrected": 11945
+  },
+  "3": {
+   "tpr": 0.8672651107121484,
+   "fpr": 0.114,
+   "precision": 0.8411887624796842,
+   "wrong": 7431,
+   "corrected": 7431
+  },
+  "4": {
+   "tpr": 0.9382405745062836,
+   "fpr": 0.06455555555555556,
+   "precision": 0.9100653999458226,
+   "wrong": 3872,
+   "corrected": 3872
+  },
+  "5": {
+   "tpr": 0.9624177139437463,
+   "fpr": 0.041555555555555554,
+   "precision": 0.9416058394160584,
+   "wrong": 2438,
+   "corrected": 2438
+  },
+  "6": {
+   "tpr": 0.9722720925593457,
+   "fpr": 0.028666666666666667,
+   "precision": 0.9593732776946697,
+   "wrong": 1727,
+   "corrected": 1727
+  },
+  "7": {
+   "tpr": 0.9788150807899462,
+   "fpr": 0.020166666666666666,
+   "precision": 0.9712589073634205,
+   "wrong": 1257,
+   "corrected": 1257
+  },
+  "8": {
+   "tpr": 0.9828047077598244,
+   "fpr": 0.015111111111111112,
+   "precision": 0.9783938358884741,
+   "wrong": 975,
+   "corrected": 975
+  }
+ }
+}

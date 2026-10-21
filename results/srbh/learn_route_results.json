@@ -1,0 +1,269 @@
+{
+ "protocol": "SSE whose gates recalibrate themselves from every failure, precalibrated on 17 Jul, replayed on 18-19 Jul.\n\nEach wrong verdict updates the gates' own knowledge, on every route:\n  missed attack -> statistical gate: the blamed field (highest gate z) gets more sensitive;\n                   semantic layer:   the oddest field's grams that are rare in normal traffic weigh more;\n  false alarm   -> statistical gate: the request joins the baseline, fields that fired get less sensitive;\n                   semantic layer:   every field that fired stores the value as normal and drops its gram boosts.\nDetectors (same split and seed as replay_realtime.py, so static / thresholds-only numbers there compare directly):\n  gates_learn        gates learn, global thresholds unchanged\n  gates_learn_route  gates learn + the real-time (route, field) threshold overrides on top\nEvery 100th correction is re-checked on the same request (\"flipped\" = that request now gets the right verdict).\nTeacher = dataset label (stands in for the split-verifier verdict).",
+ "reference_same_split": "replay_realtime.py: static tpr 0.559 fpr 0.594; thresholds-only real-time (precalibrated) tpr 0.657 fpr 0.390",
+ "gates_learn_route": {
+  "precal": {
+   "tpr": 0.8030556916123156,
+   "fpr": 0.026676762675830735,
+   "wrong": 23835,
+   "flipped_rate": 1.0
+  },
+  "pass1": {
+   "tpr": 0.7673354717066172,
+   "fpr": 0.050742082900416444,
+   "precision": 0.9714369944890089,
+   "wrong": 67953,
+   "corrected": 67953,
+   "checked": 680,
+   "flipped_rate": 1.0,
+   "per_class_tpr": {
+    "126 - Path Traversal": 0.8620199146514936,
+    "153 - Input Data Manipulation": 0.9904513888888888,
+    "16 - Dictionary-based Password Attack": 0.9735376044568245,
+    "194 - Fake the Source of Data": 0.818348623853211,
+    "242 - Code Injection": 0.9000268024658269,
+    "272 - Protocol Manipulation": 0.6579369981470043,
+    "274 - HTTP Verb Tampering": 0.9990802060338484,
+    "310 - Scanning for Vulnerable Software": 1.0,
+    "33 - HTTP Request Smuggling": 0.9357884796978282,
+    "34 - HTTP Response Splitting": 0.42476441382105584,
+    "66 - SQL Injection": 0.7841229387438002,
+    "88 - OS Command Injection": 0.9825341378215307
+   },
+   "hourly": {
+    "0": {
+     "tpr": 0.7649274553571429,
+     "fpr": 0.15076100370218018
+    },
+    "1": {
+     "tpr": 0.5331747376653848,
+     "fpr": 0.042242703533026116
+    },
+    "2": {
+     "tpr": 0.8383935302583785,
+     "fpr": 0.048530666991830264
+    },
+    "3": {
+     "tpr": 0.574995410317606,
+     "fpr": 0.03629191321499014
+    },
+    "4": {
+     "tpr": 0.28654134800943465,
+     "fpr": 0.05479674796747967
+    },
+    "5": {
+     "tpr": 0.37319189971070393,
+     "fpr": 0.00736659650860468
+    },
+    "6": {
+     "tpr": 0.5278467052660601,
+     "fpr": 0.008852570650323459
+    },
+    "7": {
+     "tpr": 0.4265530126109295,
+     "fpr": 0.07335260995282301
+    },
+    "8": {
+     "tpr": 0.6486486486486487,
+     "fpr": 0.04020100502512563
+    },
+    "9": {
+     "tpr": 0.8636363636363636,
+     "fpr": 0.24175824175824176
+    },
+    "10": {
+     "tpr": 0.8518147684605757,
+     "fpr": 0.032036613272311214
+    },
+    "11": {
+     "tpr": 0.8727880616488625,
+     "fpr": 0.07519755289319398
+    },
+    "12": {
+     "tpr": 0.8427987598647125,
+     "fpr": 0.06826117318435754
+    },
+    "13": {
+     "tpr": 0.9725895183862562,
+     "fpr": 0.12705882352941175
+    },
+    "14": {
+     "tpr": 0.997179125528914,
+     "fpr": 0.3645833333333333
+    },
+    "15": {
+     "tpr": 0.997452317014391,
+     "fpr": 0.3235294117647059
+    },
+    "16": {
+     "tpr": 0.9970440201326196,
+     "fpr": 0.47058823529411764
+    },
+    "17": {
+     "tpr": 0.9510425277854322,
+     "fpr": 0.07017543859649122
+    },
+    "18": {
+     "tpr": 0.9598720558301832,
+     "fpr": 0.0
+    },
+    "19": {
+     "tpr": 0.9675425038639877,
+     "fpr": 0.037037037037037035
+    },
+    "20": {
+     "tpr": 0.9514925373134329,
+     "fpr": 0.0
+    },
+    "21": {
+     "tpr": 0.9312581063553826,
+     "fpr": 0.0
+    },
+    "22": {
+     "tpr": 0.9331436699857752,
+     "fpr": 0.0
+    },
+    "23": {
+     "tpr": 0.9362808842652796,
+     "fpr": 0.0
+    },
+    "24": {
+     "tpr": 0.9550348321722609,
+     "fpr": 0.0
+    },
+    "25": {
+     "tpr": 0.9587096774193549,
+     "fpr": 0.0
+    },
+    "26": {
+     "tpr": 0.973202614379085,
+     "fpr": 0.0
+    },
+    "27": {
+     "tpr": 0.9495955196017424,
+     "fpr": 0.0
+    },
+    "28": {
+     "tpr": 0.9736673089274245,
+     "fpr": 0.2222222222222222
+    },
+    "29": {
+     "tpr": 0.9307496823379924,
+     "fpr": 0.0
+    },
+    "30": {
+     "tpr": 0.9655831739961759,
+     "fpr": 0.0
+    },
+    "31": {
+     "tpr": 0.9404839764551994,
+     "fpr": 0.07692307692307693
+    },
+    "32": {
+     "tpr": 0.9491315136476427,
+     "fpr": 0.1
+    },
+    "33": {
+     "tpr": 0.7472527472527473,
+     "fpr": 0.030757097791798107
+    },
+    "34": {
+     "tpr": 0.5642342011978976,
+     "fpr": 0.07780357432104099
+    },
+    "35": {
+     "tpr": 0.8571428571428571,
+     "fpr": 0.02828054298642534
+    },
+    "36": {
+     "tpr": 0.75,
+     "fpr": 0.8333333333333334
+    },
+    "37": {
+     "tpr": 1.0,
+     "fpr": 0.0
+    },
+    "39": {
+     "tpr": 0.0,
+     "fpr": 0.0
+    },
+    "41": {
+     "tpr": 0.42857142857142855,
+     "fpr": 0.29411764705882354
+    },
+    "42": {
+     "tpr": 0.9655172413793104,
+     "fpr": 0.0
+    },
+    "43": {
+     "tpr": 1.0,
+     "fpr": 0.0
+    },
+    "44": {
+     "tpr": 1.0,
+     "fpr": 0.0
+    },
+    "45": {
+     "tpr": 1.0,
+     "fpr": 0.0
+    },
+    "47": {
+     "tpr": 0.0,
+     "fpr": 0.05869074492099323
+    }
+   }
+  },
+  "state_after_pass1": {
+   "gate_field_weights": {
+    "user-agent": 0.6802078926254581,
+    "@path": 2.0178090108920963,
+    "cookie": 2.194263076488574,
+    "host": 0.5,
+    "accept": 2.2047483985351675,
+    "@body": 2.8499999999999996,
+    "referer": 2.315539455468749,
+    "origin": 2.8499999999999996,
+    "@query": 2.177847211562233,
+    "content-type": 2.8499999999999996,
+    "accept-language": 2.315539455468749,
+    "connection": 2.8357678125,
+    "dnt": 2.8499999999999996,
+    "@method": 2.667029132377946,
+    "accept-encoding": 1.05
+   },
+   "baseline_N": 11923,
+   "semantic_boosted_grams": {
+    "user-agent": 212,
+    "referer": 305,
+    "host": 8,
+    "cookie": 1401,
+    "@method": 11,
+    "@path": 2089,
+    "@query": 551,
+    "accept": 0,
+    "accept-encoding": 0,
+    "connection": 0,
+    "content-type": 6,
+    "@body": 968,
+    "accept-language": 0
+   },
+   "semantic_learned_normal_values": {
+    "user-agent": 76,
+    "referer": 473,
+    "host": 2,
+    "cookie": 2516,
+    "@method": 73,
+    "@path": 925,
+    "@query": 280,
+    "accept": 17,
+    "accept-encoding": 3,
+    "connection": 23,
+    "content-type": 1,
+    "@body": 121,
+    "accept-language": 6
+   },
+   "route_overrides": 171034
+  }
+ },
+ "seconds": 629.0
+}

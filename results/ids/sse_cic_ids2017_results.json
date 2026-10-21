@@ -1,0 +1,654 @@
+{
+  "Friday-Afternoon-DDos": {
+    "unfixed_gates_only": {
+      "precision": 0.0,
+      "recall_tpr": 0.0,
+      "fpr": 0.00681509569316697,
+      "f1": 0.0,
+      "accuracy": 0.32304166666666667,
+      "tp": 0,
+      "fp": 266,
+      "tn": 38765,
+      "fn": 80969,
+      "per_attack": {
+        "DDoS": {
+          "count": 80969,
+          "recall": 0.0
+        }
+      }
+    },
+    "unfixed_scalar_cal": {
+      "precision": 0.775716872491066,
+      "recall_tpr": 0.9999752991885783,
+      "fpr": 0.5997796623196946,
+      "f1": 0.8736848920397526,
+      "accuracy": 0.8049,
+      "tp": 80967,
+      "fp": 23410,
+      "tn": 15621,
+      "fn": 2,
+      "per_attack": {
+        "DDoS": {
+          "count": 80969,
+          "recall": 0.9999752991885783
+        }
+      }
+    },
+    "fixed_entropy_gate_only": {
+      "precision": 0.9893844221105528,
+      "recall_tpr": 0.38906248070249105,
+      "fpr": 0.008659783249212166,
+      "f1": 0.5585015379978548,
+      "accuracy": 0.5849583333333334,
+      "tp": 31502,
+      "fp": 338,
+      "tn": 38693,
+      "fn": 49467,
+      "per_attack": {
+        "DDoS": {
+          "count": 80969,
+          "recall": 0.38906248070249105
+        }
+      }
+    },
+    "fixed_gate_plus_sem": {
+      "precision": 0.9707978707407297,
+      "recall_tpr": 0.39867109634551495,
+      "fpr": 0.0248776613461095,
+      "f1": 0.5652250043775171,
+      "accuracy": 0.5861666666666666,
+      "tp": 32280,
+      "fp": 971,
+      "tn": 38060,
+      "fn": 48689,
+      "per_attack": {
+        "DDoS": {
+          "count": 80969,
+          "recall": 0.39867109634551495
+        }
+      }
+    },
+    "perf": {
+      "fit_seconds": 2.98,
+      "full_online_seconds": 22.7,
+      "us_per_flow": 189.1,
+      "flows_per_second": 5287,
+      "state_bytes_after_pass1": 1854753
+    },
+    "fixed_full_online_pass1": {
+      "precision": 0.9822072263420436,
+      "recall_tpr": 0.9994812829601453,
+      "fpr": 0.037559888293920214,
+      "f1": 0.9907689670792473,
+      "accuracy": 0.9874333333333334,
+      "tp": 80927,
+      "fp": 1466,
+      "tn": 37565,
+      "fn": 42,
+      "per_attack": {
+        "DDoS": {
+          "count": 80969,
+          "recall": 0.9994812829601453
+        }
+      },
+      "stage_stats": {
+        "gate_caught": 31840,
+        "sem_caught": 1411,
+        "cal_caught": 48732,
+        "split_caught": 410,
+        "split_flips": 204,
+        "signatures_learned": 102
+      }
+    },
+    "fixed_full_online_pass2": {
+      "precision": 0.9804850276189553,
+      "recall_tpr": 0.9996541886400968,
+      "fpr": 0.04127488406651123,
+      "f1": 0.9899768225487857,
+      "accuracy": 0.9863416666666667,
+      "tp": 80941,
+      "fp": 1611,
+      "tn": 37420,
+      "fn": 28,
+      "per_attack": {
+        "DDoS": {
+          "count": 80969,
+          "recall": 0.9996541886400968
+        }
+      },
+      "stage_stats": {
+        "gate_caught": 31840,
+        "sem_caught": 1411,
+        "cal_caught": 49054,
+        "split_caught": 247,
+        "split_flips": 123,
+        "signatures_learned": 8
+      }
+    }
+  },
+  "Friday-Afternoon-PortScan": {
+    "unfixed_gates_only": {
+      "precision": 0.0,
+      "recall_tpr": 0.0,
+      "fpr": 0.013542165378565077,
+      "f1": 0.0,
+      "accuracy": 0.360575,
+      "tp": 0,
+      "fp": 594,
+      "tn": 43269,
+      "fn": 76137,
+      "per_attack": {
+        "PortScan": {
+          "count": 76137,
+          "recall": 0.0
+        }
+      }
+    },
+    "unfixed_scalar_cal": {
+      "precision": 0.3493493118621852,
+      "recall_tpr": 0.24504511604082116,
+      "fpr": 0.792193876387844,
+      "f1": 0.28804557595220087,
+      "accuracy": 0.23143333333333332,
+      "tp": 18657,
+      "fp": 34748,
+      "tn": 9115,
+      "fn": 57480,
+      "per_attack": {
+        "PortScan": {
+          "count": 76137,
+          "recall": 0.24504511604082116
+        }
+      }
+    },
+    "fixed_entropy_gate_only": {
+      "precision": 0.9840403854496693,
+      "recall_tpr": 0.9831356633437094,
+      "fpr": 0.02767708547067004,
+      "f1": 0.9835878163517384,
+      "accuracy": 0.9791833333333333,
+      "tp": 74853,
+      "fp": 1214,
+      "tn": 42649,
+      "fn": 1284,
+      "per_attack": {
+        "PortScan": {
+          "count": 76137,
+          "recall": 0.9831356633437094
+        }
+      }
+    },
+    "fixed_gate_plus_sem": {
+      "precision": 0.9819224954450891,
+      "recall_tpr": 0.9980692698687892,
+      "fpr": 0.031894763240088456,
+      "f1": 0.9899300444224431,
+      "accuracy": 0.9871166666666666,
+      "tp": 75990,
+      "fp": 1399,
+      "tn": 42464,
+      "fn": 147,
+      "per_attack": {
+        "PortScan": {
+          "count": 76137,
+          "recall": 0.9980692698687892
+        }
+      }
+    },
+    "perf": {
+      "fit_seconds": 2.42,
+      "full_online_seconds": 11.03,
+      "us_per_flow": 91.9,
+      "flows_per_second": 10883,
+      "state_bytes_after_pass1": 1791565
+    },
+    "fixed_full_online_pass1": {
+      "precision": 0.9743287709819085,
+      "recall_tpr": 0.9994877654753931,
+      "fpr": 0.04571050771721041,
+      "f1": 0.9867479253112034,
+      "accuracy": 0.9829666666666667,
+      "tp": 76098,
+      "fp": 2005,
+      "tn": 41858,
+      "fn": 39,
+      "per_attack": {
+        "PortScan": {
+          "count": 76137,
+          "recall": 0.9994877654753931
+        }
+      },
+      "stage_stats": {
+        "gate_caught": 76067,
+        "sem_caught": 1322,
+        "cal_caught": 383,
+        "split_caught": 331,
+        "split_flips": 163,
+        "signatures_learned": 106
+      }
+    },
+    "fixed_full_online_pass2": {
+      "precision": 0.9721544533714825,
+      "recall_tpr": 0.9996322418797694,
+      "fpr": 0.04970020290449809,
+      "f1": 0.9857018895781798,
+      "accuracy": 0.9816,
+      "tp": 76109,
+      "fp": 2180,
+      "tn": 41683,
+      "fn": 28,
+      "per_attack": {
+        "PortScan": {
+          "count": 76137,
+          "recall": 0.9996322418797694
+        }
+      },
+      "stage_stats": {
+        "gate_caught": 76067,
+        "sem_caught": 1322,
+        "cal_caught": 677,
+        "split_caught": 223,
+        "split_flips": 113,
+        "signatures_learned": 13
+      }
+    }
+  },
+  "Wednesday": {
+    "unfixed_gates_only": {
+      "precision": 0.08355614973262032,
+      "recall_tpr": 0.0027083829870214286,
+      "fpr": 0.018565412271317725,
+      "f1": 0.005246699825809565,
+      "accuracy": 0.6050083333333334,
+      "tp": 125,
+      "fp": 1371,
+      "tn": 72476,
+      "fn": 46028,
+      "per_attack": {
+        "DoS GoldenEye": {
+          "count": 1864,
+          "recall": 0.0
+        },
+        "DoS Hulk": {
+          "count": 42204,
+          "recall": 0.0
+        },
+        "DoS Slowhttptest": {
+          "count": 1009,
+          "recall": 0.10901883052527254
+        },
+        "DoS slowloris": {
+          "count": 1074,
+          "recall": 0.012104283054003724
+        },
+        "Heartbleed": {
+          "count": 2,
+          "recall": 1.0
+        }
+      }
+    },
+    "unfixed_scalar_cal": {
+      "precision": 0.43529888895176655,
+      "recall_tpr": 1.0,
+      "fpr": 0.810770918249895,
+      "f1": 0.6065620092128349,
+      "accuracy": 0.5010583333333334,
+      "tp": 46153,
+      "fp": 59873,
+      "tn": 13974,
+      "fn": 0,
+      "per_attack": {
+        "DoS GoldenEye": {
+          "count": 1864,
+          "recall": 1.0
+        },
+        "DoS Hulk": {
+          "count": 42204,
+          "recall": 1.0
+        },
+        "DoS Slowhttptest": {
+          "count": 1009,
+          "recall": 1.0
+        },
+        "DoS slowloris": {
+          "count": 1074,
+          "recall": 1.0
+        },
+        "Heartbleed": {
+          "count": 2,
+          "recall": 1.0
+        }
+      }
+    },
+    "fixed_entropy_gate_only": {
+      "precision": 0.3889695210449927,
+      "recall_tpr": 0.011613546248347886,
+      "fpr": 0.011401952685958807,
+      "f1": 0.022553701794618252,
+      "accuracy": 0.6128416666666666,
+      "tp": 536,
+      "fp": 842,
+      "tn": 73005,
+      "fn": 45617,
+      "per_attack": {
+        "DoS GoldenEye": {
+          "count": 1864,
+          "recall": 0.02467811158798283
+        },
+        "DoS Hulk": {
+          "count": 42204,
+          "recall": 0.0004975831674722775
+        },
+        "DoS Slowhttptest": {
+          "count": 1009,
+          "recall": 0.4509415262636274
+        },
+        "DoS slowloris": {
+          "count": 1074,
+          "recall": 0.01303538175046555
+        },
+        "Heartbleed": {
+          "count": 2,
+          "recall": 0.0
+        }
+      }
+    },
+    "fixed_gate_plus_sem": {
+      "precision": 0.9577552970639602,
+      "recall_tpr": 0.6297532121422226,
+      "fpr": 0.017360217747504975,
+      "f1": 0.7598692810457517,
+      "accuracy": 0.8469166666666667,
+      "tp": 29065,
+      "fp": 1282,
+      "tn": 72565,
+      "fn": 17088,
+      "per_attack": {
+        "DoS GoldenEye": {
+          "count": 1864,
+          "recall": 0.06652360515021459
+        },
+        "DoS Hulk": {
+          "count": 42204,
+          "recall": 0.6448440906075253
+        },
+        "DoS Slowhttptest": {
+          "count": 1009,
+          "recall": 0.7244796828543112
+        },
+        "DoS slowloris": {
+          "count": 1074,
+          "recall": 0.9245810055865922
+        },
+        "Heartbleed": {
+          "count": 2,
+          "recall": 1.0
+        }
+      }
+    },
+    "perf": {
+      "fit_seconds": 2.16,
+      "full_online_seconds": 15.2,
+      "us_per_flow": 126.7,
+      "flows_per_second": 7893,
+      "state_bytes_after_pass1": 1822259
+    },
+    "fixed_full_online_pass1": {
+      "precision": 0.9071425710050876,
+      "recall_tpr": 0.981301323857604,
+      "fpr": 0.062778447330291,
+      "f1": 0.9427658489368125,
+      "accuracy": 0.954175,
+      "tp": 45290,
+      "fp": 4636,
+      "tn": 69211,
+      "fn": 863,
+      "per_attack": {
+        "DoS GoldenEye": {
+          "count": 1864,
+          "recall": 0.7854077253218884
+        },
+        "DoS Hulk": {
+          "count": 42204,
+          "recall": 0.9894085868638044
+        },
+        "DoS Slowhttptest": {
+          "count": 1009,
+          "recall": 0.9920713577799801
+        },
+        "DoS slowloris": {
+          "count": 1074,
+          "recall": 0.9925512104283054
+        },
+        "Heartbleed": {
+          "count": 2,
+          "recall": 1.0
+        }
+      },
+      "stage_stats": {
+        "gate_caught": 1378,
+        "sem_caught": 28969,
+        "cal_caught": 19003,
+        "split_caught": 576,
+        "split_flips": 285,
+        "signatures_learned": 117
+      }
+    },
+    "fixed_full_online_pass2": {
+      "precision": 0.8857802078486118,
+      "recall_tpr": 0.9898598140965917,
+      "fpr": 0.07977304426720111,
+      "f1": 0.9349323128242384,
+      "accuracy": 0.9470083333333333,
+      "tp": 45685,
+      "fp": 5891,
+      "tn": 67956,
+      "fn": 468,
+      "per_attack": {
+        "DoS GoldenEye": {
+          "count": 1864,
+          "recall": 0.8937768240343348
+        },
+        "DoS Hulk": {
+          "count": 42204,
+          "recall": 0.9939105298076012
+        },
+        "DoS Slowhttptest": {
+          "count": 1009,
+          "recall": 0.9920713577799801
+        },
+        "DoS slowloris": {
+          "count": 1074,
+          "recall": 0.9953445065176909
+        },
+        "Heartbleed": {
+          "count": 2,
+          "recall": 1.0
+        }
+      },
+      "stage_stats": {
+        "gate_caught": 1378,
+        "sem_caught": 28969,
+        "cal_caught": 20927,
+        "split_caught": 302,
+        "split_flips": 153,
+        "signatures_learned": 9
+      }
+    }
+  },
+  "Thursday-Morning-WebAttacks": {
+    "unfixed_gates_only": {
+      "precision": 0.06798623063683305,
+      "recall_tpr": 0.040429887410440124,
+      "fpr": 0.009174389644714773,
+      "f1": 0.05070603337612324,
+      "accuracy": 0.97535,
+      "tp": 79,
+      "fp": 1083,
+      "tn": 116963,
+      "fn": 1875,
+      "per_attack": {
+        "Web Attack - Brute Force": {
+          "count": 1354,
+          "recall": 0.04874446085672083
+        },
+        "Web Attack - Sql Injection": {
+          "count": 18,
+          "recall": 0.0
+        },
+        "Web Attack - XSS": {
+          "count": 582,
+          "recall": 0.022336769759450172
+        }
+      }
+    },
+    "unfixed_scalar_cal": {
+      "precision": 0.019894317800018328,
+      "recall_tpr": 1.0,
+      "fpr": 0.8154871829625739,
+      "f1": 0.039012508360536276,
+      "accuracy": 0.19779166666666667,
+      "tp": 1954,
+      "fp": 96265,
+      "tn": 21781,
+      "fn": 0,
+      "per_attack": {
+        "Web Attack - Brute Force": {
+          "count": 1354,
+          "recall": 1.0
+        },
+        "Web Attack - Sql Injection": {
+          "count": 18,
+          "recall": 1.0
+        },
+        "Web Attack - XSS": {
+          "count": 582,
+          "recall": 1.0
+        }
+      }
+    },
+    "fixed_entropy_gate_only": {
+      "precision": 0.003847798204360838,
+      "recall_tpr": 0.004605936540429887,
+      "fpr": 0.019738068210697526,
+      "f1": 0.0041928721174004195,
+      "accuracy": 0.964375,
+      "tp": 9,
+      "fp": 2330,
+      "tn": 115716,
+      "fn": 1945,
+      "per_attack": {
+        "Web Attack - Brute Force": {
+          "count": 1354,
+          "recall": 0.0029542097488921715
+        },
+        "Web Attack - Sql Injection": {
+          "count": 18,
+          "recall": 0.05555555555555555
+        },
+        "Web Attack - XSS": {
+          "count": 582,
+          "recall": 0.006872852233676976
+        }
+      }
+    },
+    "fixed_gate_plus_sem": {
+      "precision": 0.028861921941620204,
+      "recall_tpr": 0.04503582395087001,
+      "fpr": 0.02508344204801518,
+      "f1": 0.035178892664401364,
+      "accuracy": 0.959775,
+      "tp": 88,
+      "fp": 2961,
+      "tn": 115085,
+      "fn": 1866,
+      "per_attack": {
+        "Web Attack - Brute Force": {
+          "count": 1354,
+          "recall": 0.051698670605613
+        },
+        "Web Attack - Sql Injection": {
+          "count": 18,
+          "recall": 0.05555555555555555
+        },
+        "Web Attack - XSS": {
+          "count": 582,
+          "recall": 0.029209621993127148
+        }
+      }
+    },
+    "perf": {
+      "fit_seconds": 2.31,
+      "full_online_seconds": 13.0,
+      "us_per_flow": 108.3,
+      "flows_per_second": 9232,
+      "state_bytes_after_pass1": 1775461
+    },
+    "fixed_full_online_pass1": {
+      "precision": 0.018074735987002436,
+      "recall_tpr": 0.045547594677584444,
+      "fpr": 0.040958609355674906,
+      "f1": 0.02587961616749055,
+      "accuracy": 0.9441666666666667,
+      "tp": 89,
+      "fp": 4835,
+      "tn": 113211,
+      "fn": 1865,
+      "per_attack": {
+        "Web Attack - Brute Force": {
+          "count": 1354,
+          "recall": 0.051698670605613
+        },
+        "Web Attack - Sql Injection": {
+          "count": 18,
+          "recall": 0.1111111111111111
+        },
+        "Web Attack - XSS": {
+          "count": 582,
+          "recall": 0.029209621993127148
+        }
+      },
+      "stage_stats": {
+        "gate_caught": 2339,
+        "sem_caught": 710,
+        "cal_caught": 1165,
+        "split_caught": 710,
+        "split_flips": 353,
+        "signatures_learned": 149
+      }
+    },
+    "fixed_full_online_pass2": {
+      "precision": 0.016152450090744102,
+      "recall_tpr": 0.045547594677584444,
+      "fpr": 0.04592277586703489,
+      "f1": 0.02384780278670954,
+      "accuracy": 0.9392833333333334,
+      "tp": 89,
+      "fp": 5421,
+      "tn": 112625,
+      "fn": 1865,
+      "per_attack": {
+        "Web Attack - Brute Force": {
+          "count": 1354,
+          "recall": 0.051698670605613
+        },
+        "Web Attack - Sql Injection": {
+          "count": 18,
+          "recall": 0.1111111111111111
+        },
+        "Web Attack - XSS": {
+          "count": 582,
+          "recall": 0.029209621993127148
+        }
+      },
+      "stage_stats": {
+        "gate_caught": 2339,
+        "sem_caught": 710,
+        "cal_caught": 1915,
+        "split_caught": 546,
+        "split_flips": 274,
+        "signatures_learned": 5
+      }
+    }
+  }
+}

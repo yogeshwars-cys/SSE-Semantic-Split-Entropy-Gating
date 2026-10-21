@@ -1,0 +1,26 @@
+{
+ "protocol": "One lap of CSIC 2010 (a different web app: an e-shop, not WordPress) through two SSE hybrids.\n\n  new_hybrid    brand-new SSE: gates fit on CSIC normal training traffic (10,000 requests, benign only)\n  srbh_hybrid   the scanner trained on SR-BH (precalibration + belt laps), carried over unchanged\nBoth are hybrids (gates learn from every wrong verdict + real-time route thresholds) and keep learning\nduring the lap. A frozen pass of each (no learning) is reported for reference.\nRequests are mapped onto the SR-BH field schema (the same 11 header columns + @method/@path/@query/@body) so the\ncarried-over scanner sees the fields it was built on. CSIC has no timestamps: normal test and attack requests are\ninterleaved in a seeded random order. Teacher = dataset label.",
+ "scanner": "trained_gates_learn_route.pkl",
+ "stream": 61065,
+ "normal": 36000,
+ "attacks": 25065,
+ "srbh_hybrid frozen": {
+  "tpr": 1.0,
+  "fpr": 1.0,
+  "precision": 0.41046425939572584,
+  "wrong": 36000,
+  "corrected": 0,
+  "seconds": 24.2,
+  "first_10k_vs_last_10k": null
+ },
+ "srbh_hybrid": {
+  "tpr": 0.7189706762417714,
+  "fpr": 0.24525,
+  "precision": 0.6711731843575419,
+  "wrong": 15873,
+  "corrected": 15873,
+  "seconds": 29.1,
+  "first_10k_vs_last_10k": null
+ },
+ "seconds": 57.6
+}

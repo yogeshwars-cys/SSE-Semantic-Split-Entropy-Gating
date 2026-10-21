@@ -1,0 +1,164 @@
+{
+ "protocol": "One lap of CSIC 2010 (a different web app: an e-shop, not WordPress) through two SSE hybrids.\n\n  new_hybrid    brand-new SSE: gates fit on CSIC normal training traffic (10,000 requests, benign only)\n  srbh_hybrid   the scanner trained on SR-BH (precalibration + belt laps), carried over unchanged\nBoth are hybrids (gates learn from every wrong verdict + real-time route thresholds) and keep learning\nduring the lap. A frozen pass of each (no learning) is reported for reference.\nRequests are mapped onto the SR-BH field schema (the same 11 header columns + @method/@path/@query/@body) so the\ncarried-over scanner sees the fields it was built on. CSIC has no timestamps: normal test and attack requests are\ninterleaved in a seeded random order. Teacher = dataset label.",
+ "scanner": "none",
+ "stream": 61065,
+ "normal": 36000,
+ "attacks": 25065,
+ "new_hybrid frozen": {
+  "tpr": 0.6116896070217435,
+  "fpr": 0.010722222222222222,
+  "precision": 0.9754421682147856,
+  "wrong": 10119,
+  "corrected": 0,
+  "seconds": 23.9,
+  "curve_per_3600_requests": {
+   "0": {
+    "tpr": 0.6210384356035064,
+    "fpr": 0.00944733112895607
+   },
+   "1": {
+    "tpr": 0.6246648793565683,
+    "fpr": 0.010436432637571158
+   },
+   "2": {
+    "tpr": 0.6084546084546084,
+    "fpr": 0.012517385257301807
+   },
+   "3": {
+    "tpr": 0.6005361930294906,
+    "fpr": 0.010910815939278937
+   },
+   "4": {
+    "tpr": 0.6055045871559633,
+    "fpr": 0.01253616200578592
+   },
+   "5": {
+    "tpr": 0.6140350877192983,
+    "fpr": 0.008970727101038715
+   },
+   "6": {
+    "tpr": 0.6330645161290323,
+    "fpr": 0.01278409090909091
+   },
+   "7": {
+    "tpr": 0.6159468438538206,
+    "fpr": 0.012887828162291169
+   },
+   "8": {
+    "tpr": 0.6312664907651715,
+    "fpr": 0.009117082533589251
+   },
+   "9": {
+    "tpr": 0.6,
+    "fpr": 0.010697674418604652
+   },
+   "10": {
+    "tpr": 0.6056527590847914,
+    "fpr": 0.008514664143803218
+   },
+   "11": {
+    "tpr": 0.6047619047619047,
+    "fpr": 0.0107981220657277
+   },
+   "12": {
+    "tpr": 0.6206657420249653,
+    "fpr": 0.008804448563484708
+   },
+   "13": {
+    "tpr": 0.6005434782608695,
+    "fpr": 0.01456766917293233
+   },
+   "14": {
+    "tpr": 0.6137281292059219,
+    "fpr": 0.00804162724692526
+   },
+   "15": {
+    "tpr": 0.6088737201365187,
+    "fpr": 0.008430913348946136
+   },
+   "16": {
+    "tpr": 0.5874177029992684,
+    "fpr": 0.012869399428026692
+   }
+  }
+ },
+ "new_hybrid": {
+  "tpr": 0.8775982445641333,
+  "fpr": 0.0965,
+  "precision": 0.8636095952259433,
+  "wrong": 6542,
+  "corrected": 6542,
+  "seconds": 18.5,
+  "curve_per_3600_requests": {
+   "0": {
+    "tpr": 0.8570465273095077,
+    "fpr": 0.134624468587624
+   },
+   "1": {
+    "tpr": 0.878686327077748,
+    "fpr": 0.10578747628083492
+   },
+   "2": {
+    "tpr": 0.8641718641718642,
+    "fpr": 0.10060268891979601
+   },
+   "3": {
+    "tpr": 0.8693029490616622,
+    "fpr": 0.10199240986717267
+   },
+   "4": {
+    "tpr": 0.8709043250327654,
+    "fpr": 0.10125361620057859
+   },
+   "5": {
+    "tpr": 0.8792172739541161,
+    "fpr": 0.09442870632672333
+   },
+   "6": {
+    "tpr": 0.885752688172043,
+    "fpr": 0.09043560606060606
+   },
+   "7": {
+    "tpr": 0.8790697674418605,
+    "fpr": 0.09403341288782817
+   },
+   "8": {
+    "tpr": 0.8865435356200527,
+    "fpr": 0.09213051823416507
+   },
+   "9": {
+    "tpr": 0.8827586206896552,
+    "fpr": 0.08883720930232558
+   },
+   "10": {
+    "tpr": 0.8882907133243607,
+    "fpr": 0.08703878902554399
+   },
+   "11": {
+    "tpr": 0.882312925170068,
+    "fpr": 0.09107981220657277
+   },
+   "12": {
+    "tpr": 0.8661581137309292,
+    "fpr": 0.09962928637627433
+   },
+   "13": {
+    "tpr": 0.8845108695652174,
+    "fpr": 0.08787593984962407
+   },
+   "14": {
+    "tpr": 0.8855989232839838,
+    "fpr": 0.09224219489120151
+   },
+   "15": {
+    "tpr": 0.8812286689419795,
+    "fpr": 0.08992974238875878
+   },
+   "16": {
+    "tpr": 0.8771031455742502,
+    "fpr": 0.0886558627264061
+   }
+  }
+ },
+ "seconds": 47.3
+}

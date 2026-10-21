@@ -1,0 +1,10 @@
+lap 1 (from replay_learn): tpr=0.6801 fpr=0.0572 wrong=91950
+    lap2 50000/384629 tpr=0.350 fpr=0.070 143s
+    lap2 100000/384629 tpr=0.425 fpr=0.033 238s
+    lap2 150000/384629 tpr=0.351 fpr=0.019 342s
+    lap2 200000/384629 tpr=0.356 fpr=0.017 424s
+    lap2 250000/384629 tpr=0.339 fpr=0.016 544s
+    lap2 300000/384629 tpr=0.411 fpr=0.016 667s
+    lap2 350000/384629 tpr=0.446 fpr=0.017 818s
+lap 2: tpr=0.4471 fpr=0.0174 precision=0.9830 wrong=149274 (842s)
+wrote belt_gates_learn.json

@@ -1,0 +1,16 @@
+precalibrated on 150710 requests of 17 Jul in 177s: {'tn': 33570, 'wrong': 68350, 'loosened': 1126, 'verified': 68350, 'fp': 767, 'tp': 48790, 'tightened': 135154, 'fn': 67583}, 135383 overrides
+replay 384629 requests of 18-19 Jul (266246 attacks)
+  0/384629  static: tpr=0.000 fpr=0.000  realtime_cold: tpr=0.000 fpr=0.000  precal_frozen: tpr=0.000 fpr=0.000  precal_realtime: tpr=0.000 fpr=0.000  tighten_only_hl120: tpr=0.000 fpr=0.000
+  50000/384629  static: tpr=0.067 fpr=0.047  realtime_cold: tpr=0.297 fpr=0.051  precal_frozen: tpr=0.106 fpr=0.203  precal_realtime: tpr=0.298 fpr=0.049  tighten_only_hl120: tpr=0.198 fpr=0.212
+  100000/384629  static: tpr=0.237 fpr=0.094  realtime_cold: tpr=0.443 fpr=0.079  precal_frozen: tpr=0.281 fpr=0.141  precal_realtime: tpr=0.444 fpr=0.076  tighten_only_hl120: tpr=0.362 fpr=0.240
+  150000/384629  static: tpr=0.347 fpr=0.492  realtime_cold: tpr=0.524 fpr=0.356  precal_frozen: tpr=0.391 fpr=0.511  precal_realtime: tpr=0.525 fpr=0.355  tighten_only_hl120: tpr=0.458 fpr=0.556
+  200000/384629  static: tpr=0.383 fpr=0.521  realtime_cold: tpr=0.537 fpr=0.344  precal_frozen: tpr=0.426 fpr=0.537  precal_realtime: tpr=0.539 fpr=0.344  tighten_only_hl120: tpr=0.483 fpr=0.567
+  250000/384629  static: tpr=0.445 fpr=0.532  realtime_cold: tpr=0.585 fpr=0.350  precal_frozen: tpr=0.484 fpr=0.545  precal_realtime: tpr=0.586 fpr=0.350  tighten_only_hl120: tpr=0.539 fpr=0.572
+  300000/384629  static: tpr=0.506 fpr=0.531  realtime_cold: tpr=0.621 fpr=0.350  precal_frozen: tpr=0.535 fpr=0.544  precal_realtime: tpr=0.622 fpr=0.349  tighten_only_hl120: tpr=0.578 fpr=0.571
+  350000/384629  static: tpr=0.538 fpr=0.521  realtime_cold: tpr=0.643 fpr=0.344  precal_frozen: tpr=0.565 fpr=0.535  precal_realtime: tpr=0.646 fpr=0.344  tighten_only_hl120: tpr=0.599 fpr=0.561
+static {'tpr': 0.558521066983166, 'fpr': 0.5939704180498889, 'precision': 0.678951693909232, 'wrong': 187858, 'tightened': 0, 'loosened': 0, 'verified': 0, 'verify_fail': 0, 'overrides': 0, 'tpr_route_seen_day1': 0.6145949832241572, 'tpr_route_new': 0.5527009659632686}
+realtime_cold {'tpr': 0.6548455188059163, 'fpr': 0.3899124029632633, 'precision': 0.7906706755733326, 'wrong': 138055, 'tightened': 183781, 'loosened': 50060, 'verified': 138055, 'verify_fail': 0, 'overrides': 221003, 'tpr_route_seen_day1': 0.8979469563828087, 'tpr_route_new': 0.6296132001160815}
+precal_frozen {'tpr': 0.5838547809168964, 'fpr': 0.604917935852276, 'precision': 0.6846133858302395, 'wrong': 182409, 'tightened': 0, 'loosened': 0, 'verified': 0, 'verify_fail': 0, 'overrides': 135383, 'tpr_route_seen_day1': 0.8845662246365235, 'tpr_route_new': 0.5526429252518552}
+precal_realtime {'tpr': 0.6573432089120588, 'fpr': 0.3896420938817229, 'precision': 0.791414566206329, 'wrong': 137358, 'tightened': 182450, 'loosened': 49958, 'verified': 137358, 'verify_fail': 0, 'overrides': 354785, 'tpr_route_seen_day1': 0.9245486499440805, 'tpr_route_new': 0.6296090543509805}
+tighten_only_hl120 {'tpr': 0.6163209963717765, 'fpr': 0.6272015407617648, 'precision': 0.6884741737747699, 'wrong': 176403, 'tightened': 0, 'loosened': 0, 'verified': 0, 'verify_fail': 0, 'overrides': 184200, 'tpr_route_seen_day1': 0.9507509186771049, 'tpr_route_new': 0.5816093860121886}
+wrote realtime_results.json

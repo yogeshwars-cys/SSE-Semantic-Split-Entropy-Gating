@@ -1,0 +1,164 @@
+{
+ "protocol": "One lap of CSIC 2010 (a different web app: an e-shop, not WordPress) through two SSE hybrids.\n\n  new_hybrid    brand-new SSE: gates fit on CSIC normal training traffic (10,000 requests, benign only)\n  srbh_hybrid   the scanner trained on SR-BH (precalibration + belt laps), carried over unchanged\nBoth are hybrids (gates learn from every wrong verdict + real-time route thresholds) and keep learning\nduring the lap. A frozen pass of each (no learning) is reported for reference.\nRequests are mapped onto the SR-BH field schema (the same 11 header columns + @method/@path/@query/@body) so the\ncarried-over scanner sees the fields it was built on. CSIC has no timestamps: normal test and attack requests are\ninterleaved in a seeded random order. Teacher = dataset label.",
+ "scanner": "belt_gates_learn_route_lap3.pkl",
+ "stream": 61065,
+ "normal": 36000,
+ "attacks": 25065,
+ "srbh_hybrid frozen": {
+  "tpr": 1.0,
+  "fpr": 1.0,
+  "precision": 0.41046425939572584,
+  "wrong": 36000,
+  "corrected": 0,
+  "seconds": 27.7,
+  "curve_per_3600_requests": {
+   "0": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "1": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "2": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "3": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "4": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "5": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "6": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "7": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "8": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "9": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "10": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "11": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "12": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "13": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "14": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "15": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   },
+   "16": {
+    "tpr": 1.0,
+    "fpr": 1.0
+   }
+  }
+ },
+ "srbh_hybrid": {
+  "tpr": 0.7419509275882705,
+  "fpr": 0.17872222222222223,
+  "precision": 0.7429587311733451,
+  "wrong": 12902,
+  "corrected": 12902,
+  "seconds": 28.0,
+  "curve_per_3600_requests": {
+   "0": {
+    "tpr": 0.7161159811193527,
+    "fpr": 0.23193197921587153
+   },
+   "1": {
+    "tpr": 0.7091152815013405,
+    "fpr": 0.21963946869070208
+   },
+   "2": {
+    "tpr": 0.7096327096327096,
+    "fpr": 0.20213259156235514
+   },
+   "3": {
+    "tpr": 0.7292225201072386,
+    "fpr": 0.18785578747628084
+   },
+   "4": {
+    "tpr": 0.765399737876802,
+    "fpr": 0.1759884281581485
+   },
+   "5": {
+    "tpr": 0.7604588394062078,
+    "fpr": 0.17233238904627007
+   },
+   "6": {
+    "tpr": 0.7721774193548387,
+    "fpr": 0.16761363636363635
+   },
+   "7": {
+    "tpr": 0.7614617940199335,
+    "fpr": 0.16897374701670645
+   },
+   "8": {
+    "tpr": 0.746042216358839,
+    "fpr": 0.177063339731286
+   },
+   "9": {
+    "tpr": 0.7448275862068966,
+    "fpr": 0.16744186046511628
+   },
+   "10": {
+    "tpr": 0.7449528936742934,
+    "fpr": 0.17313150425733206
+   },
+   "11": {
+    "tpr": 0.7448979591836735,
+    "fpr": 0.1704225352112676
+   },
+   "12": {
+    "tpr": 0.7406380027739251,
+    "fpr": 0.1607970342910102
+   },
+   "13": {
+    "tpr": 0.7506793478260869,
+    "fpr": 0.16447368421052633
+   },
+   "14": {
+    "tpr": 0.7355316285329744,
+    "fpr": 0.1693472090823084
+   },
+   "15": {
+    "tpr": 0.7453924914675768,
+    "fpr": 0.1629976580796253
+   },
+   "16": {
+    "tpr": 0.7344550109729334,
+    "fpr": 0.1663489037178265
+   }
+  }
+ },
+ "seconds": 60.9
+}

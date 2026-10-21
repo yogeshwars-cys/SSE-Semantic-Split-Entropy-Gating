@@ -1,0 +1,675 @@
+{
+ "dataset": "SR-BH 2020 (data_capec_multilabel.csv, Harvard Dataverse doi:10.7910/DVN/OGOIXX)",
+ "rows": 907813,
+ "label_counts": {
+  "000 - Normal": 525193,
+  "272 - Protocol Manipulation": 9153,
+  "242 - Code Injection": 15827,
+  "88 - OS Command Injection": 7482,
+  "126 - Path Traversal": 20992,
+  "66 - SQL Injection": 250311,
+  "16 - Dictionary-based Password Attack": 1847,
+  "310 - Scanning for Vulnerable Software": 2718,
+  "153 - Input Data Manipulation": 2272,
+  "248 - Command Injection": 1,
+  "274 - HTTP Verb Tampering": 5437,
+  "194 - Fake the Source of Data": 56145,
+  "34 - HTTP Response Splitting": 19738,
+  "33 - HTTP Request Smuggling": 1059
+ },
+ "src_ips_all_rows": [
+  [
+   "172.26.0.1",
+   907813
+  ]
+ ],
+ "load_seconds": 69.6,
+ "split": "time_disjoint: fit on benign 20-29 Jul, eval 17-19 Jul; same_window: 17-19 Jul benign halved",
+ "time_disjoint/sse_stock": {
+  "fit_requests": 10000,
+  "fit_seconds": 10.09,
+  "semantic_matrices_mb": 16.3,
+  "semantic_fields": [
+   "accept",
+   "accept-encoding",
+   "connection",
+   "host",
+   "user-agent"
+  ],
+  "eval_benign": 20000,
+  "eval_attack": 21862,
+  "latency_ms": {
+   "p50": 0.47119997907429934,
+   "p95": 0.9420950140338388,
+   "p99": 2.0299749739933746
+  },
+  "as_shipped": {
+   "entropy_gate": {
+    "tpr": 0.9572317262830482,
+    "fpr": 0.92485,
+    "precision": 0.5308187905844156,
+    "f1": 0.6829292171132069
+   },
+   "semantic_gate": {
+    "tpr": 0.307199707254597,
+    "fpr": 0.0646,
+    "precision": 0.8386613386613386,
+    "f1": 0.44968195513893544
+   },
+   "cascade": {
+    "tpr": 0.9573232092214802,
+    "fpr": 0.92515,
+    "precision": 0.5307618178129438,
+    "f1": 0.6829053414689856
+   }
+  },
+  "matched_fpr": {
+   "baseline_uri_body_length": {
+    "auc": 0.7100740874576892,
+    "tpr@fpr1%": 0.17400054889763059,
+    "tpr@fpr2%": 0.26534626292196506,
+    "tpr@fpr5%": 0.3521178300247004
+   },
+   "entropy_gate": {
+    "auc": 0.49561115977495196,
+    "tpr@fpr1%": 0.013768182234013356,
+    "tpr@fpr2%": 0.013768182234013356,
+    "tpr@fpr5%": 0.03046381849785015
+   },
+   "semantic_gate": {
+    "auc": 0.6289761618333181,
+    "tpr@fpr1%": 0.265849419083341,
+    "tpr@fpr2%": 0.2740371420730034,
+    "tpr@fpr5%": 0.29439209587411946
+   },
+   "combined": {
+    "auc": 0.6376859036227244,
+    "tpr@fpr1%": 0.265849419083341,
+    "tpr@fpr2%": 0.2740371420730034,
+    "tpr@fpr5%": 0.29439209587411946
+   }
+  },
+  "per_class": {
+   "272 - Protocol Manipulation": {
+    "n": 599,
+    "auc": 0.6200722454090151,
+    "tpr@fpr1%": 0.15525876460767946,
+    "tpr@fpr5%": 0.24874791318864775,
+    "cascade_as_shipped_tpr": 0.9833055091819699
+   },
+   "242 - Code Injection": {
+    "n": 1038,
+    "auc": 0.5024500722543352,
+    "tpr@fpr1%": 0.004816955684007707,
+    "tpr@fpr5%": 0.03275529865125241,
+    "cascade_as_shipped_tpr": 0.9499036608863198
+   },
+   "88 - OS Command Injection": {
+    "n": 779,
+    "auc": 0.5324055840821567,
+    "tpr@fpr1%": 0.0038510911424903724,
+    "tpr@fpr5%": 0.04878048780487805,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "126 - Path Traversal": {
+    "n": 1181,
+    "auc": 0.5097912362404742,
+    "tpr@fpr1%": 0.006773920406435224,
+    "tpr@fpr5%": 0.060118543607112614,
+    "cascade_as_shipped_tpr": 0.9398814563928873
+   },
+   "66 - SQL Injection": {
+    "n": 13348,
+    "auc": 0.6972176711866946,
+    "tpr@fpr1%": 0.3927180101887923,
+    "tpr@fpr5%": 0.41204674857656576,
+    "cascade_as_shipped_tpr": 0.959469583458196
+   },
+   "16 - Dictionary-based Password Attack": {
+    "n": 518,
+    "auc": 0.5661369691119691,
+    "tpr@fpr1%": 0.03667953667953668,
+    "tpr@fpr5%": 0.07722007722007722,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "310 - Scanning for Vulnerable Software": {
+    "n": 502,
+    "auc": 0.9968,
+    "tpr@fpr1%": 1.0,
+    "tpr@fpr5%": 1.0,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "153 - Input Data Manipulation": {
+    "n": 501,
+    "auc": 0.5377529940119761,
+    "tpr@fpr1%": 0.001996007984031936,
+    "tpr@fpr5%": 0.059880239520958084,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "248 - Command Injection": {
+    "n": 1,
+    "auc": 0.9968,
+    "tpr@fpr1%": 1.0,
+    "tpr@fpr5%": 1.0,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "274 - HTTP Verb Tampering": {
+    "n": 500,
+    "auc": 0.5655752,
+    "tpr@fpr1%": 0.01,
+    "tpr@fpr5%": 0.128,
+    "cascade_as_shipped_tpr": 0.994
+   },
+   "194 - Fake the Source of Data": {
+    "n": 2943,
+    "auc": 0.5081761043153245,
+    "tpr@fpr1%": 0.0020387359836901123,
+    "tpr@fpr5%": 0.04519198097179748,
+    "cascade_as_shipped_tpr": 0.9306829765545361
+   },
+   "34 - HTTP Response Splitting": {
+    "n": 1209,
+    "auc": 0.49922007857733663,
+    "tpr@fpr1%": 0.0016542597187758478,
+    "tpr@fpr5%": 0.026468155500413565,
+    "cascade_as_shipped_tpr": 0.9520264681555004
+   },
+   "33 - HTTP Request Smuggling": {
+    "n": 500,
+    "auc": 0.511001,
+    "tpr@fpr1%": 0.004,
+    "tpr@fpr5%": 0.004,
+    "cascade_as_shipped_tpr": 1.0
+   }
+  }
+ },
+ "time_disjoint/sse_plus_request_fields": {
+  "fit_requests": 10000,
+  "fit_seconds": 13.84,
+  "semantic_matrices_mb": 17.2,
+  "semantic_fields": [
+   "@method",
+   "@path",
+   "@query",
+   "accept",
+   "accept-encoding",
+   "connection",
+   "host",
+   "user-agent"
+  ],
+  "eval_benign": 20000,
+  "eval_attack": 21862,
+  "latency_ms": {
+   "p50": 0.8792000007815659,
+   "p95": 1.7721449898090182,
+   "p99": 3.6131429800298043
+  },
+  "as_shipped": {
+   "entropy_gate": {
+    "tpr": 1.0,
+    "fpr": 0.9806,
+    "precision": 0.5271254279789748,
+    "f1": 0.6903498800050524
+   },
+   "semantic_gate": {
+    "tpr": 0.9989479462080322,
+    "fpr": 0.96905,
+    "precision": 0.5298156234837458,
+    "f1": 0.6924003677752767
+   },
+   "cascade": {
+    "tpr": 1.0,
+    "fpr": 0.98105,
+    "precision": 0.5270110647735217,
+    "f1": 0.6902517957218407
+   }
+  },
+  "matched_fpr": {
+   "baseline_uri_body_length": {
+    "auc": 0.7100740874576892,
+    "tpr@fpr1%": 0.17400054889763059,
+    "tpr@fpr2%": 0.26534626292196506,
+    "tpr@fpr5%": 0.3521178300247004
+   },
+   "entropy_gate": {
+    "auc": 0.4277591345714024,
+    "tpr@fpr1%": 0.020675144085628032,
+    "tpr@fpr2%": 0.020995334370139968,
+    "tpr@fpr5%": 0.10529686213521178
+   },
+   "semantic_gate": {
+    "auc": 0.6947207380386058,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr2%": 0.0,
+    "tpr@fpr5%": 0.276049766718507
+   },
+   "combined": {
+    "auc": 0.6930374416796268,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr2%": 0.0,
+    "tpr@fpr5%": 0.276049766718507
+   }
+  },
+  "per_class": {
+   "272 - Protocol Manipulation": {
+    "n": 599,
+    "auc": 0.6211639398998331,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.1636060100166945,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "242 - Code Injection": {
+    "n": 1038,
+    "auc": 0.7252318882466281,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.012524084778420038,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "88 - OS Command Injection": {
+    "n": 779,
+    "auc": 0.9128007702182285,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.024390243902439025,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "126 - Path Traversal": {
+    "n": 1181,
+    "auc": 0.7223307578323455,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.02540220152413209,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "66 - SQL Injection": {
+    "n": 13348,
+    "auc": 0.7017692688043152,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.4011836979322745,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "16 - Dictionary-based Password Attack": {
+    "n": 518,
+    "auc": 0.9603223938223938,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.03667953667953668,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "310 - Scanning for Vulnerable Software": {
+    "n": 502,
+    "auc": 0.9898,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 1.0,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "153 - Input Data Manipulation": {
+    "n": 501,
+    "auc": 0.9609101796407186,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.05588822355289421,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "248 - Command Injection": {
+    "n": 1,
+    "auc": 0.9898,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 1.0,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "274 - HTTP Verb Tampering": {
+    "n": 500,
+    "auc": 0.9596896,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.016,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "194 - Fake the Source of Data": {
+    "n": 2943,
+    "auc": 0.5465584267753992,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.014610941216445803,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "34 - HTTP Response Splitting": {
+    "n": 1209,
+    "auc": 0.5824960504549215,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.013234077750206782,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "33 - HTTP Request Smuggling": {
+    "n": 500,
+    "auc": 0.86744505,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.004,
+    "cascade_as_shipped_tpr": 1.0
+   }
+  }
+ },
+ "same_window/sse_stock": {
+  "fit_requests": 10000,
+  "fit_seconds": 11.11,
+  "semantic_matrices_mb": 32.2,
+  "semantic_fields": [
+   "accept",
+   "accept-encoding",
+   "accept-language",
+   "connection",
+   "content-type",
+   "cookie",
+   "host",
+   "referer",
+   "user-agent"
+  ],
+  "eval_benign": 20000,
+  "eval_attack": 21881,
+  "latency_ms": {
+   "p50": 1.369300007354468,
+   "p95": 3.1491999980062246,
+   "p99": 5.5293000070378024
+  },
+  "as_shipped": {
+   "entropy_gate": {
+    "tpr": 0.07024359032950962,
+    "fpr": 0.0072,
+    "precision": 0.9143367043426531,
+    "f1": 0.1304643069348952
+   },
+   "semantic_gate": {
+    "tpr": 0.06745578355651022,
+    "fpr": 0.0103,
+    "precision": 0.8775267538644471,
+    "f1": 0.12528116114246915
+   },
+   "cascade": {
+    "tpr": 0.10040674557835565,
+    "fpr": 0.01685,
+    "precision": 0.867008681925809,
+    "f1": 0.17997132910096253
+   }
+  },
+  "matched_fpr": {
+   "baseline_uri_body_length": {
+    "auc": 0.713239033864997,
+    "tpr@fpr1%": 0.16978200265070154,
+    "tpr@fpr2%": 0.25958594214158404,
+    "tpr@fpr5%": 0.3551483021799735
+   },
+   "entropy_gate": {
+    "auc": 0.6059028746400987,
+    "tpr@fpr1%": 0.07188885334308304,
+    "tpr@fpr2%": 0.07760157214021297,
+    "tpr@fpr5%": 0.12801060280608748
+   },
+   "semantic_gate": {
+    "auc": 0.6346828435629085,
+    "tpr@fpr1%": 0.06741008180613317,
+    "tpr@fpr2%": 0.06992367807687035,
+    "tpr@fpr5%": 0.11759060372012248
+   },
+   "combined": {
+    "auc": 0.6290302225675244,
+    "tpr@fpr1%": 0.06462227503313377,
+    "tpr@fpr2%": 0.10077235958137197,
+    "tpr@fpr5%": 0.11004981490791098
+   }
+  },
+  "per_class": {
+   "272 - Protocol Manipulation": {
+    "n": 599,
+    "auc": 0.5670328881469116,
+    "tpr@fpr1%": 0.19031719532554256,
+    "tpr@fpr5%": 0.20701168614357263,
+    "cascade_as_shipped_tpr": 0.19532554257095158
+   },
+   "242 - Code Injection": {
+    "n": 1095,
+    "auc": 0.6491557305936073,
+    "tpr@fpr1%": 0.0091324200913242,
+    "tpr@fpr5%": 0.2410958904109589,
+    "cascade_as_shipped_tpr": 0.2319634703196347
+   },
+   "88 - OS Command Injection": {
+    "n": 737,
+    "auc": 0.8643743215739484,
+    "tpr@fpr1%": 0.028493894165535955,
+    "tpr@fpr5%": 0.45861601085481685,
+    "cascade_as_shipped_tpr": 0.42469470827679784
+   },
+   "126 - Path Traversal": {
+    "n": 1208,
+    "auc": 0.6341493791390729,
+    "tpr@fpr1%": 0.048841059602649006,
+    "tpr@fpr5%": 0.08940397350993377,
+    "cascade_as_shipped_tpr": 0.07864238410596026
+   },
+   "66 - SQL Injection": {
+    "n": 13213,
+    "auc": 0.6175581945810944,
+    "tpr@fpr1%": 0.02240217967153561,
+    "tpr@fpr5%": 0.04245818512071445,
+    "cascade_as_shipped_tpr": 0.034284416862181186
+   },
+   "16 - Dictionary-based Password Attack": {
+    "n": 516,
+    "auc": 0.9871672965116279,
+    "tpr@fpr1%": 0.1511627906976744,
+    "tpr@fpr5%": 1.0,
+    "cascade_as_shipped_tpr": 0.9922480620155039
+   },
+   "310 - Scanning for Vulnerable Software": {
+    "n": 501,
+    "auc": 0.999879241516966,
+    "tpr@fpr1%": 1.0,
+    "tpr@fpr5%": 1.0,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "153 - Input Data Manipulation": {
+    "n": 500,
+    "auc": 0.98953825,
+    "tpr@fpr1%": 0.906,
+    "tpr@fpr5%": 0.942,
+    "cascade_as_shipped_tpr": 0.93
+   },
+   "248 - Command Injection": {
+    "n": 1,
+    "auc": 1.0,
+    "tpr@fpr1%": 1.0,
+    "tpr@fpr5%": 1.0,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "274 - HTTP Verb Tampering": {
+    "n": 500,
+    "auc": 0.5385126,
+    "tpr@fpr1%": 0.098,
+    "tpr@fpr5%": 0.196,
+    "cascade_as_shipped_tpr": 0.13
+   },
+   "194 - Fake the Source of Data": {
+    "n": 2920,
+    "auc": 0.603395676369863,
+    "tpr@fpr1%": 0.06027397260273973,
+    "tpr@fpr5%": 0.08424657534246575,
+    "cascade_as_shipped_tpr": 0.07842465753424657
+   },
+   "34 - HTTP Response Splitting": {
+    "n": 1344,
+    "auc": 0.5448353422619048,
+    "tpr@fpr1%": 0.001488095238095238,
+    "tpr@fpr5%": 0.026041666666666668,
+    "cascade_as_shipped_tpr": 0.019345238095238096
+   },
+   "33 - HTTP Request Smuggling": {
+    "n": 500,
+    "auc": 0.8168718,
+    "tpr@fpr1%": 0.0,
+    "tpr@fpr5%": 0.434,
+    "cascade_as_shipped_tpr": 0.432
+   }
+  }
+ },
+ "same_window/sse_plus_request_fields": {
+  "fit_requests": 10000,
+  "fit_seconds": 28.22,
+  "semantic_matrices_mb": 97.7,
+  "semantic_fields": [
+   "@body",
+   "@method",
+   "@path",
+   "@query",
+   "accept",
+   "accept-encoding",
+   "accept-language",
+   "connection",
+   "content-type",
+   "cookie",
+   "host",
+   "referer",
+   "user-agent"
+  ],
+  "eval_benign": 20000,
+  "eval_attack": 21881,
+  "latency_ms": {
+   "p50": 1.7377000185661018,
+   "p95": 5.030700005590916,
+   "p99": 8.236240001860974
+  },
+  "as_shipped": {
+   "entropy_gate": {
+    "tpr": 0.08212604542753987,
+    "fpr": 0.00765,
+    "precision": 0.9215384615384615,
+    "f1": 0.15081196760522012
+   },
+   "semantic_gate": {
+    "tpr": 0.2291028746400987,
+    "fpr": 0.00825,
+    "precision": 0.9681344148319815,
+    "f1": 0.3705236704978011
+   },
+   "cascade": {
+    "tpr": 0.26283076641835385,
+    "fpr": 0.0152,
+    "precision": 0.9497935590421139,
+    "f1": 0.4117268041237114
+   }
+  },
+  "matched_fpr": {
+   "baseline_uri_body_length": {
+    "auc": 0.713239033864997,
+    "tpr@fpr1%": 0.16978200265070154,
+    "tpr@fpr2%": 0.25958594214158404,
+    "tpr@fpr5%": 0.3551483021799735
+   },
+   "entropy_gate": {
+    "auc": 0.67906621383849,
+    "tpr@fpr1%": 0.08354279968922809,
+    "tpr@fpr2%": 0.10058955257986381,
+    "tpr@fpr5%": 0.1845893697728623
+   },
+   "semantic_gate": {
+    "auc": 0.8846778118001919,
+    "tpr@fpr1%": 0.23842603171701476,
+    "tpr@fpr2%": 0.2870069923678077,
+    "tpr@fpr5%": 0.5964535441707417
+   },
+   "combined": {
+    "auc": 0.8600338341483479,
+    "tpr@fpr1%": 0.12727937480005483,
+    "tpr@fpr2%": 0.2820255015767104,
+    "tpr@fpr5%": 0.38581417668296697
+   }
+  },
+  "per_class": {
+   "272 - Protocol Manipulation": {
+    "n": 599,
+    "auc": 0.719710183639399,
+    "tpr@fpr1%": 0.337228714524207,
+    "tpr@fpr5%": 0.4090150250417362,
+    "cascade_as_shipped_tpr": 0.3572621035058431
+   },
+   "242 - Code Injection": {
+    "n": 1095,
+    "auc": 0.9498030136986302,
+    "tpr@fpr1%": 0.2420091324200913,
+    "tpr@fpr5%": 0.8410958904109589,
+    "cascade_as_shipped_tpr": 0.26666666666666666
+   },
+   "88 - OS Command Injection": {
+    "n": 737,
+    "auc": 0.9584322591587517,
+    "tpr@fpr1%": 0.44369063772048845,
+    "tpr@fpr5%": 0.6065128900949797,
+    "cascade_as_shipped_tpr": 0.47218453188602444
+   },
+   "126 - Path Traversal": {
+    "n": 1208,
+    "auc": 0.8336022350993377,
+    "tpr@fpr1%": 0.0935430463576159,
+    "tpr@fpr5%": 0.1490066225165563,
+    "cascade_as_shipped_tpr": 0.10264900662251655
+   },
+   "66 - SQL Injection": {
+    "n": 13213,
+    "auc": 0.8361262071444789,
+    "tpr@fpr1%": 0.04450162718534777,
+    "tpr@fpr5%": 0.35389389237871793,
+    "cascade_as_shipped_tpr": 0.25399228032997806
+   },
+   "16 - Dictionary-based Password Attack": {
+    "n": 516,
+    "auc": 0.9912888081395349,
+    "tpr@fpr1%": 0.9922480620155039,
+    "tpr@fpr5%": 0.9941860465116279,
+    "cascade_as_shipped_tpr": 0.9922480620155039
+   },
+   "310 - Scanning for Vulnerable Software": {
+    "n": 501,
+    "auc": 0.999898003992016,
+    "tpr@fpr1%": 1.0,
+    "tpr@fpr5%": 1.0,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "153 - Input Data Manipulation": {
+    "n": 500,
+    "auc": 0.9915726,
+    "tpr@fpr1%": 0.88,
+    "tpr@fpr5%": 0.936,
+    "cascade_as_shipped_tpr": 0.926
+   },
+   "248 - Command Injection": {
+    "n": 1,
+    "auc": 1.0,
+    "tpr@fpr1%": 1.0,
+    "tpr@fpr5%": 1.0,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "274 - HTTP Verb Tampering": {
+    "n": 500,
+    "auc": 0.9998398,
+    "tpr@fpr1%": 1.0,
+    "tpr@fpr5%": 1.0,
+    "cascade_as_shipped_tpr": 1.0
+   },
+   "194 - Fake the Source of Data": {
+    "n": 2920,
+    "auc": 0.910146926369863,
+    "tpr@fpr1%": 0.07808219178082192,
+    "tpr@fpr5%": 0.3308219178082192,
+    "cascade_as_shipped_tpr": 0.1284246575342466
+   },
+   "34 - HTTP Response Splitting": {
+    "n": 1344,
+    "auc": 0.851948790922619,
+    "tpr@fpr1%": 0.01711309523809524,
+    "tpr@fpr5%": 0.03571428571428571,
+    "cascade_as_shipped_tpr": 0.018601190476190476
+   },
+   "33 - HTTP Request Smuggling": {
+    "n": 500,
+    "auc": 0.9393517,
+    "tpr@fpr1%": 0.432,
+    "tpr@fpr5%": 0.454,
+    "cascade_as_shipped_tpr": 0.432
+   }
+  }
+ }
+}
