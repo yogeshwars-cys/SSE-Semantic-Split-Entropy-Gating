@@ -145,6 +145,51 @@ def finetune(gate, sem, docs_tok, texts, train, queries, qrels, id2row, epochs=3
             "buckets_changed": int((sem.gram_gain != 1.0).sum())}
 
 
+def finetune_pairwise(gate, sem, train, queries, qrels, id2row, epochs=1, lr=1.0, shrink=0.1, start_epoch=0):
+    """Blame by contribution, the fix for finetune(). finetune() blames by set membership (a query word in the right
+    passage but not the wrong one is boosted, however little it scored) with up-steps 1.25x the down-steps, and never
+    pulls a gain back, so stopwords ratchet to the caps ('the', 'and' -> 2.40) and every lap adds drift.
+    Here each violation moves a gain, in log space, by how much that term / 3-gram bucket actually separated the
+    right passage from the wrong one in the blended score (a pairwise hinge gradient), symmetric up and down, and
+    every lap shrinks the gains toward 1 by `shrink`, so only gains the training queries keep pushing stay moved."""
+    viol = 0
+    for ep in range(start_epoch, start_epoch + epochs):
+        step = lr * (0.8 ** ep)
+        for q in train:
+            pos = [id2row[d] for d in qrels[q] if d in id2row]
+            if not pos:
+                continue
+            qt = queries[q]
+            se, ss = gate.score_all(qt), sem.score_all(qt)
+            me, ms = float(se.max()) or 1.0, float(ss.max()) or 1.0
+            s = 0.65 * se / me + 0.35 * ss / ms
+            best = max(pos, key=lambda r: s[r])
+            neg = next((int(c) for c in top(s, 15) if int(c) not in set(pos)), None)
+            if neg is None or s[neg] + 0.08 < s[best]:
+                continue
+            viol += 1
+            qtf = Counter(tokenize(qt))
+            for t, n in qtf.items():                            # d score / d log gain = the term's own contribution
+                post = gate.postings.get(t)
+                if post is None:
+                    continue
+                ids, ntf = post
+                c = gate.base_weight[t] * gate.learned_gain.get(t, 1.0) * (1.0 + 0.25 * math.log1p(n))
+                k = np.searchsorted(ids, [best, neg])
+                tp, tn = (float(ntf[j]) if j < len(ids) and ids[j] == r else 0.0 for j, r in zip(k, (best, neg)))
+                g = math.log(gate.learned_gain.get(t, 1.0)) + step * 0.65 * c * (tp - tn) / me
+                gate.learned_gain[t] = math.exp(min(math.log(2.40), max(math.log(0.30), g)))
+            i, w = sem.weights(qt)
+            d = sem.MT[i][:, [best, neg]].toarray()
+            g = np.log(sem.gram_gain[i]) + step * 0.35 * w * (d[:, 0] - d[:, 1]) / ms
+            sem.gram_gain[i] = np.exp(np.clip(g, math.log(0.45), math.log(2.0)))
+        for t in list(gate.learned_gain):                      # shrink toward 1 once per lap
+            gate.learned_gain[t] **= 1.0 - shrink
+        sem.gram_gain **= np.float32(1.0 - shrink)
+    return {"margin_violations": viol, "terms_with_gain": len(gate.learned_gain),
+            "buckets_changed": int((np.abs(sem.gram_gain - 1.0) > 1e-3).sum())}
+
+
 def main():
     import bqboost
     from benchmark_bq import METRICS, ROOT, bootstrap_ci, query_metrics, summarize_ms
