@@ -467,7 +467,8 @@ class SSERetriever:
         }
 
     def fine_tune_supervised(self, train_queries: Dict[str, str], train_qrels: Dict[str, Set[str]],
-                             epochs: int = 4, lr: float = 0.12) -> Dict[str, float]:
+                             epochs: int = 4, lr: float = 0.12, start_epoch: int = 0,
+                             tune_mix: bool = True) -> Dict[str, float]:
         """Supervised Task Fine-Tuning on Held-Out Training Queries (analogous to `/__train` + Adversary Calibrator).
 
         For each training query `(q, pos_docs)`:
@@ -479,6 +480,8 @@ class SSERetriever:
              - High-surprisal bridge terms in `pos_doc` (corroborated in both Part A and Part B) are
                linked to the anchor query terms in `self.learned_bridges`.
           3. Tunes the stage mixing weights `(mix_stage_a, mix_verify, prf_weight)` on the training split.
+        start_epoch continues an earlier run's schedule (lr decay, bridges only in epoch 0), so a training lap
+        is fine_tune_supervised(epochs=1, start_epoch=lap - 1); tune_mix=False skips step 3.
         """
         t0 = time.perf_counter()
         valid_qids = [qid for qid in train_qrels if qid in train_queries]
@@ -486,7 +489,7 @@ class SSERetriever:
         total_term_updates = 0
         total_bridge_links = 0
 
-        for ep in range(epochs):
+        for ep in range(start_epoch, start_epoch + epochs):
             step_lr = lr * (0.8 ** ep)
             for qid in valid_qids:
                 qtext = train_queries[qid]
@@ -565,7 +568,7 @@ class SSERetriever:
             self.sem_a.apply_gram_gains()
 
         # Coordinate grid refinement of stage mixing weights on a 200-query training subset
-        sample_qids = valid_qids[:200]
+        sample_qids = valid_qids[:200] if tune_mix else []
         best_ndcg = -1.0
         best_cfg = (self.mix_stage_a, self.mix_verify, self.prf_weight)
         candidates_cfg = [

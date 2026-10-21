@@ -1,0 +1,30 @@
+SciFact: 5183 docs, 809 train queries, 300 test queries
+built in 20s
+zero-shot       train nDCG 0.6665  test nDCG 0.6685
+
+== continued
+lap  0          train nDCG 0.6664  test nDCG 0.6684
+lap  1  viol  399  train nDCG 0.7507  test nDCG 0.7039  R@10 0.8158  (5s)
+lap  2  viol  368  train nDCG 0.7648  test nDCG 0.7093  R@10 0.8124  (5s)
+lap  3  viol  349  train nDCG 0.7732  test nDCG 0.7168  R@10 0.8155  (6s)
+lap  4  viol  347  train nDCG 0.7777  test nDCG 0.7183  R@10 0.8155  (5s)
+lap  5  viol  339  train nDCG 0.7816  test nDCG 0.7209  R@10 0.8155  (5s)
+lap  6  viol  330  train nDCG 0.7851  test nDCG 0.7207  R@10 0.8138  (5s)
+lap  7  viol  325  train nDCG 0.7869  test nDCG 0.7222  R@10 0.8138  (5s)
+lap  8  viol  320  train nDCG 0.7872  test nDCG 0.7225  R@10 0.8138  (6s)
+lap  9  viol  313  train nDCG 0.7883  test nDCG 0.7260  R@10 0.8172  (5s)
+lap 10  viol  314  train nDCG 0.7887  test nDCG 0.7260  R@10 0.8172  (5s)
+lap 11  viol  317  train nDCG 0.7891  test nDCG 0.7259  R@10 0.8172  (5s)
+lap 12  viol  307  train nDCG 0.7891  test nDCG 0.7274  R@10 0.8178  (5s)
+lap 13  viol  311  train nDCG 0.7895  test nDCG 0.7275  R@10 0.8178  (5s)
+lap 14  viol  312  train nDCG 0.7904  test nDCG 0.7287  R@10 0.8178  (5s)
+lap 15  viol  308  train nDCG 0.7909  test nDCG 0.7287  R@10 0.8178  (5s)
+lap 16  viol  309  train nDCG 0.7913  test nDCG 0.7287  R@10 0.8178  (5s)
+lap 17  viol  309  train nDCG 0.7914  test nDCG 0.7288  R@10 0.8178  (5s)
+lap 18  viol  309  train nDCG 0.7914  test nDCG 0.7293  R@10 0.8178  (5s)
+lap 19  viol  309  train nDCG 0.7918  test nDCG 0.7293  R@10 0.8178  (5s)
+lap 20  viol  307  train nDCG 0.7918  test nDCG 0.7293  R@10 0.8178  (5s)
+
+== constant
+lap  0          train nDCG 0.6664  test nDCG 0.6684
+lap  1  viol  399  train nDCG 0.7507  test nDCG 0.7039  R@10 0.8158  (6s)

@@ -1,0 +1,845 @@
+{
+ "protocol": "benchmark_sse_laps.py: conveyor belt for the retrieval port. Does lapping the SciFact train set make SSE better\non the train set, and does any of it carry to the held-out test set?\n\n  lap 0   zero-shot SSE + the self-supervised split B->A pass (as benchmark_sse.py's task recipe starts)\n  lap k   one supervised pass over every train query (fine_tune_supervised, epochs=1, start_epoch=k-1), then the\n          stage mixing weights are re-tuned on the train subset. The pass's updates use only the gate/semantic\n          blend, never the mixing weights, so lap 4 ends in exactly the state of the shipped 4-epoch recipe.\nTwo schedules on the same belt:\n  continued   lr 0.14 * 0.8^(k-1): the shipped schedule carried on past epoch 4 (steps shrink every lap)\n  constant    lr 0.14 every lap: does the belt keep moving when the steps do not shrink?\nAfter every lap both sets are scored frozen (no online split calibration), so the numbers show only what training\nchanged. Train = 809 SciFact train queries (disjoint from test), test = the 300 BEIR test queries.\nThe repo's audit rule applies: train-set laps measure fit to queries already trained on; only test generalises.",
+ "train_queries": 809,
+ "test_queries": 300,
+ "zero_shot": {
+  "train": {
+   "ndcg10": 0.6664881474471533,
+   "recall10": 0.7886485372888339,
+   "mrr10": 0.6329384699903859
+  },
+  "test": {
+   "ndcg10": 0.6685143880387024,
+   "recall10": 0.7914444444444445,
+   "mrr10": 0.6352328042328043
+  }
+ },
+ "continued": {
+  "laps": {
+   "0": {
+    "train": {
+     "ndcg10": 0.6664089180880756,
+     "recall10": 0.7861763494025545,
+     "mrr10": 0.6336840504640258
+    },
+    "test": {
+     "ndcg10": 0.6684086102264012,
+     "recall10": 0.7914444444444445,
+     "mrr10": 0.6353201058201058
+    }
+   },
+   "1": {
+    "train": {
+     "ndcg10": 0.7507421038869087,
+     "recall10": 0.8486608982282653,
+     "mrr10": 0.7271288284576295
+    },
+    "test": {
+     "ndcg10": 0.7039229388582788,
+     "recall10": 0.8157777777777777,
+     "mrr10": 0.674100529100529
+    },
+    "step_lr": 0.14,
+    "margin_violations": 399,
+    "term_updates": 1227,
+    "train_subset_ndcg10_mix_tuning": 0.7186,
+    "state": {
+     "terms_with_gain": 1640,
+     "terms_at_floor": 0,
+     "terms_at_cap": 1,
+     "grams_moved": 3121,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.3
+   },
+   "2": {
+    "train": {
+     "ndcg10": 0.7648267060872721,
+     "recall10": 0.8659662134322208,
+     "mrr10": 0.7413856024486433
+    },
+    "test": {
+     "ndcg10": 0.7093211097846983,
+     "recall10": 0.8124444444444444,
+     "mrr10": 0.6836044973544972
+    },
+    "step_lr": 0.112,
+    "margin_violations": 368,
+    "term_updates": 997,
+    "train_subset_ndcg10_mix_tuning": 0.7404,
+    "state": {
+     "terms_with_gain": 1691,
+     "terms_at_floor": 2,
+     "terms_at_cap": 3,
+     "grams_moved": 3308,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.4
+   },
+   "3": {
+    "train": {
+     "ndcg10": 0.7732239221044133,
+     "recall10": 0.8709105892047795,
+     "mrr10": 0.7513616653913315
+    },
+    "test": {
+     "ndcg10": 0.7167612780118412,
+     "recall10": 0.8154999999999999,
+     "mrr10": 0.6938968253968253
+    },
+    "step_lr": 0.0896,
+    "margin_violations": 349,
+    "term_updates": 892,
+    "train_subset_ndcg10_mix_tuning": 0.7539,
+    "state": {
+     "terms_with_gain": 1714,
+     "terms_at_floor": 11,
+     "terms_at_cap": 3,
+     "grams_moved": 3389,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.5
+   },
+   "4": {
+    "train": {
+     "ndcg10": 0.777712725659195,
+     "recall10": 0.8718376596621342,
+     "mrr10": 0.7577716954107558
+    },
+    "test": {
+     "ndcg10": 0.7183359144958726,
+     "recall10": 0.8154999999999999,
+     "mrr10": 0.6959563492063491
+    },
+    "step_lr": 0.0717,
+    "margin_violations": 347,
+    "term_updates": 881,
+    "train_subset_ndcg10_mix_tuning": 0.762,
+    "state": {
+     "terms_with_gain": 1740,
+     "terms_at_floor": 22,
+     "terms_at_cap": 3,
+     "grams_moved": 3470,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.1
+   },
+   "5": {
+    "train": {
+     "ndcg10": 0.78156854880045,
+     "recall10": 0.8743098475484136,
+     "mrr10": 0.7621980889595229
+    },
+    "test": {
+     "ndcg10": 0.72087079799402,
+     "recall10": 0.8154999999999999,
+     "mrr10": 0.6992288359788359
+    },
+    "step_lr": 0.0573,
+    "margin_violations": 339,
+    "term_updates": 825,
+    "train_subset_ndcg10_mix_tuning": 0.7666,
+    "state": {
+     "terms_with_gain": 1759,
+     "terms_at_floor": 29,
+     "terms_at_cap": 3,
+     "grams_moved": 3521,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.3
+   },
+   "6": {
+    "train": {
+     "ndcg10": 0.7851250781728707,
+     "recall10": 0.8736918005768438,
+     "mrr10": 0.7670222889320542
+    },
+    "test": {
+     "ndcg10": 0.720687629254616,
+     "recall10": 0.8138333333333333,
+     "mrr10": 0.6990899470899471
+    },
+    "step_lr": 0.0459,
+    "margin_violations": 330,
+    "term_updates": 789,
+    "train_subset_ndcg10_mix_tuning": 0.7738,
+    "state": {
+     "terms_with_gain": 1771,
+     "terms_at_floor": 32,
+     "terms_at_cap": 3,
+     "grams_moved": 3562,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.3
+   },
+   "7": {
+    "train": {
+     "ndcg10": 0.7869124934977656,
+     "recall10": 0.8722496909765142,
+     "mrr10": 0.7698241018698372
+    },
+    "test": {
+     "ndcg10": 0.7222385095818109,
+     "recall10": 0.8138333333333333,
+     "mrr10": 0.7012010582010582
+    },
+    "step_lr": 0.0367,
+    "margin_violations": 325,
+    "term_updates": 784,
+    "train_subset_ndcg10_mix_tuning": 0.7772,
+    "state": {
+     "terms_with_gain": 1779,
+     "terms_at_floor": 36,
+     "terms_at_cap": 4,
+     "grams_moved": 3588,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.1
+   },
+   "8": {
+    "train": {
+     "ndcg10": 0.7871891542630098,
+     "recall10": 0.8718376596621342,
+     "mrr10": 0.7708831204504875
+    },
+    "test": {
+     "ndcg10": 0.7224695877215662,
+     "recall10": 0.8138333333333333,
+     "mrr10": 0.701478835978836
+    },
+    "step_lr": 0.0294,
+    "margin_violations": 320,
+    "term_updates": 769,
+    "train_subset_ndcg10_mix_tuning": 0.7794,
+    "state": {
+     "terms_with_gain": 1785,
+     "terms_at_floor": 47,
+     "terms_at_cap": 5,
+     "grams_moved": 3601,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.6
+   },
+   "9": {
+    "train": {
+     "ndcg10": 0.78828643303995,
+     "recall10": 0.8718376596621342,
+     "mrr10": 0.7723443600761277
+    },
+    "test": {
+     "ndcg10": 0.7259896862037255,
+     "recall10": 0.8171666666666666,
+     "mrr10": 0.7049272486772487
+    },
+    "step_lr": 0.0235,
+    "margin_violations": 313,
+    "term_updates": 736,
+    "train_subset_ndcg10_mix_tuning": 0.7801,
+    "state": {
+     "terms_with_gain": 1787,
+     "terms_at_floor": 51,
+     "terms_at_cap": 5,
+     "grams_moved": 3606,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 4.7
+   },
+   "10": {
+    "train": {
+     "ndcg10": 0.7887399804591894,
+     "recall10": 0.8718376596621342,
+     "mrr10": 0.7728888300272725
+    },
+    "test": {
+     "ndcg10": 0.7259896862037255,
+     "recall10": 0.8171666666666666,
+     "mrr10": 0.7049272486772487
+    },
+    "step_lr": 0.0188,
+    "margin_violations": 314,
+    "term_updates": 726,
+    "train_subset_ndcg10_mix_tuning": 0.7814,
+    "state": {
+     "terms_with_gain": 1790,
+     "terms_at_floor": 53,
+     "terms_at_cap": 5,
+     "grams_moved": 3618,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 4.9
+   },
+   "11": {
+    "train": {
+     "ndcg10": 0.7891296746206451,
+     "recall10": 0.8724557066337041,
+     "mrr10": 0.7731816665685639
+    },
+    "test": {
+     "ndcg10": 0.7258607601310585,
+     "recall10": 0.8171666666666666,
+     "mrr10": 0.7047605820105819
+    },
+    "step_lr": 0.015,
+    "margin_violations": 317,
+    "term_updates": 736,
+    "train_subset_ndcg10_mix_tuning": 0.7817,
+    "state": {
+     "terms_with_gain": 1791,
+     "terms_at_floor": 55,
+     "terms_at_cap": 5,
+     "grams_moved": 3624,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.3
+   },
+   "12": {
+    "train": {
+     "ndcg10": 0.7891111340763681,
+     "recall10": 0.8724557066337041,
+     "mrr10": 0.7731419349775345
+    },
+    "test": {
+     "ndcg10": 0.7274177919052582,
+     "recall10": 0.8178333333333333,
+     "mrr10": 0.7064272486772486
+    },
+    "step_lr": 0.012,
+    "margin_violations": 307,
+    "term_updates": 692,
+    "train_subset_ndcg10_mix_tuning": 0.7819,
+    "state": {
+     "terms_with_gain": 1791,
+     "terms_at_floor": 55,
+     "terms_at_cap": 4,
+     "grams_moved": 3628,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 4.9
+   },
+   "13": {
+    "train": {
+     "ndcg10": 0.7895481057570757,
+     "recall10": 0.8724557066337041,
+     "mrr10": 0.7737673396511467
+    },
+    "test": {
+     "ndcg10": 0.7274940380845071,
+     "recall10": 0.8178333333333333,
+     "mrr10": 0.7065066137566137
+    },
+    "step_lr": 0.0096,
+    "margin_violations": 311,
+    "term_updates": 712,
+    "train_subset_ndcg10_mix_tuning": 0.7819,
+    "state": {
+     "terms_with_gain": 1793,
+     "terms_at_floor": 55,
+     "terms_at_cap": 6,
+     "grams_moved": 3634,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.3
+   },
+   "14": {
+    "train": {
+     "ndcg10": 0.7903706910262254,
+     "recall10": 0.8736918005768438,
+     "mrr10": 0.7745089960170306
+    },
+    "test": {
+     "ndcg10": 0.7287242722392689,
+     "recall10": 0.8178333333333333,
+     "mrr10": 0.7081732804232804
+    },
+    "step_lr": 0.0077,
+    "margin_violations": 312,
+    "term_updates": 721,
+    "train_subset_ndcg10_mix_tuning": 0.7837,
+    "state": {
+     "terms_with_gain": 1795,
+     "terms_at_floor": 57,
+     "terms_at_cap": 5,
+     "grams_moved": 3637,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.2
+   },
+   "15": {
+    "train": {
+     "ndcg10": 0.7908672599764233,
+     "recall10": 0.8736918005768438,
+     "mrr10": 0.7751388153118685
+    },
+    "test": {
+     "ndcg10": 0.7287242722392689,
+     "recall10": 0.8178333333333333,
+     "mrr10": 0.7081732804232804
+    },
+    "step_lr": 0.0062,
+    "margin_violations": 308,
+    "term_updates": 698,
+    "train_subset_ndcg10_mix_tuning": 0.7838,
+    "state": {
+     "terms_with_gain": 1796,
+     "terms_at_floor": 57,
+     "terms_at_cap": 6,
+     "grams_moved": 3640,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.0
+   },
+   "16": {
+    "train": {
+     "ndcg10": 0.7913234654726266,
+     "recall10": 0.8736918005768438,
+     "mrr10": 0.7757568622834383
+    },
+    "test": {
+     "ndcg10": 0.7287242722392689,
+     "recall10": 0.8178333333333333,
+     "mrr10": 0.7081732804232804
+    },
+    "step_lr": 0.0049,
+    "margin_violations": 309,
+    "term_updates": 716,
+    "train_subset_ndcg10_mix_tuning": 0.7857,
+    "state": {
+     "terms_with_gain": 1796,
+     "terms_at_floor": 58,
+     "terms_at_cap": 6,
+     "grams_moved": 3647,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.2
+   },
+   "17": {
+    "train": {
+     "ndcg10": 0.7913613463380487,
+     "recall10": 0.8736918005768438,
+     "mrr10": 0.7757980654148763
+    },
+    "test": {
+     "ndcg10": 0.7288138402719465,
+     "recall10": 0.8178333333333333,
+     "mrr10": 0.708339947089947
+    },
+    "step_lr": 0.0039,
+    "margin_violations": 309,
+    "term_updates": 711,
+    "train_subset_ndcg10_mix_tuning": 0.7838,
+    "state": {
+     "terms_with_gain": 1796,
+     "terms_at_floor": 57,
+     "terms_at_cap": 6,
+     "grams_moved": 3648,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.2
+   },
+   "18": {
+    "train": {
+     "ndcg10": 0.7913613463380487,
+     "recall10": 0.8736918005768438,
+     "mrr10": 0.7757980654148763
+    },
+    "test": {
+     "ndcg10": 0.7292502727838515,
+     "recall10": 0.8178333333333333,
+     "mrr10": 0.7088955026455026
+    },
+    "step_lr": 0.0032,
+    "margin_violations": 309,
+    "term_updates": 707,
+    "train_subset_ndcg10_mix_tuning": 0.7838,
+    "state": {
+     "terms_with_gain": 1797,
+     "terms_at_floor": 60,
+     "terms_at_cap": 7,
+     "grams_moved": 3650,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.4
+   },
+   "19": {
+    "train": {
+     "ndcg10": 0.7918323419076095,
+     "recall10": 0.8736918005768438,
+     "mrr10": 0.7764298467635921
+    },
+    "test": {
+     "ndcg10": 0.7292502727838515,
+     "recall10": 0.8178333333333333,
+     "mrr10": 0.7088955026455026
+    },
+    "step_lr": 0.0025,
+    "margin_violations": 309,
+    "term_updates": 708,
+    "train_subset_ndcg10_mix_tuning": 0.7857,
+    "state": {
+     "terms_with_gain": 1798,
+     "terms_at_floor": 60,
+     "terms_at_cap": 6,
+     "grams_moved": 3655,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.2
+   },
+   "20": {
+    "train": {
+     "ndcg10": 0.7918323419076095,
+     "recall10": 0.8736918005768438,
+     "mrr10": 0.7764298467635921
+    },
+    "test": {
+     "ndcg10": 0.7292502727838515,
+     "recall10": 0.8178333333333333,
+     "mrr10": 0.7088955026455026
+    },
+    "step_lr": 0.002,
+    "margin_violations": 307,
+    "term_updates": 694,
+    "train_subset_ndcg10_mix_tuning": 0.7857,
+    "state": {
+     "terms_with_gain": 1799,
+     "terms_at_floor": 58,
+     "terms_at_cap": 5,
+     "grams_moved": 3658,
+     "bridge_anchors": 1029,
+     "mix": [
+      [
+       0.6,
+       0.2,
+       0.2
+      ],
+      [
+       0.62,
+       0.26,
+       0.06,
+       0.06
+      ],
+      0.1
+     ]
+    },
+    "seconds": 5.2
+   },
+   "belt_rule_stops_at_lap": 4
+  },
+  "best_train_lap": 19,
+  "paired_vs_lap1": {
+   "lap4": {
+    "train": {
+     "delta": 0.027,
+     "ci95": [
+      0.0202,
+      0.0337
+     ]
+    },
+    "test": {
+     "delta": 0.0144,
+     "ci95": [
+      0.0043,
+      0.026
+     ]
+    }
+   },
+   "lap19": {
+    "train": {
+     "delta": 0.0411,
+     "ci95": [
+      0.0325,
+      0.0498
+     ]
+    },
+    "test": {
+     "delta": 0.0253,
+     "ci95": [
+      0.0128,
+      0.0393
+     ]
+    }
+   },
+   "lap20": {
+    "train": {
+     "delta": 0.0411,
+     "ci95": [
+      0.0325,
+      0.0498
+     ]
+    },
+    "test": {
+     "delta": 0.0253,
+     "ci95": [
+      0.0128,
+      0.0393
+     ]
+    }
+   }
+  }
+ }
+}
