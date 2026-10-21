@@ -2,7 +2,8 @@
 
 Loads the scanner saved at the end of lap 1 by replay_learn.py (trained_<detector>.pkl) and runs laps 2, 3, ...
 over the identical 18-19 Jul stream (384,629 requests), learning from every wrong verdict on every lap. Stops when
-a lap removes less than 1% of the previous lap's mistakes, or after MAX_LAPS. Lap 1 is the only figure for items
+a lap removes less than 1% of the previous lap's mistakes, or after MAX_LAPS (BELT_STOP=0: always run MAX_LAPS;
+BELT_SNAPSHOTS=0: no per-lap pickles, only the final one). Lap 1 is the only figure for items
 never seen before; later laps show how fast and how far the scanner converges on this belt.
 
 usage: python -I belt.py <data_capec_multilabel.csv> <sse dir> <detector> <out.json>
@@ -22,6 +23,8 @@ import run_sse_srbh as base  # noqa: E402
 import __main__  # noqa: E402
 
 MAX_LAPS = int(os.environ.get("BELT_MAX_LAPS", 6))
+STOP = os.environ.get("BELT_STOP", "1") != "0"
+SNAPSHOTS = os.environ.get("BELT_SNAPSHOTS", "1") != "0"
 
 
 def main():
@@ -44,11 +47,13 @@ def main():
               f"({time.perf_counter() - t:.0f}s)", flush=True)
         with open(OUT, "w") as f:
             json.dump(out, f, indent=1)
-        with open(os.path.join(here, f"belt_{NAME}_lap{lap}.pkl"), "wb") as f:   # snapshot every lap
-            pickle.dump(det, f)
+        if SNAPSHOTS:
+            with open(os.path.join(here, f"belt_{NAME}_lap{lap}.pkl"), "wb") as f:   # snapshot every lap
+                pickle.dump(det, f)
         if prev - r["wrong"] < 0.01 * prev:
-            out["converged_at_lap"] = lap
-            break
+            out.setdefault("converged_at_lap", lap)
+            if STOP:
+                break
         prev = r["wrong"]
     out["state"] = det.state()
     with open(os.path.join(here, f"belt_{NAME}.pkl"), "wb") as f:
