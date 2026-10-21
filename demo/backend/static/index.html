@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backend · SSE control</title>
+<link rel="stylesheet" href="/shared/app.css">
+<style>
+  .toggle { display:flex; align-items:center; gap:14px; }
+  .switch { font-size:22px; font-weight:800; padding:10px 22px; border-radius:12px; border:2px solid var(--line); cursor:pointer; }
+  .switch.on  { background:var(--ok);  color:#06231a; border-color:var(--ok); }
+  .switch.off { background:var(--bad); color:#2a0b0b; border-color:var(--bad); }
+  .state-line { font-size:15px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Origin + SSE</h1>
+  <span class="sub">Laptop A · SSE lives here — flip it on/off</span>
+  <span class="spacer"></span>
+  <span class="chip">gate thr <b id="gthr" class="mono">–</b></span>
+  <span class="chip">sem thr <b id="sthr" class="mono">–</b></span>
+  <span class="chip">baseline <b id="bn" class="mono">–</b></span>
+</header>
+
+<main class="cols2">
+  <section class="panel" style="grid-column:1 / -1">
+    <h2>SSE switch</h2>
+    <div class="toggle">
+      <button id="switch" class="switch off">SSE: OFF</button>
+      <span class="state-line" id="stateline">While OFF the origin reflects crafted inputs → the cache gets poisoned.</span>
+    </div>
+  </section>
+
+  <section class="panel" style="grid-column:1 / -1">
+    <h2>Last request — <span id="rq_host" class="mono"></span> <span id="rq_path" class="mono muted"></span></h2>
+    <div class="row" style="margin-bottom:8px">
+      <span class="chip">req score <b id="rq_z" class="mono">–</b> / thr <b id="rq_t" class="mono">–</b></span>
+      <span id="rq_flag"></span>
+      <span id="rq_san"></span>
+    </div>
+    <div class="scroll" style="max-height:260px">
+      <table><thead><tr><th>field</th><th>value</th><th class="num">len</th>
+        <th class="num">gate z / thr</th><th class="num">sem z / thr</th><th>SSE action</th></tr></thead>
+      <tbody id="rows"></tbody></table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>SSE activity (what it sanitized / learned)</h2>
+    <ul class="plain ticker scroll" id="ticker"></ul>
+  </section>
+
+  <section class="panel">
+    <h2>Learned state</h2>
+    <h3 style="color:var(--muted);font-size:12px">per-field weights</h3>
+    <ul class="plain" id="weights"></ul>
+    <h3 style="color:var(--muted);font-size:12px;margin-top:10px">boosted 3-grams</h3>
+    <ul class="plain" id="boosted"></ul>
+  </section>
+</main>
+
+<script src="/shared/sse.js"></script>
+<script>
+const { el, node, post, fmt } = SSE;
+let sseOn = false;
+
+function setSwitch(on) {
+  sseOn = on;
+  const b = el("#switch");
+  b.className = "switch " + (on ? "on" : "off");
+  b.textContent = "SSE: " + (on ? "ON" : "OFF");
+  el("#stateline").textContent = on
+    ? "While ON the origin ignores anomalous inputs → whatever the cache stores is clean."
+    : "While OFF the origin reflects crafted inputs → the cache gets poisoned.";
+}
+el("#switch").onclick = () => post("/api/sse", { on: !sseOn }).then((s) => setSwitch(s.sse_on));
+
+function zcell(z, t) {
+  if (z == null) return node("td", { class: "num under" }, ["–"]);
+  return node("td", { class: "num z " + (t != null && z > t ? "over" : "under") },
+    [z + (t != null ? " / " + t : "")]);
+}
+
+function onRequest(ev) {
+  setSwitch(ev.sse_on);
+  el("#rq_host").textContent = ev.host || "";
+  el("#rq_path").textContent = ev.path || "";
+  if (ev.insp && ev.insp.req) { el("#rq_z").textContent = ev.insp.req.z; el("#rq_t").textContent = ev.insp.req.t; }
+  el("#rq_flag").innerHTML = "";
+  el("#rq_flag").appendChild(node("span", { class: "tag " + (ev.flagged ? "bad" : "ok") },
+    [ev.flagged ? "anomaly detected" : "clean"]));
+  el("#rq_san").innerHTML = "";
+  if (ev.sanitized && ev.sanitized.length)
+    el("#rq_san").appendChild(node("span", { class: "tag ok" },
+      ["sanitized: " + ev.sanitized.map((s) => s.field).join(", ")]));
+  else if (ev.flagged && !ev.sse_on)
+    el("#rq_san").appendChild(node("span", { class: "tag bad" }, ["reflected (SSE off) → cacheable poison"]));
+  const body = el("#rows"); body.innerHTML = "";
+  (ev.insp ? ev.insp.rows : []).forEach((r) => {
+    let action = node("span", { class: "tag mut" }, ["pass"]);
+    if (r.sanitized) action = node("span", { class: "tag ok" }, ["sanitized"]);
+    else if (r.flag) action = node("span", { class: "tag bad" }, [ev.sse_on ? "flagged" : "reflected"]);
+    body.appendChild(node("tr", { class: (r.flag ? "poison" : "") }, [
+      node("td", { class: "mono" }, [r.name]),
+      node("td", { class: "mono", title: r.value }, [r.value.length > 38 ? r.value.slice(0, 37) + "…" : r.value]),
+      node("td", { class: "num" }, [fmt(r.len)]),
+      zcell(r.zg, r.tg), zcell(r.zs, r.ts), node("td", {}, [action]),
+    ]));
+  });
+  (ev.learn || []).forEach(tick);
+}
+
+const ticker = el("#ticker");
+function tick(c) {
+  let txt, cls = "bad";
+  if (c.type === "weight") txt = `weight ↑ ${c.field}: ${c.old} → ${c.new}`;
+  else if (c.type === "sharpen") txt = `sharpen rare 3-grams of ${c.field}`;
+  else if (c.type === "note") { txt = c.field; cls = "mut"; }
+  else txt = JSON.stringify(c);
+  const li = node("li", { class: "fade" }, [node("span", { class: "tag " + cls }, [c.type]), " " + txt]);
+  ticker.insertBefore(li, ticker.firstChild);
+  while (ticker.childElementCount > 80) ticker.removeChild(ticker.lastChild);
+}
+
+function onState(s) {
+  const g = s.engine || {};
+  setSwitch(!!s.sse_on);
+  if (g.gate_thr != null) el("#gthr").textContent = g.gate_thr;
+  if (g.sem_thr != null) el("#sthr").textContent = g.sem_thr;
+  if (g.baseline_n != null) el("#bn").textContent = fmt(g.baseline_n);
+  const wl = el("#weights"); wl.innerHTML = "";
+  Object.entries(g.weights || {}).forEach(([k, v]) =>
+    wl.appendChild(node("li", {}, [node("span", { class: "chip" }, [k + " : " + v])])));
+  const bl = el("#boosted"); bl.innerHTML = "";
+  Object.entries(g.boosted || {}).forEach(([k, n]) =>
+    bl.appendChild(node("li", {}, [node("span", { class: "chip" }, [k + " : " + n])])));
+}
+
+SSE.stream((ev) => {
+  if (ev.kind === "request") onRequest(ev);
+  else if (ev.kind === "state") onState(ev);
+  else if (ev.kind === "note") tick({ type: "note", field: ev.field || ev.text });
+});
+fetch("/api/state").then((r) => r.json()).then(onState).catch(() => {});
+</script>
+</body>
+</html>
