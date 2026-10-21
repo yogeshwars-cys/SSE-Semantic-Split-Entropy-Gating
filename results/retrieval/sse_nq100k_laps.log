@@ -1,3 +1,58 @@
 NQ slice: 100,000 passages, 1726 train / 1726 held-out queries
 built in 54s, 3-gram index 333 MB
 lap  0                     train nDCG 0.6672
+lap  1  viol 1011  train nDCG 0.6954  R@10 0.8405  (16s)
+lap  2  viol  961  train nDCG 0.7035  R@10 0.8426  (16s)
+lap  3  viol  940  train nDCG 0.7115  R@10 0.8449  (17s)
+lap  4  viol  916  train nDCG 0.7159  R@10 0.8492  (17s)
+lap  5  viol  908  train nDCG 0.7178  R@10 0.8499  (16s)
+lap  6  viol  894  train nDCG 0.7188  R@10 0.8496  (16s)
+lap  7  viol  891  train nDCG 0.7205  R@10 0.8507  (16s)
+lap  8  viol  880  train nDCG 0.7218  R@10 0.8511  (16s)
+lap  9  viol  876  train nDCG 0.7231  R@10 0.8523  (17s)
+lap 10  viol  872  train nDCG 0.7232  R@10 0.8525  (16s)
+
+frozen; held-out half, first look:
+  after lap  0: nDCG 0.6608  R@10 0.8098  MRR 0.6242
+  after lap  1: nDCG 0.6701  R@10 0.8166  MRR 0.6356
+  after lap  3: nDCG 0.6662  R@10 0.8091  MRR 0.6324
+  after lap 10: nDCG 0.6638  R@10 0.8101  MRR 0.6293
+  bm25        : nDCG 0.6528  R@10 0.7788  MRR 0.6277
+{
+ "lap1_vs_lap0": {
+  "delta": 0.0093,
+  "ci95": [
+   0.0054,
+   0.0136
+  ]
+ },
+ "lap3_vs_lap0": {
+  "delta": 0.0054,
+  "ci95": [
+   0.0003,
+   0.011
+  ]
+ },
+ "lap10_vs_lap0": {
+  "delta": 0.003,
+  "ci95": [
+   -0.003,
+   0.0089
+  ]
+ },
+ "lap10_vs_lap1": {
+  "delta": -0.0063,
+  "ci95": [
+   -0.0107,
+   -0.0019
+  ]
+ },
+ "lap10_vs_lap3": {
+  "delta": -0.0024,
+  "ci95": [
+   -0.0057,
+   0.0008
+  ]
+ }
+}
+wrote results/retrieval/sse_nq100k_laps_results.json
