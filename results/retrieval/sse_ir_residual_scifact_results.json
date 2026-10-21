@@ -1,0 +1,269 @@
+{
+ "protocol": "benchmark_sse_ir.py: the generalised IR SSE (sse_ir.py), 10 learning laps on training queries, then frozen test.\n\n  data     scifact: BEIR train qrels (809) to learn from, BEIR test qrels (300) to test\n           nq:      prep_nq_100k.py's slice; seeded halves of the 3,452 queries (1,726 / 1,726)\n  calib    the training queries are split again, seeded 80 / 20: laps learn on the 80% (\"fit\"), the 20% (\"val\")\n           picks the configuration and the lap. Test is never seen until the end.\n  configs  full (split + both gates learn) at two gate step sizes, and two ablations: split only, gates only\n  lap      every fit query once; each miss recalibrates at once (sse_ir.SSEIR.learn); then shrink toward start\n  report   test for: untrained, the val-picked configuration at its val-picked lap, the same configuration at lap 10;\n           paired bootstrap CIs; index sizes; search latency",
+ "dataset": "scifact",
+ "fit": 648,
+ "val": 161,
+ "test": {
+  "untrained": {
+   "ndcg10": 0.6786760673272922,
+   "recall10": 0.8011666666666667,
+   "mrr10": 0.6460846560846562
+  },
+  "full + residuals tau0.5 lap 4 (val pick)": {
+   "ndcg10": 0.7683117919880612,
+   "recall10": 0.8372777777777777,
+   "mrr10": 0.7570714285714285
+  },
+  "full + residuals tau0.5 lap 5": {
+   "ndcg10": 0.7630162190706538,
+   "recall10": 0.8382777777777778,
+   "mrr10": 0.7499457671957671
+  },
+  "val_pick_vs_untrained": {
+   "delta": 0.0896,
+   "ci95": [
+    0.0626,
+    0.1169
+   ]
+  },
+  "lap5_vs_untrained": {
+   "delta": 0.0843,
+   "ci95": [
+    0.0578,
+    0.112
+   ]
+  }
+ },
+ "build_seconds": 11.4,
+ "index_mb": {
+  "postings_full": 3.53,
+  "postings_a": 2.54,
+  "postings_b": 2.78,
+  "semantic": 25.77,
+  "learned_gains": 0.31,
+  "residual_memory": 0.0
+ },
+ "search_ms_p50": 3.17,
+ "untrained": {
+  "val": {
+   "ndcg10": 0.6857187377795508,
+   "recall10": 0.7971014492753622,
+   "mrr10": 0.6637064970915902
+  },
+  "test": {
+   "ndcg10": 0.6786760673272922,
+   "recall10": 0.8011666666666667,
+   "mrr10": 0.6460846560846562
+  }
+ },
+ "configs": {
+  "full": {
+   "lr": 3.0,
+   "lr_split": 0.2,
+   "shrink": 0.1,
+   "laps": {
+    "1": {
+     "val_ndcg10": 0.6968,
+     "split_misses": 360,
+     "recall_misses": 56,
+     "seconds": 3.7
+    },
+    "2": {
+     "val_ndcg10": 0.7018,
+     "split_misses": 331,
+     "recall_misses": 53,
+     "seconds": 3.1
+    },
+    "3": {
+     "val_ndcg10": 0.7047,
+     "split_misses": 323,
+     "recall_misses": 54,
+     "seconds": 3.4
+    },
+    "4": {
+     "val_ndcg10": 0.7111,
+     "split_misses": 314,
+     "recall_misses": 46,
+     "seconds": 3.1
+    },
+    "5": {
+     "val_ndcg10": 0.7103,
+     "split_misses": 298,
+     "recall_misses": 50,
+     "seconds": 3.5
+    }
+   },
+   "split_weights": {
+    "gate": 0.245,
+    "semantic": 0.35,
+    "gate_a": 0.073,
+    "gate_b": 0.056,
+    "info_a": 0.058,
+    "info_b": -0.042,
+    "info_ab": -0.005,
+    "residual": 0.15
+   }
+  },
+  "full + residuals tau0.5": {
+   "lr": 3.0,
+   "lr_split": 0.2,
+   "tau": 0.5,
+   "shrink": 0.1,
+   "laps": {
+    "1": {
+     "val_ndcg10": 0.7639,
+     "split_misses": 287,
+     "recall_misses": 56,
+     "seconds": 4.2
+    },
+    "2": {
+     "val_ndcg10": 0.7724,
+     "split_misses": 19,
+     "recall_misses": 54,
+     "seconds": 3.3
+    },
+    "3": {
+     "val_ndcg10": 0.7743,
+     "split_misses": 8,
+     "recall_misses": 47,
+     "seconds": 3.6
+    },
+    "4": {
+     "val_ndcg10": 0.777,
+     "split_misses": 2,
+     "recall_misses": 43,
+     "seconds": 3.6
+    },
+    "5": {
+     "val_ndcg10": 0.7678,
+     "split_misses": 9,
+     "recall_misses": 46,
+     "seconds": 3.7
+    }
+   },
+   "split_weights": {
+    "gate": 0.388,
+    "semantic": 0.311,
+    "gate_a": -0.003,
+    "gate_b": 0.033,
+    "info_a": 0.179,
+    "info_b": 0.014,
+    "info_ab": 0.048,
+    "residual": 1.0
+   },
+   "residual_memory": {
+    "keys": 372,
+    "live": 370,
+    "bytes": 309504
+   }
+  },
+  "full + residuals tau0.7": {
+   "lr": 3.0,
+   "lr_split": 0.2,
+   "tau": 0.7,
+   "shrink": 0.1,
+   "laps": {
+    "1": {
+     "val_ndcg10": 0.7399,
+     "split_misses": 318,
+     "recall_misses": 56,
+     "seconds": 4.5
+    },
+    "2": {
+     "val_ndcg10": 0.7407,
+     "split_misses": 17,
+     "recall_misses": 53,
+     "seconds": 3.4
+    },
+    "3": {
+     "val_ndcg10": 0.7361,
+     "split_misses": 8,
+     "recall_misses": 50,
+     "seconds": 3.3
+    },
+    "4": {
+     "val_ndcg10": 0.7385,
+     "split_misses": 6,
+     "recall_misses": 44,
+     "seconds": 3.7
+    },
+    "5": {
+     "val_ndcg10": 0.7383,
+     "split_misses": 5,
+     "recall_misses": 48,
+     "seconds": 3.4
+    }
+   },
+   "split_weights": {
+    "gate": 0.513,
+    "semantic": 0.421,
+    "gate_a": 0.114,
+    "gate_b": 0.046,
+    "info_a": 0.107,
+    "info_b": -0.01,
+    "info_ab": -0.06,
+    "residual": 0.904
+   },
+   "residual_memory": {
+    "keys": 396,
+    "live": 395,
+    "bytes": 329472
+   }
+  }
+ },
+ "picked_on_val": {
+  "config": "full + residuals tau0.5",
+  "lap": 4,
+  "val_ndcg10": 0.777
+ },
+ "test_by_answer_seen_in_training": {
+  "answer_seen": {
+   "queries": 175,
+   "untrained": 0.646,
+   "val_pick": 0.7994,
+   "delta": {
+    "delta": 0.1535,
+    "ci95": [
+     0.1088,
+     0.2008
+    ]
+   }
+  },
+  "answer_unseen": {
+   "queries": 125,
+   "untrained": 0.7245,
+   "val_pick": 0.7247,
+   "delta": {
+    "delta": 0.0002,
+    "ci95": [
+     -0.0135,
+     0.0133
+    ]
+   }
+  }
+ },
+ "picked_state": {
+  "split_weights": {
+   "gate": 0.425,
+   "semantic": 0.41,
+   "gate_a": 0.007,
+   "gate_b": 0.023,
+   "info_a": 0.096,
+   "info_b": -0.024,
+   "info_ab": 0.027,
+   "residual": 0.801
+  },
+  "words_moved": 1086,
+  "grams_moved": 4041,
+  "word_gains": {
+   "the": 0.991,
+   "and": 0.991,
+   "what": 1.0,
+   "who": 1.0,
+   "when": 0.981,
+   "does": 0.545,
+   "you": 1.0
+  }
+ },
+ "seconds": 69.1
+}

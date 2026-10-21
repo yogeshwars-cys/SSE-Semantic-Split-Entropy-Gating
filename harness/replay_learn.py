@@ -55,6 +55,16 @@ class Detector:
         if flagged == attack or not learn:
             return flagged
         tl["corrected"] += 1
+        self.correct(now, attack, rt, h, pnames, zg, zs, og, os_)
+        if check:
+            _, _, zg2, zs2 = self.features(row)
+            og2, os2 = self.verdict(rt, zg2, zs2, now)
+            tl["checked"] += 1
+            tl["flipped"] += bool(og2 or os2) == attack
+        return flagged
+
+    def correct(self, now, attack, rt, h, pnames, zg, zs, og, os_):
+        """Recalibrate the gates (and route thresholds) from one wrong verdict."""
         g, s = self.gate, self.sem
         if attack:
             fields = {k: v for k, v in zg.items() if k != "_req"}
@@ -73,12 +83,6 @@ class Detector:
                     self.cal.loosen(rt, "gate", k, zg[k], g.thr, now)
                 for k in os_:
                     self.cal.loosen(rt, "sem", k, zs[k], s.thr, now)
-        if check:
-            _, _, zg2, zs2 = self.features(row)
-            og2, os2 = self.verdict(rt, zg2, zs2, now)
-            tl["checked"] += 1
-            tl["flipped"] += bool(og2 or os2) == attack
-        return flagged
 
     def state(self):
         g, s = self.gate, self.sem

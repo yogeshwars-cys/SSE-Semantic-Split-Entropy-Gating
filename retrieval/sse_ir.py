@@ -22,6 +22,7 @@ Compression:
                  5 bytes per entry against 8 for float32 CSR; the front gates only shortlist and the split stage
                  rescores the shortlist.
 """
+import copy
 import math
 
 import numpy as np
@@ -29,8 +30,83 @@ import numpy as np
 from sse_retrieval import char_grams, split_doc, tokenize
 
 DIM = 1 << 18
-FEATURES = ("gate", "semantic", "gate_a", "gate_b", "info_a", "info_b", "info_ab")
-W0 = np.array([0.65, 0.35, 0, 0, 0, 0, 0], np.float64)
+FEATURES = ("gate", "semantic", "gate_a", "gate_b", "info_a", "info_b", "info_ab", "residual")
+W0 = np.array([0.65, 0.35, 0, 0, 0, 0, 0, 0.15], np.float64)   # "residual" is 0 until a residual memory holds anything
+
+
+def top_residual(i, w, ref, T):
+    """Positive part of (w - ref[i]), its top T entries, unit length, sorted by index (empty if nothing is left)."""
+    r = w - ref
+    keep = r > 0
+    i, r = i[keep], r[keep]
+    if not len(i):
+        return i, r
+    o = np.argsort(-r)[:T]
+    i, r = i[o], r[o] / np.linalg.norm(r[o])
+    o = np.argsort(i)
+    return i[o], r[o]
+
+
+class Residuals:
+    """Differential residual memory. On a training miss it stores
+         key    what the query carried beyond the average training query  (top Tk 3-gram residual)
+         value  what the right document carried beyond the wrong one       (top Tv 3-gram residual)
+    A new query whose residual aligns with a key (cos > tau) gets its candidates rescored along that key's value:
+    the split's "residual" feature. A key whose value pushed a wrong document up on a later miss loses strength
+    (dead at 0); a key within cos `merge` of a stored one merges into it. Keys sit in one flat growable index
+    (gram, key id, weight), so matching is one searchsorted over Tk entries per key."""
+
+    def __init__(self, mu_q, tau=0.6, Tk=16, Tv=32, merge=0.85):
+        self.mu_q, self.tau, self.Tk, self.Tv, self.merge = mu_q, tau, Tk, Tv, merge
+        self.G, self.J, self.W, self.n = np.zeros(1024, np.int64), np.zeros(1024, np.int32), np.zeros(1024), 0
+        self.strength, self.values = [], []
+
+    def match(self, ki, kw):
+        """Live keys aligned with residual (ki, kw) above tau: (ids, cos)."""
+        if not self.n or not len(ki):
+            return np.zeros(0, np.int64), np.zeros(0)
+        G, J, W = self.G[:self.n], self.J[:self.n], self.W[:self.n]
+        p = np.minimum(np.searchsorted(ki, G), len(ki) - 1)
+        m = ki[p] == G
+        a = np.bincount(J[m], W[m] * kw[p[m]], minlength=len(self.strength))
+        a[np.asarray(self.strength) <= 0] = 0
+        ids = np.flatnonzero(a > self.tau)
+        return ids, a[ids]
+
+    def key(self, qi, qw):
+        return top_residual(qi, qw, self.mu_q[qi], self.Tk)
+
+    def add(self, ki, kw, pi, pw, ni, nw):
+        ref = np.zeros(len(pi))
+        p = np.searchsorted(ni, pi)
+        ok = (p < len(ni)) & (ni[np.minimum(p, len(ni) - 1)] == pi)
+        ref[ok] = nw[p[ok]]
+        vi, vw = top_residual(pi, pw, ref, self.Tv)
+        if not len(ki) or not len(vi):
+            return
+        ids, a = self.match(ki, kw)
+        if len(ids) and a.max() > self.merge:                   # same miss again: strengthen, fold the value in
+            j = int(ids[a.argmax()])
+            oi, ow = self.values[j]
+            u, inv = np.unique(np.concatenate([oi, vi]), return_inverse=True)
+            uw = np.bincount(inv, np.concatenate([ow * self.strength[j], vw]))
+            self.values[j] = top_residual(u, uw / np.linalg.norm(uw), np.zeros(len(u)), self.Tv)
+            self.strength[j] += 1
+            return
+        while self.n + len(ki) > len(self.G):
+            self.G, self.J, self.W = (np.concatenate([x, np.zeros_like(x)]) for x in (self.G, self.J, self.W))
+        self.G[self.n:self.n + len(ki)], self.J[self.n:self.n + len(ki)] = ki, len(self.strength)
+        self.W[self.n:self.n + len(ki)] = kw
+        self.n += len(ki)
+        self.strength.append(1)
+        self.values.append((vi, vw))
+
+    def weaken(self, ids):
+        for j in ids:
+            self.strength[j] -= 1
+
+    def nbytes(self):
+        return int(self.n * (8 + 4 + 8) + sum(i.nbytes + w.nbytes for i, w in self.values))
 
 
 class LogGains:
@@ -119,6 +195,7 @@ class SSEIR:
             full.append(f"{title}. {title}. {text}".strip())
             toks_a.append(tokenize(a))
             toks_b.append(tokenize(b))
+        self.texts = full
         toks = [tokenize(t) for t in full]
         self.vocab = {}
         for tt in (toks, toks_a, toks_b):
@@ -145,16 +222,33 @@ class SSEIR:
         self.word_gain, self.gram_gain = LogGains(len(self.vocab), seed=1), LogGains(dim, seed=2)
         self.w = W0.copy()
         self._wsum, self._wn = np.zeros_like(W0), 0               # averaged split weights over a lap
+        self.res = None
+
+    def enable_residuals(self, train_texts, **kw):
+        """Turn on the differential residual memory; mu = the average training query (training data only)."""
+        mu = np.zeros(self.dim)
+        for q in train_texts:
+            i, w = self.unit(q)
+            mu[i] += w
+        self.res = Residuals(mu / max(len(train_texts), 1), **kw)
+
+    def unit(self, text):
+        """3-gram TF-IDF unit vector (base IDF, no learned gains), sorted indices."""
+        i, c = np.unique(np.asarray(char_grams(text, dim=self.dim), np.int64), return_counts=True)
+        w = (1 + np.log(c)) * self.idf[i]
+        return i, w / (np.linalg.norm(w) or 1)
 
     def nbytes(self):
         return {"postings_full": self.full.nbytes(), "postings_a": self.pa.nbytes(), "postings_b": self.pb.nbytes(),
-                "semantic": self.sem.nbytes(), "learned_gains": int(self.word_gain.q.nbytes + self.gram_gain.q.nbytes)}
+                "semantic": self.sem.nbytes(), "learned_gains": int(self.word_gain.q.nbytes + self.gram_gain.q.nbytes),
+                "residual_memory": self.res.nbytes() if self.res else 0}
 
     def state(self):
-        return self.word_gain.q.copy(), self.gram_gain.q.copy(), self.w.copy()
+        return self.word_gain.q.copy(), self.gram_gain.q.copy(), self.w.copy(), copy.deepcopy(self.res)
 
     def load(self, st):
         self.word_gain.q, self.gram_gain.q, self.w = st[0].copy(), st[1].copy(), st[2].copy()
+        self.res = copy.deepcopy(st[3]) if len(st) > 3 else None
         self._wsum, self._wn = np.zeros_like(W0), 0
 
     def _run(self, text):
@@ -193,8 +287,19 @@ class SSEIR:
                 m.append(M)
             inn = np.stack([M.mean(0) for M in m])
             both = (m[0] & m[1]).mean(0)
-        F = np.column_stack([se[cand] / me, ss[cand] / ms, sa[cand] / na, sb[cand] / nb, inn[0], inn[1], both])
-        c.update(t=t, wq=wq, gf=gf, ga=ga, gb=gb, gi=gi, gw=gw, gs=gs, norm=(me, ms, na, nb), s1=s1, cand=cand, F=F)
+        resid, ids = np.zeros(k), np.zeros(0, np.int64)
+        if self.res is not None and self.res.n:
+            ui, uw = self.unit(text)
+            ids, a = self.res.match(*self.res.key(ui, uw))
+            if len(ids):                                         # rescore the shortlist along the matched values
+                vi = np.concatenate([self.res.values[j][0] for j in ids])
+                vw = np.concatenate([self.res.values[j][1] * aj for j, aj in zip(ids, a)])
+                u, inv = np.unique(vi, return_inverse=True)
+                r = self.sem.score(u, np.bincount(inv, vw))[0][cand]
+                resid = r / (float(r.max()) or 1.0)
+        F = np.column_stack([se[cand] / me, ss[cand] / ms, sa[cand] / na, sb[cand] / nb, inn[0], inn[1], both, resid])
+        c.update(t=t, wq=wq, gf=gf, ga=ga, gb=gb, gi=gi, gw=gw, gs=gs, norm=(me, ms, na, nb), s1=s1, cand=cand, F=F,
+                 matched=ids)
         return F @ self.w, c
 
     def _words(self, t):
@@ -229,6 +334,10 @@ class SSEIR:
         else:                                                    # shortlist missed it: teach the front gates
             pos = int(max(relevant, key=lambda d: c["s1"][d]))
             w, kind = W0, "recall"
+        if self.res is not None:
+            if kind == "split" and len(c["matched"]) and F[neg_i, 7] > F[pos_i, 7]:
+                self.res.weaken(c["matched"])                    # the stored direction pushed the wrong doc up
+            self.res.add(*self.res.key(*self.unit(text)), *self.unit(self.texts[pos]), *self.unit(self.texts[neg]))
         me, ms, na, nb = c["norm"]
         n = len(c["t"])
 

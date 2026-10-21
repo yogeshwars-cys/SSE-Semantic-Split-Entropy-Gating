@@ -28,6 +28,9 @@ LAPS = int(os.environ.get("IR_LAPS", 10))
 SEED = 20261021
 CONFIGS = (("full", dict(lr=3.0, lr_split=0.05)), ("full, big split step", dict(lr=3.0, lr_split=0.2)),
            ("split only", dict(lr=0.0, lr_split=0.05)), ("gates only", dict(lr=3.0, lr_split=0.0)))
+if os.environ.get("IR_CONFIGS") == "residual":     # differential residual memory vs the same learner without it
+    CONFIGS = (("full", dict(lr=3.0, lr_split=0.2)), ("full + residuals tau0.5", dict(lr=3.0, lr_split=0.2, tau=0.5)),
+               ("full + residuals tau0.7", dict(lr=3.0, lr_split=0.2, tau=0.7)))
 SHRINK = 0.1
 
 
@@ -95,6 +98,9 @@ def main():
     lap10 = {}
     for name, kw in CONFIGS:
         m.load(start)
+        kw = dict(kw)
+        if "tau" in kw:
+            m.enable_residuals([queries[q] for q in fit], tau=kw.pop("tau"))
         laps = {}
         for lap in range(1, LAPS + 1):
             t = time.perf_counter()
@@ -112,8 +118,12 @@ def main():
             print(f"{name:20s} lap {lap:2d}  misses {kinds['split']:4d} split + {kinds['recall']:4d} recall  "
                   f"val nDCG {va:.4f} ({va - va0[:, 0].mean():+.4f})  {time.perf_counter() - t:.0f}s", flush=True)
         lap10[name] = m.state()
-        out["configs"][name] = {**kw, "shrink": SHRINK, "laps": laps,
+        out["configs"][name] = {**dict(CONFIGS)[name], "shrink": SHRINK, "laps": laps,
                                 "split_weights": dict(zip(FEATURES, np.round(m.w, 3).tolist()))}
+        if m.res is not None:
+            out["configs"][name]["residual_memory"] = {"keys": len(m.res.strength),
+                                                       "live": int(sum(x > 0 for x in m.res.strength)),
+                                                       "bytes": m.res.nbytes()}
         with open(OUT, "w") as f:
             json.dump(out, f, indent=1)
 
@@ -123,6 +133,13 @@ def main():
     m.load(lap10[name] if name in lap10 else start)
     te_10 = evaluate(test)
     out["picked_on_val"] = {"config": name, "lap": lap, "val_ndcg10": round(float(best[0]), 4)}
+    seen = set().union(*[train_rel[q] for q in fit])               # answer documents the fit queries taught
+    shared = np.array([bool(qrels[q] & seen) for q in test])
+    out["test_by_answer_seen_in_training"] = {
+        grp: {"queries": int(mask.sum()), "untrained": round(float(te0[mask, 0].mean()), 4),
+              "val_pick": round(float(te_best[mask, 0].mean()), 4),
+              "delta": bl.paired_ci(te0[mask, 0], te_best[mask, 0])}
+        for grp, mask in (("answer_seen", shared), ("answer_unseen", ~shared)) if mask.any()}
     out["test"] = {"untrained": bl.summary(te0), f"{name} lap {lap} (val pick)": bl.summary(te_best),
                    f"{name} lap {LAPS}": bl.summary(te_10),
                    "val_pick_vs_untrained": bl.paired_ci(te0[:, 0], te_best[:, 0]),
@@ -137,6 +154,7 @@ def main():
         json.dump(out, f, indent=1)
     print(f"\npicked on val: {name} lap {lap}")
     print(json.dumps(out["test"], indent=1))
+    print(json.dumps(out["test_by_answer_seen_in_training"], indent=1))
     print(json.dumps(out["picked_state"], indent=1))
     print("wrote", OUT)
 
