@@ -1,0 +1,3 @@
+NQ slice: 100,000 passages, 1726 train / 1726 held-out queries
+built in 54s, 3-gram index 333 MB
+lap  0                     train nDCG 0.6672
