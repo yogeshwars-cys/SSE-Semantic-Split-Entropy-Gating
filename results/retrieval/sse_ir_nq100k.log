@@ -2,3 +2,4 @@ nq: 100,000 docs; fit 1381, val 345 (training queries), test 1726
 built in 109s; sizes MB {'postings_full': 29.9, 'postings_a': 21.7, 'postings_b': 22.6, 'semantic': 209.5, 'learned_gains': 0.5}
 untrained: val nDCG 0.6608  test nDCG 0.6612  search p50 32.2 ms
 full                 lap  1  misses 1035 split +   82 recall  val nDCG 0.6763 (+0.0154)  71s
+full                 lap  2  misses 1017 split +   70 recall  val nDCG 0.6858 (+0.0250)  68s
