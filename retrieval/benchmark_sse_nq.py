@@ -21,8 +21,6 @@ from pathlib import Path
 import numpy as np
 import scipy.sparse as sp
 
-import bqboost
-from benchmark_bq import METRICS, ROOT, bootstrap_ci, query_metrics, summarize_ms
 from sse_retrieval import EntropyGate, char_grams, tokenize
 
 DATA = Path(__import__("os").environ.get("SSE_NQ_DATA", "data/nq-100k"))
@@ -107,12 +105,13 @@ def top(s, k=10):
     return i[np.argsort(-s[i], kind="stable")]
 
 
-def finetune(gate, sem, docs_tok, texts, train, queries, qrels, id2row, epochs=3, lr=0.14):
+def finetune(gate, sem, docs_tok, texts, train, queries, qrels, id2row, epochs=3, lr=0.14, start_epoch=0):
     """SSE blame-by-diff (calibration.py blame + tighten) as an offline trainer: for each training query find the
     hardest wrong document above the best right one; turn down the query terms / 3-gram buckets that matched only
-    the wrong one, turn up those that matched only the right one."""
+    the wrong one, turn up those that matched only the right one. start_epoch continues an earlier run's lr decay,
+    so a training lap is finetune(..., epochs=1, start_epoch=lap - 1)."""
     viol = upd = 0
-    for ep in range(epochs):
+    for ep in range(start_epoch, start_epoch + epochs):
         step = lr * (0.8 ** ep)
         for q in train:
             pos = [id2row[d] for d in qrels[q] if d in id2row]
@@ -147,6 +146,8 @@ def finetune(gate, sem, docs_tok, texts, train, queries, qrels, id2row, epochs=3
 
 
 def main():
+    import bqboost
+    from benchmark_bq import METRICS, ROOT, bootstrap_ci, query_metrics, summarize_ms
     t_all = time.perf_counter()
     d = json.loads((DATA / "data.json").read_text(encoding="utf-8"))
     doc_ids, qids, queries = d["corpus_ids"], d["query_ids"], d["queries"]
