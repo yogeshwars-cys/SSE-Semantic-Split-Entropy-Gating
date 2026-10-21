@@ -1,0 +1,710 @@
+{
+ "attack|unknown header names (5 sampled from the Param Miner list)|unprotected cache": {
+  "n": 200,
+  "clean": 0,
+  "saved": 0,
+  "harmed": 200,
+  "proxy": {
+   "hits": 1568,
+   "misses": 24,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 24,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|unknown header names (5 sampled from the Param Miner list)|gate only": {
+  "n": 196,
+  "clean": 196,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1453,
+   "misses": 119,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 119,
+   "bypass": 77,
+   "odd": 77,
+   "sem": 0
+  }
+ },
+ "attack|unknown header names (5 sampled from the Param Miner list)|split only": {
+  "n": 181,
+  "clean": 98,
+  "saved": 83,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1526,
+   "misses": 47,
+   "flips": 27,
+   "reports": 83,
+   "upstream": 47,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|unknown header names (5 sampled from the Param Miner list)|gate + split": {
+  "n": 196,
+  "clean": 196,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1442,
+   "misses": 121,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 121,
+   "bypass": 74,
+   "odd": 74,
+   "sem": 0
+  }
+ },
+ "attack|unknown header names (5 sampled from the Param Miner list)|gate + semantic": {
+  "n": 196,
+  "clean": 196,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1455,
+   "misses": 117,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 117,
+   "bypass": 77,
+   "odd": 77,
+   "sem": 0
+  }
+ },
+ "attack|unknown header names (5 sampled from the Param Miner list)|gate + semantic + split": {
+  "n": 196,
+  "clean": 196,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1462,
+   "misses": 114,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 114,
+   "bypass": 80,
+   "odd": 79,
+   "sem": 1
+  }
+ },
+ "attack|X-Forwarded-Host with a hostname|unprotected cache": {
+  "n": 200,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 140,
+  "proxy": {
+   "hits": 1591,
+   "misses": 8,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 8,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|X-Forwarded-Host with a hostname|gate only": {
+  "n": 200,
+  "clean": 200,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1580,
+   "misses": 19,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 19,
+   "bypass": 11,
+   "odd": 11,
+   "sem": 0
+  }
+ },
+ "attack|X-Forwarded-Host with a hostname|split only": {
+  "n": 176,
+  "clean": 60,
+  "saved": 116,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1555,
+   "misses": 12,
+   "flips": 6,
+   "reports": 116,
+   "upstream": 12,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|X-Forwarded-Host with a hostname|gate + split": {
+  "n": 200,
+  "clean": 200,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1568,
+   "misses": 22,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 22,
+   "bypass": 16,
+   "odd": 16,
+   "sem": 0
+  }
+ },
+ "attack|X-Forwarded-Host with a hostname|gate + semantic": {
+  "n": 200,
+  "clean": 200,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1560,
+   "misses": 32,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 32,
+   "bypass": 16,
+   "odd": 16,
+   "sem": 0
+  }
+ },
+ "attack|X-Forwarded-Host with a hostname|gate + semantic + split": {
+  "n": 200,
+  "clean": 200,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1559,
+   "misses": 28,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 28,
+   "bypass": 17,
+   "odd": 17,
+   "sem": 0
+  }
+ },
+ "attack|oversize Cookie (header-oversize through a standard header)|unprotected cache": {
+  "n": 200,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 140,
+  "proxy": {
+   "hits": 757,
+   "misses": 8,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 8,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|oversize Cookie (header-oversize through a standard header)|gate only": {
+  "n": 200,
+  "clean": 200,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1587,
+   "misses": 19,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 19,
+   "bypass": 5,
+   "odd": 5,
+   "sem": 0
+  }
+ },
+ "attack|oversize Cookie (header-oversize through a standard header)|split only": {
+  "n": 186,
+  "clean": 118,
+  "saved": 68,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1118,
+   "misses": 13,
+   "flips": 6,
+   "reports": 68,
+   "upstream": 13,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|oversize Cookie (header-oversize through a standard header)|gate + split": {
+  "n": 200,
+  "clean": 200,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1596,
+   "misses": 13,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 13,
+   "bypass": 4,
+   "odd": 4,
+   "sem": 0
+  }
+ },
+ "attack|oversize Cookie (header-oversize through a standard header)|gate + semantic": {
+  "n": 200,
+  "clean": 200,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1593,
+   "misses": 20,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 20,
+   "bypass": 5,
+   "odd": 5,
+   "sem": 0
+  }
+ },
+ "attack|oversize Cookie (header-oversize through a standard header)|gate + semantic + split": {
+  "n": 200,
+  "clean": 200,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1547,
+   "misses": 18,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 18,
+   "bypass": 7,
+   "odd": 7,
+   "sem": 0
+  }
+ },
+ "attack|mimic: real User-Agent carrying attacker content|unprotected cache": {
+  "n": 200,
+  "clean": 0,
+  "saved": 0,
+  "harmed": 200,
+  "proxy": {
+   "hits": 1581,
+   "misses": 8,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 8,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|mimic: real User-Agent carrying attacker content|gate only": {
+  "n": 200,
+  "clean": 1,
+  "saved": 0,
+  "harmed": 199,
+  "proxy": {
+   "hits": 1586,
+   "misses": 9,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 9,
+   "bypass": 2,
+   "odd": 2,
+   "sem": 0
+  }
+ },
+ "attack|mimic: real User-Agent carrying attacker content|split only": {
+  "n": 176,
+  "clean": 59,
+  "saved": 117,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1558,
+   "misses": 15,
+   "flips": 8,
+   "reports": 117,
+   "upstream": 15,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|mimic: real User-Agent carrying attacker content|gate + split": {
+  "n": 176,
+  "clean": 61,
+  "saved": 115,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1578,
+   "misses": 18,
+   "flips": 8,
+   "reports": 115,
+   "upstream": 18,
+   "bypass": 4,
+   "odd": 4,
+   "sem": 0
+  }
+ },
+ "attack|mimic: real User-Agent carrying attacker content|gate + semantic": {
+  "n": 200,
+  "clean": 200,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1625,
+   "misses": 28,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 28,
+   "bypass": 22,
+   "odd": 12,
+   "sem": 10
+  }
+ },
+ "attack|mimic: real User-Agent carrying attacker content|gate + semantic + split": {
+  "n": 200,
+  "clean": 200,
+  "saved": 0,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1654,
+   "misses": 26,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 26,
+   "bypass": 20,
+   "odd": 10,
+   "sem": 10
+  }
+ },
+ "attack|unkeyed query parameter utm_content=evil (no header change)|unprotected cache": {
+  "n": 200,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 140,
+  "proxy": {
+   "hits": 1675,
+   "misses": 8,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 8,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|unkeyed query parameter utm_content=evil (no header change)|gate only": {
+  "n": 200,
+  "clean": 0,
+  "saved": 0,
+  "harmed": 200,
+  "proxy": {
+   "hits": 1684,
+   "misses": 6,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 6,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|unkeyed query parameter utm_content=evil (no header change)|split only": {
+  "n": 188,
+  "clean": 131,
+  "saved": 57,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1683,
+   "misses": 14,
+   "flips": 5,
+   "reports": 57,
+   "upstream": 14,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|unkeyed query parameter utm_content=evil (no header change)|gate + split": {
+  "n": 187,
+  "clean": 119,
+  "saved": 68,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1679,
+   "misses": 13,
+   "flips": 5,
+   "reports": 68,
+   "upstream": 13,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|unkeyed query parameter utm_content=evil (no header change)|gate + semantic": {
+  "n": 200,
+  "clean": 0,
+  "saved": 0,
+  "harmed": 200,
+  "proxy": {
+   "hits": 1685,
+   "misses": 8,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 8,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|unkeyed query parameter utm_content=evil (no header change)|gate + semantic + split": {
+  "n": 176,
+  "clean": 57,
+  "saved": 119,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1658,
+   "misses": 15,
+   "flips": 8,
+   "reports": 119,
+   "upstream": 15,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|rare but valid real User-Agent (legitimate variant)|unprotected cache": {
+  "n": 200,
+  "clean": 0,
+  "saved": 0,
+  "harmed": 200,
+  "proxy": {
+   "hits": 1696,
+   "misses": 8,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 8,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|rare but valid real User-Agent (legitimate variant)|gate only": {
+  "n": 200,
+  "clean": 2,
+  "saved": 0,
+  "harmed": 198,
+  "proxy": {
+   "hits": 1699,
+   "misses": 9,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 9,
+   "bypass": 3,
+   "odd": 3,
+   "sem": 0
+  }
+ },
+ "attack|rare but valid real User-Agent (legitimate variant)|split only": {
+  "n": 184,
+  "clean": 118,
+  "saved": 66,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1670,
+   "misses": 15,
+   "flips": 6,
+   "reports": 66,
+   "upstream": 15,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  }
+ },
+ "attack|rare but valid real User-Agent (legitimate variant)|gate + split": {
+  "n": 176,
+  "clean": 66,
+  "saved": 110,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1655,
+   "misses": 16,
+   "flips": 7,
+   "reports": 110,
+   "upstream": 16,
+   "bypass": 4,
+   "odd": 4,
+   "sem": 0
+  }
+ },
+ "attack|rare but valid real User-Agent (legitimate variant)|gate + semantic": {
+  "n": 200,
+  "clean": 2,
+  "saved": 0,
+  "harmed": 198,
+  "proxy": {
+   "hits": 1668,
+   "misses": 8,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 8,
+   "bypass": 2,
+   "odd": 2,
+   "sem": 0
+  }
+ },
+ "attack|rare but valid real User-Agent (legitimate variant)|gate + semantic + split": {
+  "n": 176,
+  "clean": 61,
+  "saved": 115,
+  "harmed": 0,
+  "proxy": {
+   "hits": 1636,
+   "misses": 15,
+   "flips": 7,
+   "reports": 115,
+   "upstream": 15,
+   "bypass": 3,
+   "odd": 3,
+   "sem": 0
+  }
+ },
+ "benign|unprotected cache": {
+  "n": 20000,
+  "clean": 20000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 11.105151398998714,
+  "proxy": {
+   "hits": 18655,
+   "misses": 1345,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1345,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  },
+  "origin": {
+   "requests": 1345,
+   "verify": 0,
+   "health": 0
+  }
+ },
+ "benign|gate only": {
+  "n": 20000,
+  "clean": 20000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 10.560297333002381,
+  "proxy": {
+   "hits": 18649,
+   "misses": 1351,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1351,
+   "bypass": 14,
+   "odd": 14,
+   "sem": 0
+  },
+  "origin": {
+   "requests": 1351,
+   "verify": 0,
+   "health": 0
+  }
+ },
+ "benign|split only": {
+  "n": 20000,
+  "clean": 20000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 10.86894242299968,
+  "proxy": {
+   "hits": 18652,
+   "misses": 1348,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1348,
+   "bypass": 0,
+   "odd": 0,
+   "sem": 0
+  },
+  "origin": {
+   "requests": 1348,
+   "verify": 0,
+   "health": 0
+  }
+ },
+ "benign|gate + split": {
+  "n": 20000,
+  "clean": 20000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 11.655982858999778,
+  "proxy": {
+   "hits": 18648,
+   "misses": 1352,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1352,
+   "bypass": 14,
+   "odd": 14,
+   "sem": 0
+  },
+  "origin": {
+   "requests": 1352,
+   "verify": 0,
+   "health": 0
+  }
+ },
+ "benign|gate + semantic": {
+  "n": 20000,
+  "clean": 20000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 12.650411364997126,
+  "proxy": {
+   "hits": 18639,
+   "misses": 1361,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1361,
+   "bypass": 25,
+   "odd": 14,
+   "sem": 11
+  },
+  "origin": {
+   "requests": 1361,
+   "verify": 0,
+   "health": 0
+  }
+ },
+ "benign|gate + semantic + split": {
+  "n": 20000,
+  "clean": 20000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 13.132806820998667,
+  "proxy": {
+   "hits": 18639,
+   "misses": 1361,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1361,
+   "bypass": 25,
+   "odd": 14,
+   "sem": 11
+  },
+  "origin": {
+   "requests": 1361,
+   "verify": 0,
+   "health": 0
+  }
+ }
+}

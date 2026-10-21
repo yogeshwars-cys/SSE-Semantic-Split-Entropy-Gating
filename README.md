@@ -14,14 +14,18 @@ About 380 lines, numpy only, ~1 ms per request on one core, fitted on normal tra
 
 | Benchmark | Setting | Result |
 |---|---|---|
+| Web cache poisoning defence (6 attack vectors, Docker) | gates + semantic layer + split-delivery | **0% of victim views harmed on every vector** (unprotected cache: 70–100%) |
+| Adaptive attacker with an offline probe, 10 min | split verdicts feeding the gates | attacker pass rate **98.1% → 7.0%**, 0% harmed, 3.1% of views held |
+| Reverse-proxy tradeoff index, 10 architectures | performance vs security and header compatibility | **TI 95.8, ranked first**, at +6% origin load |
 | SR-BH 2020 (907k real honeypot HTTP requests, 13 attack classes) | unseen traffic, learning from every wrong verdict | **76.7% detection, 5.1% false alarms, 97.1% precision** |
 | SR-BH 2020 | frozen gates (no learning) | 24% detection at 1% false alarms |
 | CSIC 2010 (a different web app) | brand-new scanner, one learning lap | 87.8% detection, 9.7% false alarms |
 | CIC-IDS2017 | network flows, closed loop | F1 0.94–0.99 on DDoS / PortScan / DoS; 0.03 on web attacks |
 | BEIR SciFact | retrieval, supervised fine-tune | nDCG@10 0.719 (dense MiniLM: 0.645) |
 
-All figures, methods, caveats and exclusions are in [BENCHMARKS.md](BENCHMARKS.md). In the HTTP benchmarks the
-teacher is the dataset label, so they are upper bounds of what the loop can do with a verifier.
+All figures, methods, caveats and exclusions are in [BENCHMARKS.md](BENCHMARKS.md). The cache benchmarks ran in a
+caching reverse proxy that is not part of this repo; its result files are in `results/cache/`. In the HTTP benchmarks
+the teacher is the dataset label, so they are upper bounds of what the loop can do with a verifier.
 
 ## Layout
 
@@ -31,7 +35,8 @@ teacher is the dataset label, so they are upper bounds of what the loop can do w
 | `harness/` | reproducible SR-BH 2020 and CSIC 2010 runs (zero-shot, real-time recalibration, gate learning, conveyor-belt laps, cross-site transfer) |
 | `ids/` | CIC-IDS2017 flow IDS and its benchmark |
 | `retrieval/` | the retrieval port and its SciFact / NQ benchmarks |
-| `results/` | every JSON result and run log behind BENCHMARKS.md |
+| `results/` | every JSON result and run log behind BENCHMARKS.md (`cache/`, `srbh/`, `csic/`, `ids/`, `retrieval/`) |
+| `docs/figures/` | figures used in BENCHMARKS.md |
 | `data/` | how to fetch the datasets (not included) |
 
 ## Reproduce (HTTP benchmarks)

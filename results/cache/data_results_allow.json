@@ -1,0 +1,174 @@
+{
+ "allow|oversize Cookie (header-oversize via a standard header)|unprotected cache": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|oversize Cookie (header-oversize via a standard header)|allowlist only": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|oversize Cookie (header-oversize via a standard header)|allowlist + no-cache-errors": {
+  "n": 240,
+  "clean": 240,
+  "saved": 0,
+  "harmed": 0
+ },
+ "allow|oversize Cookie (header-oversize via a standard header)|full-screen origin verifier": {
+  "n": 240,
+  "clean": 240,
+  "saved": 0,
+  "harmed": 0
+ },
+ "allow|oversize Cookie (header-oversize via a standard header)|split-delivery (annotated)": {
+  "n": 228,
+  "clean": 175,
+  "saved": 53,
+  "harmed": 0
+ },
+ "allow|oversize Referer (header-oversize via a standard header)|unprotected cache": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|oversize Referer (header-oversize via a standard header)|allowlist only": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|oversize Referer (header-oversize via a standard header)|allowlist + no-cache-errors": {
+  "n": 240,
+  "clean": 240,
+  "saved": 0,
+  "harmed": 0
+ },
+ "allow|oversize Referer (header-oversize via a standard header)|full-screen origin verifier": {
+  "n": 240,
+  "clean": 240,
+  "saved": 0,
+  "harmed": 0
+ },
+ "allow|oversize Referer (header-oversize via a standard header)|split-delivery (annotated)": {
+  "n": 223,
+  "clean": 144,
+  "saved": 79,
+  "harmed": 0
+ },
+ "allow|reflection via User-Agent (standard header)|unprotected cache": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|reflection via User-Agent (standard header)|allowlist only": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|reflection via User-Agent (standard header)|allowlist + no-cache-errors": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|reflection via User-Agent (standard header)|full-screen origin verifier": {
+  "n": 212,
+  "clean": 86,
+  "saved": 0,
+  "harmed": 126
+ },
+ "allow|reflection via User-Agent (standard header)|split-delivery (annotated)": {
+  "n": 217,
+  "clean": 117,
+  "saved": 100,
+  "harmed": 0
+ },
+ "allow|reflection via Cookie (standard header)|unprotected cache": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|reflection via Cookie (standard header)|allowlist only": {
+  "n": 240,
+  "clean": 0,
+  "saved": 0,
+  "harmed": 240
+ },
+ "allow|reflection via Cookie (standard header)|allowlist + no-cache-errors": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|reflection via Cookie (standard header)|full-screen origin verifier": {
+  "n": 200,
+  "clean": 5,
+  "saved": 0,
+  "harmed": 195
+ },
+ "allow|reflection via Cookie (standard header)|split-delivery (annotated)": {
+  "n": 217,
+  "clean": 115,
+  "saved": 102,
+  "harmed": 0
+ },
+ "allow|unkeyed query parameter (utm_content), no header at all|unprotected cache": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|unkeyed query parameter (utm_content), no header at all|allowlist only": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|unkeyed query parameter (utm_content), no header at all|allowlist + no-cache-errors": {
+  "n": 240,
+  "clean": 60,
+  "saved": 0,
+  "harmed": 180
+ },
+ "allow|unkeyed query parameter (utm_content), no header at all|split-delivery (annotated)": {
+  "n": 208,
+  "clean": 57,
+  "saved": 151,
+  "harmed": 0
+ },
+ "allow|legit|unprotected cache": {
+  "x-tenant": 0,
+  "x-forwarded-host": 0,
+  "x-forwarded-proto": 0,
+  "authorization": 0,
+  "x-api-key": 0,
+  "x-requested-with": 0,
+  "x-api-version": 0,
+  "traceparent": 0,
+  "origin": 0,
+  "x-forwarded-for": 0,
+  "x-real-ip": 0,
+  "accept-language": 0
+ },
+ "allow|legit|allowlist only": {
+  "x-tenant": 20,
+  "x-forwarded-host": 20,
+  "x-forwarded-proto": 20,
+  "authorization": 20,
+  "x-api-key": 20,
+  "x-requested-with": 20,
+  "x-api-version": 20,
+  "traceparent": 20,
+  "origin": 20,
+  "x-forwarded-for": 20,
+  "x-real-ip": 20,
+  "accept-language": 0
+ }
+}

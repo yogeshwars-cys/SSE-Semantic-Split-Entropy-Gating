@@ -1,0 +1,82 @@
+{
+ "hdrs|refl|vulnerable cache": {
+  "poisonable": 1084,
+  "harmed": 1084,
+  "saved": 0,
+  "payload_harmed": 152,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|refl|v1 full screen + browser flag": {
+  "poisonable": 1084,
+  "harmed": 7,
+  "saved": 0,
+  "payload_harmed": 0,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|refl|ghost cache (hardened) + gate": {
+  "poisonable": 1084,
+  "harmed": 1084,
+  "saved": 0,
+  "payload_harmed": 152,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|refl|split: regions first + late check": {
+  "poisonable": 1084,
+  "harmed": 0,
+  "saved": 1084,
+  "payload_harmed": 0,
+  "payload_saved": 152,
+  "payloads": 152
+ },
+ "hdrs|refl|header allowlist (strip unknown headers)": {
+  "poisonable": 1084,
+  "harmed": 7,
+  "saved": 0,
+  "payload_harmed": 0,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|raw|vulnerable cache": {
+  "poisonable": 1084,
+  "harmed": 1084,
+  "saved": 0,
+  "payload_harmed": 152,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|raw|v1 full screen + browser flag": {
+  "poisonable": 1084,
+  "harmed": 7,
+  "saved": 0,
+  "payload_harmed": 0,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|raw|ghost cache (hardened) + gate": {
+  "poisonable": 1084,
+  "harmed": 1084,
+  "saved": 0,
+  "payload_harmed": 152,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|raw|split: regions first + late check": {
+  "poisonable": 1084,
+  "harmed": 1084,
+  "saved": 0,
+  "payload_harmed": 150,
+  "payload_saved": 2,
+  "payloads": 152
+ },
+ "hdrs|raw|header allowlist (strip unknown headers)": {
+  "poisonable": 1084,
+  "harmed": 7,
+  "saved": 0,
+  "payload_harmed": 0,
+  "payload_saved": 0,
+  "payloads": 152
+ }
+}

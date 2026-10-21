@@ -1,0 +1,176 @@
+{
+ "gate + semantic + split + calibration (split verdicts tune both gates)": {
+  "stats": {
+   "surrogate_rejected": 418650,
+   "oracle_trials": 36388,
+   "oracle_pass": 2551,
+   "first_bypass": 0.2,
+   "exploit_sends": 43316
+  },
+  "timeline": {
+   "0": {
+    "clean": 1122,
+    "held": 38,
+    "harmed": 0,
+    "trials": 1974,
+    "passed": 354
+   },
+   "1": {
+    "clean": 1114,
+    "held": 38,
+    "harmed": 0,
+    "trials": 2280,
+    "passed": 108
+   },
+   "2": {
+    "clean": 1116,
+    "held": 37,
+    "harmed": 0,
+    "trials": 3039,
+    "passed": 212
+   },
+   "3": {
+    "clean": 1116,
+    "held": 35,
+    "harmed": 0,
+    "trials": 3267,
+    "passed": 264
+   },
+   "4": {
+    "clean": 1115,
+    "held": 37,
+    "harmed": 0,
+    "trials": 3445,
+    "passed": 40
+   },
+   "5": {
+    "clean": 1123,
+    "held": 33,
+    "harmed": 0,
+    "trials": 3372,
+    "passed": 106
+   },
+   "6": {
+    "clean": 1119,
+    "held": 33,
+    "harmed": 0,
+    "trials": 5093,
+    "passed": 704
+   },
+   "7": {
+    "clean": 1120,
+    "held": 36,
+    "harmed": 0,
+    "trials": 4837,
+    "passed": 102
+   },
+   "8": {
+    "clean": 1113,
+    "held": 34,
+    "harmed": 0,
+    "trials": 4097,
+    "passed": 224
+   },
+   "9": {
+    "clean": 1118,
+    "held": 35,
+    "harmed": 0,
+    "trials": 4983,
+    "passed": 437
+   },
+   "10": {
+    "clean": 0,
+    "held": 0,
+    "harmed": 0,
+    "trials": 1,
+    "passed": 0
+   }
+  },
+  "per_hdr": {
+   "user-agent": [
+    280,
+    8
+   ],
+   "accept-language": [
+    0,
+    0
+   ],
+   "referer": [
+    1921,
+    72
+   ],
+   "cookie": [
+    2314,
+    84
+   ],
+   "accept": [
+    0,
+    0
+   ],
+   "x-forwarded-for": [
+    31873,
+    2387
+   ]
+  },
+  "per_tech": {
+   "append": [
+    342,
+    6
+   ],
+   "replace-token": [
+    406,
+    9
+   ],
+   "vocab-domain": [
+    524,
+    15
+   ],
+   "length-matched": [
+    344,
+    6
+   ],
+   "ip-marker": [
+    33017,
+    2430
+   ],
+   "naive": [
+    1755,
+    85
+   ]
+  },
+  "proxy": {
+   "hits": 47492,
+   "misses": 80132,
+   "flips": 145,
+   "reports": 356,
+   "upstream": 80132,
+   "bypass": 42905,
+   "odd": 1660,
+   "sem": 894,
+   "cal": 40351,
+   "poisoned": 145,
+   "blames": 145,
+   "blame_fallback": 0,
+   "tightened": 290
+  },
+  "cal": {
+   "/refl/referer|gate|referer": -1.07,
+   "/refl/referer|sem|referer": -2.81,
+   "/refl/user-agent|gate|user-agent": -1.61,
+   "/refl/user-agent|sem|user-agent": 1.14,
+   "/refl/cookie|gate|cookie": -1.76,
+   "/refl/cookie|sem|cookie": -0.22,
+   "/refl/x-forwarded-for|gate|x-forwarded-for": 0.14,
+   "/refl/x-forwarded-for|sem|x-forwarded-for": -0.25
+  },
+  "benign": {
+   "cal_hit": 0.7954,
+   "cal_bypass": 0,
+   "cal_held": 0,
+   "cal_harmed": 0,
+   "ref_hit": 0.8218,
+   "ref_held": 0,
+   "ref_harmed": 0
+  }
+ }
+}

@@ -1,9 +1,10 @@
 # SSE (Semantic Split Entropy Gating): Benchmarks
 
-Compiled 2026-10-21. All measured benchmarks for SSE in three settings:
-1. **Network intrusion detection**: `ids/sse_ids.py` on CIC-IDS2017 (Part I)
-2. **Information retrieval**: `retrieval/sse_retrieval.py` on SciFact and NQ-100k (Part II)
-3. **HTTP web-attack detection**: the `sse/` gates on SR-BH 2020 (907k real honeypot requests) and CSIC 2010 (Part III)
+Compiled 2026-10-21. All measured benchmarks for SSE in four settings:
+1. **Web cache poisoning defence**: the gates plus split-delivery in a caching reverse proxy (Part I)
+2. **Network intrusion detection**: `ids/sse_ids.py` on CIC-IDS2017 (Part II)
+3. **Information retrieval**: `retrieval/sse_retrieval.py` on SciFact and NQ-100k (Part III)
+4. **HTTP web-attack detection**: the `sse/` gates on SR-BH 2020 (907k real honeypot requests) and CSIC 2010 (Part IV)
 
 ---
 
@@ -12,15 +13,15 @@ Compiled 2026-10-21. All measured benchmarks for SSE in three settings:
 ### Requirements & Dependencies
 | Component | Requirements |
 |---|---|
-| **Runtimes** | Python 3.10+ (tested on Windows and Linux) |
+| **Runtimes** | Python 3.10+ (tested on Windows and Linux Docker) |
 | **Dependencies** | Python + `numpy` (`anomaly_model.py` and `calibration.py` use the standard library only). `scipy` for the NQ benchmark; `bqboost` for the retrieval benchmarks' dense / binary-quantised baselines. No PyTorch, no CUDA, no GPU. |
 | **Training Requirement** | Normal traffic only. No attack labels needed to fit. |
-| **Supervision / Ground Truth** | **HTTP:** a verifier's verdict on each wrong decision (the dataset label in these benchmarks, standing in for the split verifier).<br/>**IDS:** no ground-truth labels at runtime (Part-B temporal response verifier).<br/>**IR:** self-supervised document splitting, or optional relevance pairs. |
+| **Supervision / Ground Truth** | **Cache:** clean origin re-fetch + client quorum hash diff (split-delivery).<br/>**HTTP:** a verifier's verdict on each wrong decision (the dataset label in Part IV, standing in for the split verifier).<br/>**IDS:** no ground-truth labels at runtime (Part-B temporal response verifier).<br/>**IR:** self-supervised document splitting, or optional relevance pairs. |
 
 ### Memory & Size
 | Implementation | Code Size | In-Memory / Serialized State Size |
 |---|---|---|
-| **SSE gates (`sse/`)** | 384 lines (`anomaly_model.py`: 118, `semantic_model.py`: 193, `calibration.py`: 73); the gates recalibrate themselves from failures (Part III) | SR-BH: 16–98 MB fitted 3-gram matrices; trained scanner 95–105 MB after one lap, ~490 MB after five belt laps |
+| **SSE gates (`sse/`)** | 384 lines (`anomaly_model.py`: 118, `semantic_model.py`: 193, `calibration.py`: 73); the gates recalibrate themselves from failures (Part IV) | Cache proxy: ~150 KB – 500 KB per route table. SR-BH: 16–98 MB fitted 3-gram matrices; trained scanner 95–105 MB after one lap, ~490 MB after five belt laps |
 | **Network IDS (`sse_ids.py`)** | 560 lines | **1.78 MB – 1.85 MB** (measured via pickle on 120k flow stream) |
 | **Converted IR (`sse_retrieval.py`)** | 765 lines | **14.2 MB** on SciFact 5k corpus; **333.3 MB** on NQ-100k corpus (uncompressed sparse matrix) |
 
@@ -42,18 +43,205 @@ flowchart TD
 | Module | Training / Fit Time | Per-Item Processing Latency | Measured Throughput |
 |---|---|---|---|
 | **Network IDS (Closed Loop)** | 2.16 s – 2.98 s (on 36k benign flows) | **91.9 µs – 189.1 µs / flow** | **5,287 – 10,883 flows / s** (single CPU thread) |
+| **Cache front gates** | ~0.5 s (on 4k normal requests) | **0.367 ms / req** (`results/cache/semantic_offline.md`) | **~2,700 req / s** |
+| **Cache proxy total overhead** | Real-time proxying | **1.8 ms – 4.0 ms** p50 response latency | **1,523 – 1,894 req / s** in Docker |
 | **HTTP gates (SR-BH)** | 10–28 s (on 10k normal requests) | **1.25 ms / request** frozen; ~1.1–1.4 ms while learning | ~700–900 requests / s (single CPU thread) |
 | **Converted IR (SciFact 5k)** | Pre-indexed | Gate: **1.28 ms** p50, Semantic: **3.18 ms** p50 | ~315 queries / s |
 | **Converted IR (NQ 100k)** | Build: 74.5 s total | Gate: **2.99 ms** p50, Semantic: **8.09 ms** p50 | ~120 queries / s |
 
 ---
 
-# PART I: NETWORK IDS BENCHMARKS (CIC-IDS2017)
+# PART I: WEB CACHE POISONING DEFENSE BENCHMARKS
+
+**Environment:** Docker benchmark suite for a caching reverse proxy running the SSE gates with split-delivery (the proxy itself is not part of this repo; its result files are in `results/cache/`). Tested against known and adaptive cache-poisoning attacks with simulated client verifiers and origin backends.
+
+### 1.1 Synthetic & Known Attack Vectors (`combined_semantic.md`)
+*Setup: 10s duration per attack, active attacker flooding, 4 victim threads, 200 total victim views.*
+
+| Attack Vector | Vulnerable Cache (Harmed %) | Front Gate Only (Harmed %) | Split Only (Harmed %) | Full SSE: Gate + Semantic + Split (Harmed %) | Front Gate Fills Blocked |
+|---|---|---|---|---|---|
+| **Unknown Header Names** (Param Miner) | 100% | 0% | 0% | **0%** (Clean: 196, Held: 0) | 79 |
+| **X-Forwarded-Host Injection** | 70% | 0% | 0% | **0%** (Clean: 200, Held: 0) | 17 |
+| **Oversize Cookie (header oversize)** | 70% | 0% | 0% | **0%** (Clean: 200, Held: 0) | 7 |
+| **Mimic: Header with Attacker Payload** | 100% | 100% (Bypassed) | 0% (Held: 117) | **0%** (Clean: 200, Held: 0) | 10 |
+| **Unkeyed Parameter** (`utm_content=evil`) | 70% | 100% (Bypassed) | 0% (Held: 57) | **0%** (Clean: 176, Held: 119) | 0 (Caught by Split) |
+| **Rare Valid User-Agent** | 100% | 99% (Bypassed) | 0% (Held: 66) | **0%** (Clean: 176, Held: 115) | 3 |
+
+### 1.2 Adaptive Adversary with Oracle Probe (`adversary_cal10.md`, `adversary_cal.md`, `adversary.md`)
+*An attacker with an offline probe surrogate continuously tweaks payload shape and entropy to slip past the front gates.*
+
+| Configuration | Test Duration | Total Attacker Trials | Attacker Probe Pass Rate | Victim Views | Victims Harmed | Victims Held |
+|---|---|---|---|---|---|---|
+| **Gate + Semantic Only** (No Split) | 8 min | 71,597 | **98.1%** (70,217 passed) | — | **55.2% – 66.0%** | 0.0% |
+| **Gate + Semantic + Split** (No Calibration) | 5 min | 43,578 | **98.0%** (42,708 passed) | 5,532 | **0.0%** | 15.3% (844 held) |
+| **Full SSE** (Split feeds back into Gates) | 5 min | 17,189 | **8.4%** (1,441 passed) | 5,788 | **0.0%** | 2.9% (169 held) |
+| **Full SSE** (Split feeds back into Gates) | 10 min | 36,388 | **7.0%** (2,551 passed) | 11,532 | **0.0%** | **3.1%** (356 held) |
+
+*Calibration impact in 10-minute run:* Split quorum triggered 145 times $\to$ clean origin diff confirmed 145 blamed headers $\to$ tightened gate thresholds 290 times. As a result, **40,351 exploit attempts were blocked at the front door** instead of hitting the cache.
+
+### 1.3 Real-World Trace Performance & Benign Cost (`perf_stacked.md`, `combined_semantic.md`)
+*NASA-HTTP 1995 (30k requests, 21.4 KB mean) and CSIC 2010 (16k requests).*
+
+| Trace Scenario | Protection Mode | Hit Ratio | Req / s | p50 Latency | p99 Latency | Harmed % |
+|---|---|---|---|---|---|---|
+| **NASA-HTTP 1995 (Benign)** | Vulnerable Nginx | 0.904 | 606 | 1.8 ms | 47.9 ms | 0.0% |
+| **NASA-HTTP 1995 (Benign)** | Split: Regions + Late Check | 0.904 | 608 | 2.1 ms | 48.3 ms | 0.0% |
+| **NASA-HTTP (Top-3 URLs Attacked)** | Vulnerable Nginx | 0.906 | 582 | 2.4 ms | 48.9 ms | **3.46%** (1,039 views harmed) |
+| **NASA-HTTP (Top-3 URLs Attacked)** | Split: Regions + Late Check | 0.906 | 598 | 2.1 ms | 48.3 ms | **0.00%** (88 saved, 0 harmed) |
+| **CSIC 2010 Normal** | Split: Regions + Late Check | 0.821 | — | 4.8 ms | 15.5 ms | **0.00%** (0 false alarms) |
+| **CSIC 2010 Anomalous Payloads** | Split: Regions + Late Check | 0.371 | — | 7.5 ms | 23.3 ms | **0.00%** (0 harmed) |
+| **20,000 Benign Web Requests** | Gate + Semantic + Split | 0.932 | 1,523 | 4.0 ms | 21.5 ms | **0.00%** (0 false alarms) |
+
+
+### 1.4 Extended Cache Datasets: Wikimedia CDN, User-Agent Cardinality & SecLists 1,084 Headers (`data_run1.md`, `allow_test.md`)
+
+#### A. Wikimedia CDN 2019 Trace (30,000 Requests, 26,710 Distinct URLs, 89% Misses, Mean 33.7 KB)
+| Trace Scenario | Protection Mode | Hit Ratio | Req / s | p50 Latency | p99 Latency | Origin Reqs | Harmed % |
+|---|---|---|---|---|---|---|---|
+| **Wikimedia CDN (Benign)** | Vulnerable Cache | 0.109 | 1,096 | 6.8 ms | 18.1 ms | 26,724 | 0.00% |
+| **Wikimedia CDN (Benign)** | Full-Screen Origin Verifier | 0.109 | 935 | 7.9 ms | 20.2 ms | 26,733 | 0.00% |
+| **Wikimedia CDN (Benign)** | Ghost Cache (Hardened) | 0.109 | 1,188 | 6.3 ms | 15.8 ms | 26,722 | 0.00% |
+| **Wikimedia CDN (Benign)** | Split: Regions + Late Check | 0.108 | 894 | 7.9 ms | 25.1 ms | 26,754 | 0.00% |
+| **Wikimedia CDN (Hottest 3 Attacked)** | Vulnerable Cache | 0.125 | 1,009 | 7.3 ms | 18.9 ms | 26,723 | **1.70%** (509 harmed) |
+| **Wikimedia CDN (Hottest 3 Attacked)** | Split: Regions + Late Check | 0.125 | 935 | 7.7 ms | 20.7 ms | 26,756 | **0.00%** (82 saved, 0 harmed) |
+
+#### B. User-Agent Header Cardinality & Keying Cost (intoli 10k Records, K=764 Strings, Entropy 5.61 bits)
+| Cache Key Strategy | Stream Distribution | Total Requests | Overall Hit Ratio | Steady-State Hit Ratio (Last 25%) | Theoretical Ceiling | Req / s |
+|---|---|---|---|---|---|---|
+| **Default Key (Header Unkeyed)** | Real Distribution | 40,000 | 1.000 | 1.000 | 0.981 | 1,826 |
+| **Keyed on User-Agent** | Real Distribution | 40,000 | 0.981 | 0.997 | 0.981 | 1,576 |
+| **Keyed on User-Agent** | Uniform over same K | 40,000 | 0.981 | 1.000 | 0.981 | 1,463 |
+| **Keyed on User-Agent** | Zipf s=1 over same K | 40,000 | 0.981 | 1.000 | 0.981 | 1,533 |
+
+#### C. Unkeyed-Header Attack Surface (SecLists Param Miner 1,084 Header Names & 152 Injection Payloads)
+| Architecture | Annotated Origin: Names Still Poisoned | Unannotated Origin: Names Still Poisoned | Payloads Still Poisoned (Annotated / Unannotated) |
+|---|---|---|---|
+| **Vulnerable Cache** | 1,084 / 1,084 (100%) | 1,084 / 1,084 (100%) | 152 / 152 |
+| **Header Allowlist Alone** | 7 / 1,084 (0.6%) | 7 / 1,084 (0.6%) | 0 / 0 |
+| **Full-Screen Origin Verifier** | 7 / 1,084 (0.6%) | 7 / 1,084 (0.6%) | 0 / 0 |
+| **Split-Delivery Alone (Regions)** | **0 / 1,084 (0.0%)** | 1,084 / 1,084 (100%) | **0 / 150** |
+| **Full SSE (Gated + Split + Cal)** | **0 / 1,084 (0.0%)** | **0 / 1,084 (0.0%)** | **0 / 0** |
+
+*Note: The 7 residual names bypassing the allowlist and the full-screen verifier are standard headers (accept, accept-encoding, accept-language, cache-control, cookie, referer, user-agent). Full SSE covers all 1,084 names.*
+
+### 1.5 Reverse Proxy Cache Performance-Security Tradeoff Index (PSTI)
+
+In reverse proxy architectures under cache poisoning attacks, security and performance cannot be evaluated in isolation. 
+- Fast, unprotected caches maximize throughput but suffer catastrophic poisoning rates (91.9% victim harm).
+- Coarse heuristics (like **error caching policies** or **header allowlisting**) seem attractive initially, but either leave major blind spots (reflected 200-OK attacks, unkeyed query parameters) or catastrophically break legitimate enterprise microservice traffic (stripping tenant, tracing, and auth headers).
+- Conservative full-screen origin verifiers eliminate poisoning but pay severe origin penalties (+32% origin load) by requiring clean baseline re-fetches.
+- **Full SSE** solves this tradeoff by combining self-healing split delivery (0 origin baseline calls) with adaptive front-gate calibration.
+
+#### Mathematical Formulation
+The **Performance-Security Tradeoff Index (PSTI)** computes the balanced harmonic mean between normalized **Performance ($P$)** and **Security & Compatibility ($S$)** scores on a $[0, 100]$ scale:
+
+1. **Performance Score ($P \in [0, 1]$):** Evaluates cache hit ratio preservation, origin load penalty, and benign request latency:
+   $$P = 0.35 \times \left(\frac{\text{HitRatio}}{\text{HitRatio}_{\text{base}}}\right) + 0.35 \times \left(\frac{1}{\text{OriginLoadMult}}\right) + 0.30 \times \min\left(1.0, \frac{\text{p50}_{\text{base}}}{\text{p50}}\right)$$
+2. **Security & Compatibility Score ($S \in [0, 1]$):** Evaluates harm prevention, avoidance of held/blocked user views, adaptive attacker suppression, and **legitimate header compatibility**:
+   $$S = 0.40 \times (1 - \text{Harmed\%}) + 0.20 \times (1 - \text{Held\%}) + 0.20 \times (1 - \text{AttackerPassRate}) + 0.20 \times \text{EnterpriseCompatibility}$$
+   *EnterpriseCompatibility measures whether legitimate microservice headers (`X-Tenant`, `Authorization`, `X-Api-Key`, `Traceparent`, `X-Forwarded-*`) pass intact without being stripped or causing false alarms.*
+3. **Composite Tradeoff Index ($TI \in [0, 100]$):**
+   $$TI = 100 \times \frac{2 \times P \times S}{P + S}$$
+
+#### Reverse Proxy Architecture Scorecard (10 Configurations)
+*Evaluated using pooled Docker test data from `data_results_allow.json`, `data_results_hdrs_allowlist.json`, `perf_stacked.md`, and `adversary_cal10.md`:*
+
+| # | Reverse Proxy Architecture | Hit Ratio | Origin Load Mult | p50 Latency | Harmed % | Legit Compat % | P-Score | S-Score | **Tradeoff Index (TI)** | Architectural Tradeoff & Failure Modes |
+|:---:|---|---|---|---|---|---|---|---|:---:|---|
+| **1** | **Full SSE (Gated + Split + Calibrated)** | 0.990 | **1.06x** (+6%) | 2.1 ms | **0.0%** | **100.0%** | **93.7%** | **98.0%** | **95.8** | **Pareto Optimal**: Zero harm, zero header breakage, self-healing cache with 0 origin baseline fetches. |
+| **2** | **Full-Screen Origin Verifier** | 0.991 | **1.32x** (+32%) | 1.7 ms | **0.0%** | **100.0%** | 91.5% | **99.9%** | **95.5** | **Heavy Origin Penalty**: Flawless protection, but origin must serve +32% duplicate baseline verifications. |
+| **3** | **STACKED (Allowlist + Error + Split)** | 0.990 | 1.06x (+6%) | 2.2 ms | **0.0%** | 8.3% *(Breaks 91.7%)* | 92.5% | 81.7% | **86.8** | **High Security / Low Compatibility**: 0% harm, but strips 11/12 legitimate enterprise headers. |
+| **4** | **Split-Delivery Alone (No Gates/Cal)** | 0.990 | 1.06x (+6%) | 2.1 ms | 3.1% | 100.0% | 93.7% | 76.1% | **84.0** | **High User Hold Rate**: Self-heals poisoned entries, but 15.3% of victim views get held when under active flood. |
+| **5** | **Ghost Cache (Hardened)** | 0.991 | 1.01x (+1%) | 2.0 ms | 54.1% | 100.0% | 96.7% | 67.0% | **79.2** | **Blind to 200-OK Poison**: Catches 400 header-oversize errors via origin verify, but blind to reflected body/script poison. |
+| **6** | **`no-cache-errors` Alone** | 0.985 | 1.03x (+3%) | 1.9 ms | 73.5% | 100.0% | 97.2% | 55.6% | **70.7** | **Incomplete Defense**: Stops 100% of 400 header-oversize errors, but provides 0% protection against reflected 200-OK or query attacks. |
+| **7** | **Allowlist + `no-cache-errors`** | 0.985 | 1.03x (+3%) | 2.0 ms | 45.0% | 8.3% *(Breaks 91.7%)* | 95.8% | 54.7% | **69.6** | **Double Flaw**: Bypassed by standard headers (`Cookie`, `User-Agent`) and query params, while breaking custom headers. |
+| **8** | **Front Gates Alone (Static)** | 0.932 | 1.01x (+1%) | 4.1 ms | 60.6% | 100.0% | 80.7% | 56.1% | **66.2** | **Adaptive Bypass**: Static gates suffer 98.1% probe bypass; high CPU latency per request. |
+| **9** | **Unprotected Nginx Cache** | 0.991 | 1.00x (0%) | 1.8 ms | 91.9% | 100.0% | 100.0% | 43.2% | **60.4** | **Vulnerable Baseline**: High throughput, but trivial denial of service via standard cache-poisoning vectors. |
+| **10** | **Header Allowlist Alone** | 0.991 | 1.00x (0%) | 1.9 ms | 75.0% | 8.3% *(Breaks 91.7%)* | 98.4% | 36.7% | **53.4** | **False Sense of Security**: Stops 1,077 unknown names, but vulnerable to standard headers & query strings; breaks APIs. |
+
+#### Tradeoff Index Visualization & Sweet Spot Proximity
+
+![PSTI Tradeoff Index and Sweet Spot Proximity](docs/figures/psti_sweet_spot_proximity.png)
+
+*Figure: (A) Reverse Proxy Performance-Security Tradeoff Index ($TI \in [0, 100]$) across 10 evaluated architectures. (B) **Sweet Spot Proximity Graph** displaying Euclidean distance ($d$) contours toward the ideal operational point $(P=100\%, S=100\%)$. Full SSE achieves the shortest distance to perfection ($d=6.6$) on the Pareto frontier. (C) Normalized Sweet Spot Proximity Score ranking ($100 \times [1 - d / (100\sqrt{2})]$).*
+
+| Architecture | Performance ($P$) | Security & Compat ($S$) | Euclidean Distance to Ideal $(100, 100)$ | **Sweet Spot Proximity Score** |
+|---|:---:|:---:|:---:|:---:|
+| **Full SSE (Gated + Split + Calibrated)** | **93.7%** | **98.0%** | **$d = 6.6$** | **95.3%** (#1 Shortest Distance) |
+| **Full-Screen Origin Verifier** | 91.5% | **99.9%** | $d = 8.5$ | **94.0%** (#2 Shortest Distance) |
+| **STACKED (Allowlist + Error + Split)** | 92.5% | 81.7% | $d = 19.8$ | **86.0%** |
+| **Split-Delivery Alone** | 93.7% | 76.1% | $d = 24.7$ | **82.5%** |
+| **Ghost Cache (Hardened)** | 96.7% | 67.0% | $d = 33.2$ | **76.5%** |
+| **`no-cache-errors` Alone** | 97.2% | 55.6% | $d = 44.5$ | **68.5%** |
+| **Allowlist + `no-cache-errors`** | 95.8% | 54.7% | $d = 45.5$ | **67.8%** |
+| **Front Gates Alone (Static)** | 80.7% | 56.1% | $d = 48.0$ | **66.1%** |
+| **Unprotected Nginx Cache** | 100.0% | 43.2% | $d = 56.8$ | **59.8%** |
+| **Header Allowlist Alone** | 98.4% | 36.7% | $d = 63.3$ | **55.2%** |
+
+```mermaid
+xychart-beta
+    title "Reverse Proxy Performance-Security Tradeoff Index (TI / 100)"
+    x-axis ["Allowlist Alone", "Unprotected", "Front Gates", "Allow+ErrCache", "ErrCache Alone", "Ghost Cache", "Split Alone", "Stacked Def", "Full-screen verifier", "Full SSE"]
+    y-axis "Tradeoff Index" 0 --> 100
+    bar [53.4, 60.4, 66.2, 69.6, 70.7, 79.2, 84.0, 86.8, 95.5, 95.8]
+```
+
+#### Pareto Tradeoff Landscape
+```mermaid
+flowchart TD
+    subgraph Heuristics["Coarse Heuristics & Vulnerable Baselines"]
+        H1["<b>Header Allowlisting Alone</b><br/>P: 98.4%, S: 36.7%, <b>TI: 53.4</b><br/><i>Breaks 91.7% enterprise headers; powerless against standard header poison</i>"]
+        H2["<b>Unprotected Baseline</b><br/>P: 100.0%, S: 43.2%, <b>TI: 60.4</b><br/><i>91.9% of user views poisoned</i>"]
+        H3["<b>no-cache-errors Alone</b><br/>P: 97.2%, S: 55.6%, <b>TI: 70.7</b><br/><i>Stops 400 header-oversize; 0% protection for 200-OK reflected/query poison</i>"]
+        H4["<b>Allowlist + no-cache-errors</b><br/>P: 95.8%, S: 54.7%, <b>TI: 69.6</b><br/><i>Still suffers 45% harm rate on standard headers</i>"]
+    end
+
+    subgraph Partial["Isolated / Static Defensive Mechanisms"]
+        P1["<b>Front Gates Alone (Static)</b><br/>P: 80.7%, S: 56.1%, <b>TI: 66.2</b><br/><i>High latency; 98.1% adaptive probe bypass</i>"]
+        P2["<b>Ghost Cache (Hardened)</b><br/>P: 96.7%, S: 67.0%, <b>TI: 79.2</b><br/><i>Origin verify catches 400 errors, misses 200-OK poison</i>"]
+        P3["<b>Split-Delivery Alone</b><br/>P: 93.7%, S: 76.1%, <b>TI: 84.0</b><br/><i>Self-healing; zero harm, but 15.3% user holds without gates</i>"]
+    end
+
+    subgraph Stacked["Stacked Heuristics"]
+        ST["<b>STACKED (Allowlist + Error + Split)</b><br/>P: 92.5%, S: 81.7%, <b>TI: 86.8</b><br/><i>Zero harm & fast, but fatal 91.7% enterprise header breakage</i>"]
+    end
+
+    subgraph ParetoFrontier["Pareto Frontier (Top Tier)"]
+        PF1["<b>Full-Screen Origin Verifier</b><br/>P: 91.5%, S: 99.9%, <b>TI: 95.5</b><br/><i>Flawless protection, but pays +32% origin load penalty</i>"]
+        PF2["<b>Full SSE (Gated + Split + Calibrated)</b><br/>P: 93.7%, S: 98.0%, <b>TI: 95.8</b><br/><i>Zero harm, 100% header compatibility, +6% origin load, self-healing</i>"]
+    end
+
+    H1 --> Partial
+    H2 --> Partial
+    H3 --> Partial
+    H4 --> ST
+    Partial --> ParetoFrontier
+    ST --> ParetoFrontier
+```
+
+#### Key Analytical Insights
+1. **Why Heuristic Header Allowlisting Fails in Practice:**
+   Stripping headers not on an explicit allowlist successfully neutralizes 1,077 raw header names (`data_results_hdrs_allowlist.json`). However, attackers do not need custom header names:
+   - Oversize `Cookie` or `Referer` (header oversize) are standard headers on any allowlist $\to$ **75.0% victim harm rate**.
+   - Reflected `User-Agent` or `Cookie` script/CSS injections are standard headers $\to$ **75.0% – 100% victim harm rate**.
+   - Unkeyed query parameters (`?utm_content=evil`) involve no headers at all $\to$ **75.0% victim harm rate**.
+   - Furthermore, in real enterprise microservice environments, allowlists break 11 out of 12 legitimate headers (`X-Tenant`, `Authorization`, `X-Api-Key`, `Traceparent`, `X-Forwarded-*`), destroying backend routing and authentication.
+
+2. **Why `no-cache-errors` Is Not Enough:**
+   Configuring reverse proxies with `proxy_cache_valid 400 500 0s;` completely stops 400 Bad Request header-oversize cache lockouts. But cache poisoning is not limited to HTTP error codes: reflected cache poisoning delivers **200 OK** containing malicious payloads, defacements, or broken scripts. Relying on `no-cache-errors` alone leaves the cache completely exposed to 200-OK attacks (73.5% overall harm rate).
+
+3. **Where Full SSE Sits on the Frontier:**
+   - **vs. Heuristics:** Full SSE doesn't rely on fragile name lists or status code assumptions. By testing response contract consistency between Part-A and Part-B via Split Delivery, it catches 200-OK reflections and unkeyed parameters with **0.0% victim harm** while maintaining **100% enterprise compatibility**.
+   - **vs. Heavy Origin Verifiers:** the full-screen origin verifier achieves high security by querying origin twice (sequential clean baseline fetch), paying a +32% origin load penalty. **Full SSE hits TI = 95.8** while reducing origin overhead by **5.3x** (+6% vs +32%) because Part-A answers from cache while Part-B verifies autonomously, feeding blame back into the Front Gate in real time.
+
+---
+
+# PART II: NETWORK IDS BENCHMARKS (CIC-IDS2017)
 
 **Source:** Official CIC-IDS2017 CSVs (`c01dsnap/CIC-IDS2017`), evaluated in `benchmark_sse_cic.py`.
 **Training setup:** 36,000 calm benign flows per dataset. Zero attack labels used during fit or streaming evaluation.
 
-### 1.1 Full Closed-Loop Detection Performance (Pass 1)
+### 2.1 Full Closed-Loop Detection Performance (Pass 1)
 | Dataset / Scenario | Stream Size (Benign / Attack) | Precision | Recall (TPR) | FPR | F1 Score | Accuracy | Gate / Split Event Counts |
 |---|---|---|---|---|---|---|---|
 | **Friday DDoS** | 39,031 / 80,969 | 0.9822 | **0.9995** | 0.0376 | **0.9908** | 0.9874 | `G:31,840` `S:1,411` `Cal:48,732` `Sp:410` |
@@ -63,7 +251,7 @@ flowchart TD
 
 *G: Caught by EntropyGate, S: Caught by SemanticSpace, Cal: Caught by Front Gate via Split blame signatures, Sp: Caught by SplitVerifier.*
 
-### 1.2 Per-Attack Recall Progression Across Stages
+### 2.2 Per-Attack Recall Progression Across Stages
 *Demonstrates how misses slipping past Part-A front gates trigger Split and teach the Front Gate in real time:*
 
 | Attack Class | Test Flow Count | Unfixed SSE (Original Port) | Part-A Gates Alone | Full Closed-Loop SSE (Pass 1) | Warmed Front Gate (Pass 2) |
@@ -79,7 +267,7 @@ flowchart TD
 | **Web XSS** | 582 | 2.2% | 2.9% | **2.9%** | 2.9% |
 | **Web SQL Injection** | 18 | 0.0% | 5.6% | **11.1%** | 11.1% |
 
-### 1.3 Ablation: Unfixed Bugs vs. Fixed Architecture (F1 Comparison)
+### 2.3 Ablation: Unfixed Bugs vs. Fixed Architecture (F1 Comparison)
 | Scenario | Unfixed Gates (Digit Folding) | Unfixed + Scalar Cal (`z - 0.25`) | Fixed Gate A Only | Fixed Gate A + B | Fixed Full Loop |
 |---|---|---|---|---|---|
 | **Friday DDoS** | 0.0000 | 0.8737 *(FPR: 59.9%)* | 0.5585 | 0.5652 | **0.9908** |
@@ -89,11 +277,11 @@ flowchart TD
 
 ---
 
-# PART II: CONVERTED RETRIEVAL BENCHMARKS (IR / RAG)
+# PART III: CONVERTED RETRIEVAL BENCHMARKS (IR / RAG)
 
 **Source:** `sse_scifact_results.json`, `sse_finetuned_results.json`, `sse_nq100k_results.json`.
 
-### 2.1 Domain-Specific Technical Corpus: BEIR SciFact (5,183 Docs, 300 Test Queries)
+### 3.1 Domain-Specific Technical Corpus: BEIR SciFact (5,183 Docs, 300 Test Queries)
 *SciFact contains heavy biomedical and biochemical acronyms/jargon.*
 
 | Method | Type / Architecture | Model Weights | nDCG@10 | Recall@10 | MRR@10 | Latency (p50) |
@@ -109,7 +297,7 @@ flowchart TD
 
 *Finding:* Plain `SemanticSpace 16k` (0.6762) outperforms MiniLM (0.6451) zero-shot on biomedical terminology. Document splitting and self-calibration do not help zero-shot retrieval (drops from 0.6762 to 0.6697).
 
-### 2.2 Open-Domain Natural Language QA: Natural Questions (100,000 Passages, 3,452 Queries)
+### 3.2 Open-Domain Natural Language QA: Natural Questions (100,000 Passages, 3,452 Queries)
 *NQ consists of broad Wikipedia passages and natural queries requiring semantic abstraction.*
 
 | Method | Index Footprint | Build Time | nDCG@10 | Recall@10 | MRR@10 | Latency (p50) |
@@ -129,14 +317,14 @@ flowchart TD
 
 ---
 
-# PART III: HTTP WEB-ATTACK IDS (SR-BH 2020)
+# PART IV: HTTP WEB-ATTACK IDS (SR-BH 2020)
 
 **Dataset:** SR-BH 2020 (Harvard Dataverse `doi:10.7910/DVN/OGOIXX`, *Computers & Security* 120, 2022): 907,813 real HTTP requests to a WordPress honeypot exposed for 12 days, 525,193 normal and 382,620 anomalous, 13 CAPEC classes (SQL injection alone: 250,311). Labels come from ModSecurity CRS with manual review, so they are not rule-independent ground truth. Every attack falls on 17–19 Jul 2020; 20–29 Jul is normal traffic only.
 **Code:** the `sse/` gates. Harness: `harness/` (`run_sse_srbh.py`, `replay_recal.py`, `replay_realtime.py`, `replay_twice.py`, `replay_learn.py`, `belt.py`, `csic_*.py`). Response columns (status code, length) are never read.
 **Fields:** *stock* = headers + parameter names only; *+fields* = also `@method`, `@path`, `@query`, `@body` scored as values by both gates (same algorithm, more inputs).
-**Teacher for all learning rows:** the dataset label, standing in for the split verifier's verdict. In deployment the verifier confirms only a subset of wrong verdicts, so learning from every one is the upper bound of what the loop can do.
+**Teacher for all learning rows:** the dataset label, standing in for the split verifier's verdict. In the cache proxy (Part I), split only confirms poisoned cache fills, so learning from every wrong verdict is the upper bound of what the loop can do.
 
-### 3.1 Zero-Shot (no learning, fit on benign only)
+### 4.1 Zero-Shot (no learning, fit on benign only)
 *Held-out requests from 17–19 Jul (20,000 benign / 21,881 attacks), gates fit on 10,000 benign from the same window. Detection at a fixed false-alarm rate on held-out benign.*
 
 | Setup | ROC-AUC | Detection @ 1% FPR | Detection @ 5% FPR | At its own thresholds (TPR / FPR) | p50 latency | Semantic memory |
@@ -148,7 +336,7 @@ flowchart TD
 
 *Time-disjoint variant (fit on 20–29 Jul benign, test 17–19 Jul):* drift breaks the shipped thresholds (the cascade flags 92.5% of normal requests stock, 98.1% +fields; AUC 0.64 / 0.69). The gates need a baseline from the period they guard.
 
-### 3.2 Real-Time Recalibration on Every Wrong Verdict (traffic never seen)
+### 4.2 Real-Time Recalibration on Every Wrong Verdict (traffic never seen)
 *Precalibrated on 17 Jul (150,710 requests), then a time-ordered replay of 18–19 Jul: 384,629 requests, 266,246 attacks. Same split and seed for every row. Mid-18 Jul, normal traffic changes; static false alarms jump from ~9% to ~52%.*
 
 | Detector | What feedback changes | Detection | False alarms | Precision | Wrong verdicts |
@@ -173,7 +361,7 @@ flowchart TD
 | Gates learn | 68.8% | 2.6% | 37,152 |
 | Gates learn + route thresholds | **80.3%** | 2.7% | **23,835** |
 
-### 3.3 Per-Class Detection (18–19 Jul replay)
+### 4.3 Per-Class Detection (18–19 Jul replay)
 
 | CAPEC class | Static (59.4% FPR) | Real-time thresholds (39.0% FPR) | Gates learn (5.7% FPR) | Gates learn + route (5.1% FPR) |
 |---|---|---|---|---|
@@ -192,7 +380,7 @@ flowchart TD
 
 *Columns are not at equal false-alarm rates: static and threshold-only per-class figures are inflated by flagging 39–59% of normal traffic. Gates-only is weakest where misses must teach (path traversal, protocol manipulation, response splitting): a miss moves only one field by 5%.*
 
-### 3.4 Speed and Size
+### 4.4 Speed and Size
 | Item | Value |
 |---|---|
 | Fit | 10–28 s on 10,000 benign requests |
@@ -202,8 +390,8 @@ flowchart TD
 | Real-time threshold table after 18–19 Jul | 354,785 overrides, 28.8 MB pickled (one entry per request seen: memorisation) |
 | Speed fixes, 2026-10-21 | per-value cache of `grams`/`unique` and `shannon`; pending store searched as one block; versioned per-field distance cache; block merge without per-row copies. 16× faster end to end (15 s vs 244 s per 50k requests), identical verdicts on a 6,000-request learning check |
 
-### 3.5 Conveyor Belt: Same Scanner, Same Belt, Calibrating Every Lap (convergence check)
-*The scanner saved at the end of lap 1 (3.2) keeps scanning the identical 18–19 Jul stream (384,629 requests) and keeps learning from every wrong verdict (`belt.py`). This measures convergence and retention on traffic it has already seen; it is not a benchmark on unseen traffic (Part IV, item 7). Lap 1 is the unseen-traffic figure.*
+### 4.5 Conveyor Belt: Same Scanner, Same Belt, Calibrating Every Lap (convergence check)
+*The scanner saved at the end of lap 1 (4.2) keeps scanning the identical 18–19 Jul stream (384,629 requests) and keeps learning from every wrong verdict (`belt.py`). This measures convergence and retention on traffic it has already seen; it is not a benchmark on unseen traffic (Part V, item 7). Lap 1 is the unseen-traffic figure.*
 
 | Lap | Gates + route: detection | False alarms | Precision | Wrong verdicts | Gates only: detection | False alarms | Wrong verdicts |
 |---|---|---|---|---|---|---|---|
@@ -214,9 +402,9 @@ flowchart TD
 | 5 | **98.4%** | **2.4%** | **98.9%** | **7,011** | — | — | — |
 | 6 | 98.2% | 2.5% | 98.9% | 7,775 *(stopped: no gain)* | — | — | — |
 
-*The hybrid converges and plateaus at lap 5 (98.4% / 2.4%): mistakes fall 90% from lap 1, and lap 6 adds nothing. A deterministic regeneration from the lap-1 snapshot reproduced laps 2 and 3 exactly (42,265 and 12,954 wrong verdicts); per-lap snapshots (`belt_gates_learn_route_lap<N>.pkl`, 300–500 MB each) are not included; `harness/belt.py` regenerates them. Gates-only diverges: false alarms teach strongly (value stored as normal, fired fields' weights cut) while a miss nudges one field by 5%, so each lap drains sensitivity (detection 68.0% → 44.7%). The route overrides supply the strong per-miss correction the gates lack; balancing the two updates is the main design fix left (3.8).*
+*The hybrid converges and plateaus at lap 5 (98.4% / 2.4%): mistakes fall 90% from lap 1, and lap 6 adds nothing. A deterministic regeneration from the lap-1 snapshot reproduced laps 2 and 3 exactly (42,265 and 12,954 wrong verdicts); per-lap snapshots (`belt_gates_learn_route_lap<N>.pkl`, 300–500 MB each) are not included; `harness/belt.py` regenerates them. Gates-only diverges: false alarms teach strongly (value stored as normal, fired fields' weights cut) while a miss nudges one field by 5%, so each lap drains sensitivity (detection 68.0% → 44.7%). The route overrides supply the strong per-miss correction the gates lack; balancing the two updates is the main design fix left (4.8).*
 
-### 3.6 Cross-Site Transfer: CSIC 2010 (a different web app)
+### 4.6 Cross-Site Transfer: CSIC 2010 (a different web app)
 *CSIC 2010: 61,065 test requests to a Spanish e-shop (36,000 normal, 25,065 attacks), seeded random order (no timestamps), mapped onto the SR-BH field schema. One lap each, learning from every wrong verdict (`csic_lap.py`).*
 
 | Scanner | Normal-traffic baseline | Mode | Detection | False alarms | Precision | Wrong verdicts |
@@ -260,16 +448,16 @@ flowchart TD
 | 7 | 93.6% | 5.2% | 92.6% | 3,478 | 94.0% | 5.0% | 93.0% | 3,290 | 97.9% | 2.0% | 97.1% | 1,257 |
 | 8 | 94.3% | 4.7% | 93.3% | 3,120 | 94.6% | 4.4% | 93.7% | 2,937 | 98.3% | 1.5% | 97.8% | 975 |
 
-*Brand new and rebaselined track each other (mistakes halve over 8 laps, ~10% per lap, not yet converged). The scanner carried over unchanged starts worst on unseen traffic but converges fastest on the repeated belt, overtaking both by lap 4. Likely cause (not yet measured): its WordPress baseline flagged nearly all CSIC traffic at first, so laps 1–3 stored most of this belt's normal values verbatim and set per-path thresholds, which then fit the repeated belt closely. Fastest fit to a belt it keeps seeing is a different property from performance on new traffic (lap 1), where it is the worst. Laps 2+ are convergence checks (Part IV, item 7).*
+*Brand new and rebaselined track each other (mistakes halve over 8 laps, ~10% per lap, not yet converged). The scanner carried over unchanged starts worst on unseen traffic but converges fastest on the repeated belt, overtaking both by lap 4. Likely cause (not yet measured): its WordPress baseline flagged nearly all CSIC traffic at first, so laps 1–3 stored most of this belt's normal values verbatim and set per-path thresholds, which then fit the repeated belt closely. Fastest fit to a belt it keeps seeing is a different property from performance on new traffic (lap 1), where it is the worst. Laps 2+ are convergence checks (Part V, item 7).*
 
-### 3.7 What These Results Say About SSE
+### 4.7 What These Results Say About SSE
 1. **The self-calibrating loop is what makes it work.** The same ~400 lines go from 24% detection at 1% false alarms (frozen) to 76.7% detection at 5.1% false alarms and 97.1% precision on unseen real honeypot traffic once the gates recalibrate themselves from failures. Moving only route thresholds reached 65.7% at 39.0%.
 2. **It adapts to drift on its own.** When normal traffic shifted on 18 Jul, frozen gates went to 52–59% false alarms; gate learning stayed near 4–6%, because a false alarm teaches every route what normal looks like.
 3. **It converges on traffic it keeps seeing** (97.1% / 2.6% by lap 4) when misses and false alarms both teach strongly (hybrid). With gates only, the lopsided updates make it drift towards silence.
 4. **Normal traffic is site-specific; learn it per site.** A scanner trained on one site is useless frozen on another. The right deployment is a fresh benign baseline per site, with learned attack knowledge carried over.
-5. **Caveats.** The teacher is the dataset label (in deployment the split verifier confirms only a subset of wrong verdicts), so these are upper bounds of the loop. The trained state is 95–105 MB (dense 3-gram matrices). 5% false alarms is pre-filter grade, not blocking grade.
+5. **Caveats.** The teacher is the dataset label (in the cache proxy of Part I, split-delivery only confirms poisoned fills), so these are upper bounds of the loop. The trained state is 95–105 MB (dense 3-gram matrices). 5% false alarms is pre-filter grade, not blocking grade.
 
-### 3.8 Open Items
+### 4.8 Open Items
 1. Balance the updates: a miss should push as hard as a false alarm (larger miss rate, or sharpen every above-normal field), so gates-only stops draining.
 2. Automatic environment detection (Host novelty / false-alarm spike) that triggers the rebaseline above.
 3. Store the learned and fitted values sparsely (the matrices are ~1–2% dense) to shrink the 95–105 MB state.
@@ -277,7 +465,7 @@ flowchart TD
 
 ---
 
-# PART IV: AUDIT & EXCLUSIONS RECORD
+# PART V: AUDIT & EXCLUSIONS RECORD
 
 The following previously referenced numbers are explicitly excluded from verified benchmarks due to methodological contamination:
 
@@ -285,6 +473,6 @@ The following previously referenced numbers are explicitly excluded from verifie
 2. **CIC-IDS2017 "Pass 2 Warmed Gates":** Replayed identical test streams after the model adapted to them in Pass 1. Retained only as an internal mechanism check; not valid as single-pass benchmark scores.
 3. **WebAttacks "~86% Estimated Recall":** Single-feature diagnostic only; not a verified full-stream model run.
 4. **Early CSIC 2010 Custom IDS Scripts:** Ad-hoc synthetic anomaly scripts with invalid class balancing; removed.
-5. **SR-BH 2020 "Pass 2" replays (96.3% detection / 7.2% false alarms frozen; 98.9% / 4.1% learning):** the precalibrated real-time threshold instance re-run over the identical 18–19 Jul stream it had already been corrected on (354,785 overrides for 384,629 requests). Mechanism check for retention only; the single-pass figure is 65.7% / 39.0% (Part III, 3.2).
+5. **SR-BH 2020 "Pass 2" replays (96.3% detection / 7.2% false alarms frozen; 98.9% / 4.1% learning):** the precalibrated real-time threshold instance re-run over the identical 18–19 Jul stream it had already been corrected on (354,785 overrides for 384,629 requests). Mechanism check for retention only; the single-pass figure is 65.7% / 39.0% (Part IV, 4.2).
 6. **Early bqboost CSIC 2010 IDS results (`test_sse_cyber_ids.py`, `train_and_test_sse_ids.py`, `cyber_data/`):** a separate re-implementation whose route tightening was added to every request on a route (44.5% false alarms after "training"); deleted by the owner.
-7. **SR-BH 2020 and CSIC 2010 conveyor-belt laps 2+ (Part III, 3.5–3.6; e.g. SR-BH 98.4% / 2.4% at lap 5, CSIC 98.3% / 1.5% at lap 8):** the same scanner re-scanning the stream it has already been corrected on. Convergence and retention check only; the unseen-traffic figure is lap 1 (76.7% / 5.1%).
+7. **SR-BH 2020 and CSIC 2010 conveyor-belt laps 2+ (Part IV, 4.5–4.6; e.g. SR-BH 98.4% / 2.4% at lap 5, CSIC 98.3% / 1.5% at lap 8):** the same scanner re-scanning the stream it has already been corrected on. Convergence and retention check only; the unseen-traffic figure is lap 1 (76.7% / 5.1%).

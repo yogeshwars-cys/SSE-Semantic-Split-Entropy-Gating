@@ -1,0 +1,442 @@
+{
+ "NASA-HTTP 1995|benign replay|vulnerable cache": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 49.54015579599945,
+  "origin": {
+   "requests": 2888,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 27112,
+   "misses": 2888,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 2888
+  }
+ },
+ "NASA-HTTP 1995|benign replay|v1 full screen + browser flag": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 52.04446418200132,
+  "origin": {
+   "requests": 2928,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 27072,
+   "misses": 2928,
+   "rejected": 0,
+   "baseline": 0,
+   "flips": 0,
+   "refused_flags": 0,
+   "neutralized": 0,
+   "upstream": 2928,
+   "reports": 0,
+   "cells": 0,
+   "cell_hits": 0,
+   "promoted": 0,
+   "refused_promotions": 0,
+   "evicted": 0,
+   "strikes_tracked": 0,
+   "cell_bytes": 0
+  }
+ },
+ "NASA-HTTP 1995|benign replay|ghost cache (hardened) + gate": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 52.02482862400029,
+  "origin": {
+   "requests": 2926,
+   "verify": 0,
+   "health": 26
+  },
+  "proxy": {
+   "hits": 27074,
+   "misses": 2926,
+   "upstream": 2926,
+   "heartbeats": 27,
+   "purged": 0,
+   "purge_refused": 0,
+   "verified_marked": 0,
+   "enveloped": 0,
+   "pulse": 200
+  }
+ },
+ "NASA-HTTP 1995|benign replay|split: regions first + late check": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 49.32212937300028,
+  "origin": {
+   "requests": 2881,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 27119,
+   "misses": 2881,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 2881
+  }
+ },
+ "NASA-HTTP 1995|benign replay|STACKED: allowlist + no-cache-errors + split regions": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 49.762259310000445,
+  "origin": {
+   "requests": 2894,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 27106,
+   "misses": 2894,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 2894
+  }
+ },
+ "NASA-HTTP 1995|under attack (attacker poisons the 3 hottest URLs)|vulnerable cache": {
+  "n": 30000,
+  "clean": 28961,
+  "saved": 0,
+  "harmed": 1039,
+  "secs": 51.52724281799965,
+  "origin": {
+   "requests": 2908,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 28073,
+   "misses": 2908,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 2908
+  }
+ },
+ "NASA-HTTP 1995|under attack (attacker poisons the 3 hottest URLs)|v1 full screen + browser flag": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 52.32141458299884,
+  "origin": {
+   "requests": 2932,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 28059,
+   "misses": 2930,
+   "rejected": 2,
+   "baseline": 2,
+   "flips": 0,
+   "refused_flags": 0,
+   "neutralized": 0,
+   "upstream": 2932,
+   "reports": 0,
+   "cells": 0,
+   "cell_hits": 0,
+   "promoted": 0,
+   "refused_promotions": 0,
+   "evicted": 0,
+   "strikes_tracked": 0,
+   "cell_bytes": 0
+  }
+ },
+ "NASA-HTTP 1995|under attack (attacker poisons the 3 hottest URLs)|ghost cache (hardened) + gate": {
+  "n": 30000,
+  "clean": 28423,
+  "saved": 0,
+  "harmed": 1577,
+  "secs": 51.83611448800002,
+  "origin": {
+   "requests": 2913,
+   "verify": 0,
+   "health": 25
+  },
+  "proxy": {
+   "hits": 28071,
+   "misses": 2913,
+   "upstream": 2913,
+   "heartbeats": 26,
+   "purged": 0,
+   "purge_refused": 0,
+   "verified_marked": 0,
+   "enveloped": 0,
+   "pulse": 200
+  }
+ },
+ "NASA-HTTP 1995|under attack (attacker poisons the 3 hottest URLs)|split: regions first + late check": {
+  "n": 30000,
+  "clean": 29912,
+  "saved": 88,
+  "harmed": 0,
+  "secs": 50.16767487600009,
+  "origin": {
+   "requests": 2905,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 28053,
+   "misses": 2905,
+   "flips": 5,
+   "reports": 88,
+   "upstream": 2905
+  }
+ },
+ "NASA-HTTP 1995|under attack (attacker poisons the 3 hottest URLs)|STACKED: allowlist + no-cache-errors + split regions": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 49.94022650400075,
+  "origin": {
+   "requests": 2904,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 28044,
+   "misses": 2904,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 2904
+  }
+ },
+ "csic|normal|vulnerable cache": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 5.894108436999886,
+  "origin": {
+   "requests": 1434,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 6566,
+   "misses": 1434,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1434
+  }
+ },
+ "csic|normal|v1 full screen + browser flag": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 6.775211316000423,
+  "origin": {
+   "requests": 2868,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 6566,
+   "misses": 1434,
+   "rejected": 0,
+   "baseline": 1434,
+   "flips": 0,
+   "refused_flags": 0,
+   "neutralized": 0,
+   "upstream": 2868,
+   "reports": 0,
+   "cells": 0,
+   "cell_hits": 0,
+   "promoted": 0,
+   "refused_promotions": 0,
+   "evicted": 0,
+   "strikes_tracked": 0,
+   "cell_bytes": 0
+  }
+ },
+ "csic|normal|ghost cache (hardened) + gate": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 5.718775364000976,
+  "origin": {
+   "requests": 1434,
+   "verify": 0,
+   "health": 2
+  },
+  "proxy": {
+   "hits": 6566,
+   "misses": 1434,
+   "upstream": 1434,
+   "heartbeats": 3,
+   "purged": 0,
+   "purge_refused": 0,
+   "verified_marked": 0,
+   "enveloped": 0,
+   "pulse": 200
+  }
+ },
+ "csic|normal|split: regions first + late check": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 6.201534187999641,
+  "origin": {
+   "requests": 1434,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 6566,
+   "misses": 1434,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1434
+  }
+ },
+ "csic|normal|STACKED: allowlist + no-cache-errors + split regions": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 6.1039492589989095,
+  "origin": {
+   "requests": 1434,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 6566,
+   "misses": 1434,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1434
+  }
+ },
+ "csic|anomalous (attack payloads)|vulnerable cache": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 8.130665141001373,
+  "origin": {
+   "requests": 5033,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 2967,
+   "misses": 5033,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 5033
+  }
+ },
+ "csic|anomalous (attack payloads)|v1 full screen + browser flag": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 11.310590897999646,
+  "origin": {
+   "requests": 10066,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 2967,
+   "misses": 5033,
+   "rejected": 0,
+   "baseline": 5033,
+   "flips": 0,
+   "refused_flags": 0,
+   "neutralized": 0,
+   "upstream": 10066,
+   "reports": 0,
+   "cells": 0,
+   "cell_hits": 0,
+   "promoted": 0,
+   "refused_promotions": 0,
+   "evicted": 0,
+   "strikes_tracked": 0,
+   "cell_bytes": 0
+  }
+ },
+ "csic|anomalous (attack payloads)|ghost cache (hardened) + gate": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 6.495941567000045,
+  "origin": {
+   "requests": 5033,
+   "verify": 0,
+   "health": 3
+  },
+  "proxy": {
+   "hits": 2967,
+   "misses": 5033,
+   "upstream": 5033,
+   "heartbeats": 4,
+   "purged": 0,
+   "purge_refused": 0,
+   "verified_marked": 0,
+   "enveloped": 0,
+   "pulse": 200
+  }
+ },
+ "csic|anomalous (attack payloads)|split: regions first + late check": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 8.388344811000934,
+  "origin": {
+   "requests": 5033,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 2967,
+   "misses": 5033,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 5033
+  }
+ },
+ "csic|anomalous (attack payloads)|STACKED: allowlist + no-cache-errors + split regions": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 8.82069166600013,
+  "origin": {
+   "requests": 5033,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 2967,
+   "misses": 5033,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 5033
+  }
+ }
+}

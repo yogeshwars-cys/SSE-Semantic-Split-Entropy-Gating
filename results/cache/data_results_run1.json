@@ -1,0 +1,640 @@
+{
+ "NASA-HTTP 1995|benign replay|vulnerable cache": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 48.958020747000774,
+  "origin": {
+   "requests": 2881,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 27119,
+   "misses": 2881,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 2881
+  }
+ },
+ "NASA-HTTP 1995|benign replay|v1 full screen + browser flag": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 49.178157858001214,
+  "origin": {
+   "requests": 2877,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 27123,
+   "misses": 2877,
+   "rejected": 0,
+   "baseline": 0,
+   "flips": 0,
+   "refused_flags": 0,
+   "neutralized": 0,
+   "upstream": 2877,
+   "reports": 0,
+   "cells": 0,
+   "cell_hits": 0,
+   "promoted": 0,
+   "refused_promotions": 0,
+   "evicted": 0,
+   "strikes_tracked": 0,
+   "cell_bytes": 0
+  }
+ },
+ "NASA-HTTP 1995|benign replay|ghost cache (hardened) + gate": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 48.86507113500011,
+  "origin": {
+   "requests": 2870,
+   "verify": 0,
+   "health": 24
+  },
+  "proxy": {
+   "hits": 27130,
+   "misses": 2870,
+   "upstream": 2870,
+   "heartbeats": 25,
+   "purged": 0,
+   "purge_refused": 0,
+   "verified_marked": 0,
+   "enveloped": 0,
+   "pulse": 200
+  }
+ },
+ "NASA-HTTP 1995|benign replay|split: regions first + late check": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 47.347354829000324,
+  "origin": {
+   "requests": 2855,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 27145,
+   "misses": 2855,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 2855
+  }
+ },
+ "NASA-HTTP 1995|under attack (attacker poisons the 3 hottest URLs)|vulnerable cache": {
+  "n": 30000,
+  "clean": 28890,
+  "saved": 0,
+  "harmed": 1110,
+  "secs": 49.31119964399841,
+  "origin": {
+   "requests": 2894,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 28055,
+   "misses": 2894,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 2894
+  }
+ },
+ "NASA-HTTP 1995|under attack (attacker poisons the 3 hottest URLs)|v1 full screen + browser flag": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 49.614661514000545,
+  "origin": {
+   "requests": 2909,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 28046,
+   "misses": 2908,
+   "rejected": 1,
+   "baseline": 1,
+   "flips": 0,
+   "refused_flags": 0,
+   "neutralized": 0,
+   "upstream": 2909,
+   "reports": 0,
+   "cells": 0,
+   "cell_hits": 0,
+   "promoted": 0,
+   "refused_promotions": 0,
+   "evicted": 0,
+   "strikes_tracked": 0,
+   "cell_bytes": 0
+  }
+ },
+ "NASA-HTTP 1995|under attack (attacker poisons the 3 hottest URLs)|ghost cache (hardened) + gate": {
+  "n": 30000,
+  "clean": 28237,
+  "saved": 0,
+  "harmed": 1763,
+  "secs": 49.39410052099993,
+  "origin": {
+   "requests": 2890,
+   "verify": 0,
+   "health": 24
+  },
+  "proxy": {
+   "hits": 28062,
+   "misses": 2890,
+   "upstream": 2890,
+   "heartbeats": 25,
+   "purged": 0,
+   "purge_refused": 0,
+   "verified_marked": 0,
+   "enveloped": 0,
+   "pulse": 200
+  }
+ },
+ "NASA-HTTP 1995|under attack (attacker poisons the 3 hottest URLs)|split: regions first + late check": {
+  "n": 30000,
+  "clean": 29971,
+  "saved": 29,
+  "harmed": 0,
+  "secs": 47.61835739900016,
+  "origin": {
+   "requests": 2870,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 28050,
+   "misses": 2870,
+   "flips": 2,
+   "reports": 29,
+   "upstream": 2870
+  }
+ },
+ "Wikimedia CDN 2019 (text)|benign replay|vulnerable cache": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 27.364311908000673,
+  "origin": {
+   "requests": 26724,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 3276,
+   "misses": 26724,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 26724
+  }
+ },
+ "Wikimedia CDN 2019 (text)|benign replay|v1 full screen + browser flag": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 32.075151250999625,
+  "origin": {
+   "requests": 26733,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 3267,
+   "misses": 26733,
+   "rejected": 0,
+   "baseline": 0,
+   "flips": 0,
+   "refused_flags": 0,
+   "neutralized": 0,
+   "upstream": 26733,
+   "reports": 0,
+   "cells": 0,
+   "cell_hits": 0,
+   "promoted": 0,
+   "refused_promotions": 0,
+   "evicted": 0,
+   "strikes_tracked": 0,
+   "cell_bytes": 0
+  }
+ },
+ "Wikimedia CDN 2019 (text)|benign replay|ghost cache (hardened) + gate": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 25.251369231000353,
+  "origin": {
+   "requests": 26722,
+   "verify": 0,
+   "health": 12
+  },
+  "proxy": {
+   "hits": 3278,
+   "misses": 26722,
+   "upstream": 26722,
+   "heartbeats": 13,
+   "purged": 0,
+   "purge_refused": 0,
+   "verified_marked": 0,
+   "enveloped": 0,
+   "pulse": 200
+  }
+ },
+ "Wikimedia CDN 2019 (text)|benign replay|split: regions first + late check": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 33.53851883399875,
+  "origin": {
+   "requests": 26754,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 3246,
+   "misses": 26754,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 26754
+  }
+ },
+ "Wikimedia CDN 2019 (text)|under attack (attacker poisons the 3 hottest URLs)|vulnerable cache": {
+  "n": 30000,
+  "clean": 29491,
+  "saved": 0,
+  "harmed": 509,
+  "secs": 29.720418392000283,
+  "origin": {
+   "requests": 26723,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 3824,
+   "misses": 26723,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 26723
+  }
+ },
+ "Wikimedia CDN 2019 (text)|under attack (attacker poisons the 3 hottest URLs)|v1 full screen + browser flag": {
+  "n": 30000,
+  "clean": 30000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 30.58463236500029,
+  "origin": {
+   "requests": 26745,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 3822,
+   "misses": 26735,
+   "rejected": 10,
+   "baseline": 10,
+   "flips": 0,
+   "refused_flags": 0,
+   "neutralized": 0,
+   "upstream": 26745,
+   "reports": 0,
+   "cells": 0,
+   "cell_hits": 0,
+   "promoted": 0,
+   "refused_promotions": 0,
+   "evicted": 0,
+   "strikes_tracked": 0,
+   "cell_bytes": 0
+  }
+ },
+ "Wikimedia CDN 2019 (text)|under attack (attacker poisons the 3 hottest URLs)|ghost cache (hardened) + gate": {
+  "n": 30000,
+  "clean": 29491,
+  "saved": 0,
+  "harmed": 509,
+  "secs": 23.993009046000225,
+  "origin": {
+   "requests": 26724,
+   "verify": 0,
+   "health": 12
+  },
+  "proxy": {
+   "hits": 3726,
+   "misses": 26724,
+   "upstream": 26724,
+   "heartbeats": 13,
+   "purged": 0,
+   "purge_refused": 0,
+   "verified_marked": 0,
+   "enveloped": 0,
+   "pulse": 200
+  }
+ },
+ "Wikimedia CDN 2019 (text)|under attack (attacker poisons the 3 hottest URLs)|split: regions first + late check": {
+  "n": 30000,
+  "clean": 29918,
+  "saved": 82,
+  "harmed": 0,
+  "secs": 32.07970323900008,
+  "origin": {
+   "requests": 26756,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 3825,
+   "misses": 26756,
+   "flips": 20,
+   "reports": 82,
+   "upstream": 26756
+  }
+ },
+ "ua|distribution": {
+  "K": 764,
+  "entropy_bits": 5.609329166014104,
+  "effective": 48.81758987909649,
+  "top1": 18.63976496566224,
+  "top10": 55.57770575864526,
+  "top100": 92.16982586216209
+ },
+ "ua|default key (header unkeyed)|real distribution": {
+  "hit": 0.999975,
+  "steady": 1.0,
+  "first_sight_share": 0.0189
+ },
+ "ua|keyed on User-Agent|real distribution": {
+  "hit": 0.98105,
+  "steady": 0.9971,
+  "first_sight_share": 0.0189
+ },
+ "ua|keyed on User-Agent|uniform over same K": {
+  "hit": 0.98075,
+  "steady": 1.0,
+  "first_sight_share": 0.0191
+ },
+ "ua|keyed on User-Agent|Zipf s=1 over same K": {
+  "hit": 0.980725,
+  "steady": 1.0,
+  "first_sight_share": 0.0191
+ },
+ "csic|normal|vulnerable cache": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 5.706629680000333,
+  "origin": {
+   "requests": 1434,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 6566,
+   "misses": 1434,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1434
+  }
+ },
+ "csic|normal|v1 full screen + browser flag": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 8.10802639999929,
+  "origin": {
+   "requests": 2868,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 6566,
+   "misses": 1434,
+   "rejected": 0,
+   "baseline": 1434,
+   "flips": 0,
+   "refused_flags": 0,
+   "neutralized": 0,
+   "upstream": 2868,
+   "reports": 0,
+   "cells": 0,
+   "cell_hits": 0,
+   "promoted": 0,
+   "refused_promotions": 0,
+   "evicted": 0,
+   "strikes_tracked": 0,
+   "cell_bytes": 0
+  }
+ },
+ "csic|normal|ghost cache (hardened) + gate": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 7.210191658001349,
+  "origin": {
+   "requests": 1434,
+   "verify": 0,
+   "health": 3
+  },
+  "proxy": {
+   "hits": 6566,
+   "misses": 1434,
+   "upstream": 1434,
+   "heartbeats": 4,
+   "purged": 0,
+   "purge_refused": 0,
+   "verified_marked": 0,
+   "enveloped": 0,
+   "pulse": 200
+  }
+ },
+ "csic|normal|split: regions first + late check": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 5.5390131269996346,
+  "origin": {
+   "requests": 1434,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 6566,
+   "misses": 1434,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 1434
+  }
+ },
+ "csic|anomalous (attack payloads)|vulnerable cache": {
+  "n": 8000,
+  "clean": 7882,
+  "saved": 0,
+  "harmed": 118,
+  "secs": 9.173864840999158,
+  "origin": {
+   "requests": 5033,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 2967,
+   "misses": 5033,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 5033
+  }
+ },
+ "csic|anomalous (attack payloads)|v1 full screen + browser flag": {
+  "n": 8000,
+  "clean": 7882,
+  "saved": 0,
+  "harmed": 118,
+  "secs": 14.714941798998552,
+  "origin": {
+   "requests": 10066,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 2967,
+   "misses": 5033,
+   "rejected": 0,
+   "baseline": 5033,
+   "flips": 0,
+   "refused_flags": 0,
+   "neutralized": 0,
+   "upstream": 10066,
+   "reports": 118,
+   "cells": 0,
+   "cell_hits": 0,
+   "promoted": 0,
+   "refused_promotions": 0,
+   "evicted": 0,
+   "strikes_tracked": 0,
+   "cell_bytes": 0
+  }
+ },
+ "csic|anomalous (attack payloads)|ghost cache (hardened) + gate": {
+  "n": 8000,
+  "clean": 7882,
+  "saved": 0,
+  "harmed": 118,
+  "secs": 6.2596636100006435,
+  "origin": {
+   "requests": 5033,
+   "verify": 0,
+   "health": 3
+  },
+  "proxy": {
+   "hits": 2967,
+   "misses": 5033,
+   "upstream": 5033,
+   "heartbeats": 4,
+   "purged": 0,
+   "purge_refused": 0,
+   "verified_marked": 0,
+   "enveloped": 0,
+   "pulse": 200
+  }
+ },
+ "csic|anomalous (attack payloads)|split: regions first + late check": {
+  "n": 8000,
+  "clean": 8000,
+  "saved": 0,
+  "harmed": 0,
+  "secs": 9.037349832999098,
+  "origin": {
+   "requests": 5033,
+   "verify": 0,
+   "health": 0
+  },
+  "proxy": {
+   "hits": 2967,
+   "misses": 5033,
+   "flips": 0,
+   "reports": 0,
+   "upstream": 5033
+  }
+ },
+ "hdrs|refl|vulnerable cache": {
+  "poisonable": 1084,
+  "harmed": 1084,
+  "saved": 0,
+  "payload_harmed": 152,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|refl|v1 full screen + browser flag": {
+  "poisonable": 1084,
+  "harmed": 7,
+  "saved": 0,
+  "payload_harmed": 0,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|refl|ghost cache (hardened) + gate": {
+  "poisonable": 1084,
+  "harmed": 1084,
+  "saved": 0,
+  "payload_harmed": 152,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|refl|split: regions first + late check": {
+  "poisonable": 1084,
+  "harmed": 0,
+  "saved": 1084,
+  "payload_harmed": 0,
+  "payload_saved": 152,
+  "payloads": 152
+ },
+ "hdrs|raw|vulnerable cache": {
+  "poisonable": 1084,
+  "harmed": 1084,
+  "saved": 0,
+  "payload_harmed": 152,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|raw|v1 full screen + browser flag": {
+  "poisonable": 1084,
+  "harmed": 7,
+  "saved": 0,
+  "payload_harmed": 0,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|raw|ghost cache (hardened) + gate": {
+  "poisonable": 1084,
+  "harmed": 1084,
+  "saved": 0,
+  "payload_harmed": 152,
+  "payload_saved": 0,
+  "payloads": 152
+ },
+ "hdrs|raw|split: regions first + late check": {
+  "poisonable": 1084,
+  "harmed": 1084,
+  "saved": 0,
+  "payload_harmed": 150,
+  "payload_saved": 2,
+  "payloads": 152
+ }
+}
