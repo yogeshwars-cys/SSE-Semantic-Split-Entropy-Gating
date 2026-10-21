@@ -1,0 +1,99 @@
+scifact: 5,183 docs; fit 648, val 161 (training queries), test 300
+built in 8s; sizes MB {'postings_full': 3.5, 'postings_a': 2.5, 'postings_b': 2.8, 'semantic': 25.8, 'learned_gains': 0.3}
+untrained: val nDCG 0.6857  test nDCG 0.6787  search p50 3.5 ms
+full                 lap  1  misses  408 split +   54 recall  val nDCG 0.6957 (+0.0100)  4s
+full                 lap  2  misses  409 split +   49 recall  val nDCG 0.6895 (+0.0037)  4s
+full                 lap  3  misses  389 split +   47 recall  val nDCG 0.6990 (+0.0132)  4s
+full                 lap  4  misses  390 split +   44 recall  val nDCG 0.6956 (+0.0099)  4s
+full                 lap  5  misses  375 split +   45 recall  val nDCG 0.6966 (+0.0109)  3s
+full                 lap  6  misses  359 split +   45 recall  val nDCG 0.6968 (+0.0111)  4s
+full                 lap  7  misses  362 split +   43 recall  val nDCG 0.6977 (+0.0120)  4s
+full                 lap  8  misses  357 split +   46 recall  val nDCG 0.7025 (+0.0168)  4s
+full                 lap  9  misses  347 split +   48 recall  val nDCG 0.6988 (+0.0131)  4s
+full                 lap 10  misses  348 split +   47 recall  val nDCG 0.6943 (+0.0086)  4s
+full, big split step lap  1  misses  360 split +   56 recall  val nDCG 0.6966 (+0.0109)  4s
+full, big split step lap  2  misses  328 split +   52 recall  val nDCG 0.7017 (+0.0160)  4s
+full, big split step lap  3  misses  325 split +   50 recall  val nDCG 0.6936 (+0.0079)  3s
+full, big split step lap  4  misses  305 split +   49 recall  val nDCG 0.7030 (+0.0173)  4s
+full, big split step lap  5  misses  298 split +   48 recall  val nDCG 0.7061 (+0.0204)  4s
+full, big split step lap  6  misses  299 split +   48 recall  val nDCG 0.7061 (+0.0204)  3s
+full, big split step lap  7  misses  296 split +   45 recall  val nDCG 0.7107 (+0.0250)  3s
+full, big split step lap  8  misses  287 split +   45 recall  val nDCG 0.7109 (+0.0252)  3s
+full, big split step lap  9  misses  287 split +   46 recall  val nDCG 0.7059 (+0.0202)  3s
+full, big split step lap 10  misses  271 split +   51 recall  val nDCG 0.7173 (+0.0316)  3s
+split only           lap  1  misses  400 split +   59 recall  val nDCG 0.6921 (+0.0063)  4s
+split only           lap  2  misses  418 split +   59 recall  val nDCG 0.6885 (+0.0028)  4s
+split only           lap  3  misses  422 split +   59 recall  val nDCG 0.6941 (+0.0084)  4s
+split only           lap  4  misses  419 split +   59 recall  val nDCG 0.6941 (+0.0083)  4s
+split only           lap  5  misses  422 split +   59 recall  val nDCG 0.6949 (+0.0092)  4s
+split only           lap  6  misses  418 split +   59 recall  val nDCG 0.6943 (+0.0086)  4s
+split only           lap  7  misses  421 split +   59 recall  val nDCG 0.6940 (+0.0083)  4s
+split only           lap  8  misses  417 split +   59 recall  val nDCG 0.6941 (+0.0084)  4s
+split only           lap  9  misses  422 split +   59 recall  val nDCG 0.6921 (+0.0064)  4s
+split only           lap 10  misses  417 split +   59 recall  val nDCG 0.6935 (+0.0078)  4s
+gates only           lap  1  misses  266 split +   55 recall  val nDCG 0.7064 (+0.0207)  4s
+gates only           lap  2  misses  228 split +   53 recall  val nDCG 0.7102 (+0.0245)  3s
+gates only           lap  3  misses  223 split +   49 recall  val nDCG 0.7080 (+0.0223)  3s
+gates only           lap  4  misses  218 split +   48 recall  val nDCG 0.7070 (+0.0212)  3s
+gates only           lap  5  misses  215 split +   52 recall  val nDCG 0.7060 (+0.0203)  3s
+gates only           lap  6  misses  217 split +   50 recall  val nDCG 0.7079 (+0.0222)  3s
+gates only           lap  7  misses  220 split +   46 recall  val nDCG 0.7068 (+0.0210)  3s
+gates only           lap  8  misses  216 split +   48 recall  val nDCG 0.7086 (+0.0229)  3s
+gates only           lap  9  misses  213 split +   46 recall  val nDCG 0.7066 (+0.0209)  3s
+gates only           lap 10  misses  208 split +   48 recall  val nDCG 0.7019 (+0.0161)  4s
+
+picked on val: full, big split step lap 10
+{
+ "untrained": {
+  "ndcg10": 0.6786760673272922,
+  "recall10": 0.8011666666666667,
+  "mrr10": 0.6460846560846562
+ },
+ "full, big split step lap 10 (val pick)": {
+  "ndcg10": 0.7078885014667882,
+  "recall10": 0.8212777777777778,
+  "mrr10": 0.6789272486772487
+ },
+ "full, big split step lap 10": {
+  "ndcg10": 0.7078885014667882,
+  "recall10": 0.8212777777777778,
+  "mrr10": 0.6789272486772487
+ },
+ "val_pick_vs_untrained": {
+  "delta": 0.0292,
+  "ci95": [
+   0.0142,
+   0.046
+  ]
+ },
+ "lap10_vs_untrained": {
+  "delta": 0.0292,
+  "ci95": [
+   0.0142,
+   0.046
+  ]
+ }
+}
+{
+ "split_weights": {
+  "gate": 0.257,
+  "semantic": 0.413,
+  "gate_a": 0.017,
+  "gate_b": 0.053,
+  "info_a": 0.091,
+  "info_b": -0.015,
+  "info_ab": -0.024
+ },
+ "words_moved": 1612,
+ "grams_moved": 5660,
+ "word_gains": {
+  "the": 0.991,
+  "and": 1.01,
+  "what": 1.0,
+  "who": 0.745,
+  "when": 0.774,
+  "does": 0.724,
+  "you": 1.0
+ }
+}
+wrote results/retrieval/sse_ir_scifact_results.json

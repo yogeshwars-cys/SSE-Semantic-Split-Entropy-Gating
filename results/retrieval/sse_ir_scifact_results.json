@@ -1,0 +1,392 @@
+{
+ "protocol": "benchmark_sse_ir.py: the generalised IR SSE (sse_ir.py), 10 learning laps on training queries, then frozen test.\n\n  data     scifact: BEIR train qrels (809) to learn from, BEIR test qrels (300) to test\n           nq:      prep_nq_100k.py's slice; seeded halves of the 3,452 queries (1,726 / 1,726)\n  calib    the training queries are split again, seeded 80 / 20: laps learn on the 80% (\"fit\"), the 20% (\"val\")\n           picks the configuration and the lap. Test is never seen until the end.\n  configs  full (split + both gates learn) at two gate step sizes, and two ablations: split only, gates only\n  lap      every fit query once; each miss recalibrates at once (sse_ir.SSEIR.learn); then shrink toward start\n  report   test for: untrained, the val-picked configuration at its val-picked lap, the same configuration at lap 10;\n           paired bootstrap CIs; index sizes; search latency",
+ "dataset": "scifact",
+ "fit": 648,
+ "val": 161,
+ "test": {
+  "untrained": {
+   "ndcg10": 0.6786760673272922,
+   "recall10": 0.8011666666666667,
+   "mrr10": 0.6460846560846562
+  },
+  "full, big split step lap 10 (val pick)": {
+   "ndcg10": 0.7078885014667882,
+   "recall10": 0.8212777777777778,
+   "mrr10": 0.6789272486772487
+  },
+  "full, big split step lap 10": {
+   "ndcg10": 0.7078885014667882,
+   "recall10": 0.8212777777777778,
+   "mrr10": 0.6789272486772487
+  },
+  "val_pick_vs_untrained": {
+   "delta": 0.0292,
+   "ci95": [
+    0.0142,
+    0.046
+   ]
+  },
+  "lap10_vs_untrained": {
+   "delta": 0.0292,
+   "ci95": [
+    0.0142,
+    0.046
+   ]
+  }
+ },
+ "build_seconds": 8.4,
+ "index_mb": {
+  "postings_full": 3.53,
+  "postings_a": 2.54,
+  "postings_b": 2.78,
+  "semantic": 25.77,
+  "learned_gains": 0.31
+ },
+ "search_ms_p50": 3.46,
+ "untrained": {
+  "val": {
+   "ndcg10": 0.6857187377795508,
+   "recall10": 0.7971014492753622,
+   "mrr10": 0.6637064970915902
+  },
+  "test": {
+   "ndcg10": 0.6786760673272922,
+   "recall10": 0.8011666666666667,
+   "mrr10": 0.6460846560846562
+  }
+ },
+ "configs": {
+  "full": {
+   "lr": 3.0,
+   "lr_split": 0.05,
+   "shrink": 0.1,
+   "laps": {
+    "1": {
+     "val_ndcg10": 0.6957,
+     "split_misses": 408,
+     "recall_misses": 54,
+     "seconds": 3.7
+    },
+    "2": {
+     "val_ndcg10": 0.6895,
+     "split_misses": 409,
+     "recall_misses": 49,
+     "seconds": 3.8
+    },
+    "3": {
+     "val_ndcg10": 0.699,
+     "split_misses": 389,
+     "recall_misses": 47,
+     "seconds": 3.9
+    },
+    "4": {
+     "val_ndcg10": 0.6956,
+     "split_misses": 390,
+     "recall_misses": 44,
+     "seconds": 3.7
+    },
+    "5": {
+     "val_ndcg10": 0.6966,
+     "split_misses": 375,
+     "recall_misses": 45,
+     "seconds": 3.5
+    },
+    "6": {
+     "val_ndcg10": 0.6968,
+     "split_misses": 359,
+     "recall_misses": 45,
+     "seconds": 3.6
+    },
+    "7": {
+     "val_ndcg10": 0.6977,
+     "split_misses": 362,
+     "recall_misses": 43,
+     "seconds": 3.6
+    },
+    "8": {
+     "val_ndcg10": 0.7025,
+     "split_misses": 357,
+     "recall_misses": 46,
+     "seconds": 3.6
+    },
+    "9": {
+     "val_ndcg10": 0.6988,
+     "split_misses": 347,
+     "recall_misses": 48,
+     "seconds": 3.7
+    },
+    "10": {
+     "val_ndcg10": 0.6943,
+     "split_misses": 348,
+     "recall_misses": 47,
+     "seconds": 3.8
+    }
+   },
+   "split_weights": {
+    "gate": 0.239,
+    "semantic": 0.133,
+    "gate_a": -0.003,
+    "gate_b": 0.008,
+    "info_a": 0.041,
+    "info_b": -0.038,
+    "info_ab": -0.005
+   }
+  },
+  "full, big split step": {
+   "lr": 3.0,
+   "lr_split": 0.2,
+   "shrink": 0.1,
+   "laps": {
+    "1": {
+     "val_ndcg10": 0.6966,
+     "split_misses": 360,
+     "recall_misses": 56,
+     "seconds": 3.7
+    },
+    "2": {
+     "val_ndcg10": 0.7017,
+     "split_misses": 328,
+     "recall_misses": 52,
+     "seconds": 3.5
+    },
+    "3": {
+     "val_ndcg10": 0.6936,
+     "split_misses": 325,
+     "recall_misses": 50,
+     "seconds": 3.4
+    },
+    "4": {
+     "val_ndcg10": 0.703,
+     "split_misses": 305,
+     "recall_misses": 49,
+     "seconds": 3.5
+    },
+    "5": {
+     "val_ndcg10": 0.7061,
+     "split_misses": 298,
+     "recall_misses": 48,
+     "seconds": 3.5
+    },
+    "6": {
+     "val_ndcg10": 0.7061,
+     "split_misses": 299,
+     "recall_misses": 48,
+     "seconds": 3.4
+    },
+    "7": {
+     "val_ndcg10": 0.7107,
+     "split_misses": 296,
+     "recall_misses": 45,
+     "seconds": 3.4
+    },
+    "8": {
+     "val_ndcg10": 0.7109,
+     "split_misses": 287,
+     "recall_misses": 45,
+     "seconds": 3.4
+    },
+    "9": {
+     "val_ndcg10": 0.7059,
+     "split_misses": 287,
+     "recall_misses": 46,
+     "seconds": 3.4
+    },
+    "10": {
+     "val_ndcg10": 0.7173,
+     "split_misses": 271,
+     "recall_misses": 51,
+     "seconds": 3.5
+    }
+   },
+   "split_weights": {
+    "gate": 0.257,
+    "semantic": 0.413,
+    "gate_a": 0.017,
+    "gate_b": 0.053,
+    "info_a": 0.091,
+    "info_b": -0.015,
+    "info_ab": -0.024
+   }
+  },
+  "split only": {
+   "lr": 0.0,
+   "lr_split": 0.05,
+   "shrink": 0.1,
+   "laps": {
+    "1": {
+     "val_ndcg10": 0.6921,
+     "split_misses": 400,
+     "recall_misses": 59,
+     "seconds": 3.7
+    },
+    "2": {
+     "val_ndcg10": 0.6885,
+     "split_misses": 418,
+     "recall_misses": 59,
+     "seconds": 3.5
+    },
+    "3": {
+     "val_ndcg10": 0.6941,
+     "split_misses": 422,
+     "recall_misses": 59,
+     "seconds": 3.6
+    },
+    "4": {
+     "val_ndcg10": 0.6941,
+     "split_misses": 419,
+     "recall_misses": 59,
+     "seconds": 3.6
+    },
+    "5": {
+     "val_ndcg10": 0.6949,
+     "split_misses": 422,
+     "recall_misses": 59,
+     "seconds": 3.8
+    },
+    "6": {
+     "val_ndcg10": 0.6943,
+     "split_misses": 418,
+     "recall_misses": 59,
+     "seconds": 3.8
+    },
+    "7": {
+     "val_ndcg10": 0.694,
+     "split_misses": 421,
+     "recall_misses": 59,
+     "seconds": 4.0
+    },
+    "8": {
+     "val_ndcg10": 0.6941,
+     "split_misses": 417,
+     "recall_misses": 59,
+     "seconds": 3.7
+    },
+    "9": {
+     "val_ndcg10": 0.6921,
+     "split_misses": 422,
+     "recall_misses": 59,
+     "seconds": 3.6
+    },
+    "10": {
+     "val_ndcg10": 0.6935,
+     "split_misses": 417,
+     "recall_misses": 59,
+     "seconds": 3.6
+    }
+   },
+   "split_weights": {
+    "gate": 0.151,
+    "semantic": 0.167,
+    "gate_a": 0.011,
+    "gate_b": 0.003,
+    "info_a": 0.04,
+    "info_b": 0.0,
+    "info_ab": -0.01
+   }
+  },
+  "gates only": {
+   "lr": 3.0,
+   "lr_split": 0.0,
+   "shrink": 0.1,
+   "laps": {
+    "1": {
+     "val_ndcg10": 0.7064,
+     "split_misses": 266,
+     "recall_misses": 55,
+     "seconds": 3.6
+    },
+    "2": {
+     "val_ndcg10": 0.7102,
+     "split_misses": 228,
+     "recall_misses": 53,
+     "seconds": 3.4
+    },
+    "3": {
+     "val_ndcg10": 0.708,
+     "split_misses": 223,
+     "recall_misses": 49,
+     "seconds": 3.4
+    },
+    "4": {
+     "val_ndcg10": 0.707,
+     "split_misses": 218,
+     "recall_misses": 48,
+     "seconds": 3.3
+    },
+    "5": {
+     "val_ndcg10": 0.706,
+     "split_misses": 215,
+     "recall_misses": 52,
+     "seconds": 3.5
+    },
+    "6": {
+     "val_ndcg10": 0.7079,
+     "split_misses": 217,
+     "recall_misses": 50,
+     "seconds": 3.3
+    },
+    "7": {
+     "val_ndcg10": 0.7068,
+     "split_misses": 220,
+     "recall_misses": 46,
+     "seconds": 3.4
+    },
+    "8": {
+     "val_ndcg10": 0.7086,
+     "split_misses": 216,
+     "recall_misses": 48,
+     "seconds": 3.4
+    },
+    "9": {
+     "val_ndcg10": 0.7066,
+     "split_misses": 213,
+     "recall_misses": 46,
+     "seconds": 3.4
+    },
+    "10": {
+     "val_ndcg10": 0.7019,
+     "split_misses": 208,
+     "recall_misses": 48,
+     "seconds": 3.7
+    }
+   },
+   "split_weights": {
+    "gate": 0.65,
+    "semantic": 0.35,
+    "gate_a": 0.0,
+    "gate_b": 0.0,
+    "info_a": 0.0,
+    "info_b": 0.0,
+    "info_ab": 0.0
+   }
+  }
+ },
+ "picked_on_val": {
+  "config": "full, big split step",
+  "lap": 10,
+  "val_ndcg10": 0.7173
+ },
+ "picked_state": {
+  "split_weights": {
+   "gate": 0.257,
+   "semantic": 0.413,
+   "gate_a": 0.017,
+   "gate_b": 0.053,
+   "info_a": 0.091,
+   "info_b": -0.015,
+   "info_ab": -0.024
+  },
+  "words_moved": 1612,
+  "grams_moved": 5660,
+  "word_gains": {
+   "the": 0.991,
+   "and": 1.01,
+   "what": 1.0,
+   "who": 0.745,
+   "when": 0.774,
+   "does": 0.724,
+   "you": 1.0
+  }
+ },
+ "seconds": 155.5
+}
