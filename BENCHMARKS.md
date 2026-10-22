@@ -463,6 +463,44 @@ flowchart TD
 3. Store the learned and fitted values sparsely (the matrices are ~1–2% dense) to shrink the 95–105 MB state.
 4. Find what changed in 18 Jul normal traffic.
 
+### 4.9 Prototype Hybrid: Path-Token Thresholds, Balanced Learning, Compressed Stores (`replay_hybrid2.py`)
+*A prototype of three fixes to the gates + route hybrid (4.2), plus compression of its stores; `sse/` is unchanged. Same split, seed, 17 Jul precalibration and teacher (dataset label) as 4.2, so lap 1 (18–19 Jul, 384,629 requests never seen) compares directly. Settings fixed in advance, not tuned on the replay.*
+- **Balanced learning (fix 2):** a miss sharpens every above-normal field (z ≥ half the threshold; statistical weights and semantic rare 3-grams) at 0.15, instead of one field at 0.05.
+- **Path-token thresholds (fix 3):** the exact-path override becomes a set of path tokens (each segment with digits folded, first one and two segments, extension, depth, exact path, a global token); a field's threshold on a path = the 1% threshold + the mean shift of its tokens, held in a fixed 2²⁰-entry hashed table. A correction on `/wp-admin/a.php` also moves other `/wp-admin/` and `.php` paths.
+- **Damped moves (fix 4):** a correction moves the threshold halfway to its target (two same-direction corrections to commit); an entry that keeps flipping direction gets smaller steps; shifts capped at ±4.
+- **int8 compression (`HYB_QUANT=1`, `quant_space.py`):** the semantic store's values become 2,048-bit randomised-Hadamard sign codes (Hamming shortlist of 64) + an int8 matrix for the exact rescore; token shifts int8 (stochastic rounding).
+- **Fully binary (`HYB_QUANT=2`):** each stored value is two 3-gram count bit planes (0 / 1 / 2 / 3+) + an exception list with the exact count of every 3-gram at 3 or more (patched frame-of-reference) + a float16 norm + the Hadamard code; gains as uint8 log levels; token direction and flip count packed into one byte.
+
+**Lap 1 (unseen traffic):**
+
+| Variant | Detection | False alarms | Precision | Wrong verdicts | 17 Jul precal (wrong) | Route-threshold state |
+|---|---|---|---|---|---|---|
+| Hybrid (4.2) | 76.7% | 5.1% | 97.1% | 67,953 | 23,835 | 171,034 exact overrides (78.5 MB RAM, 20.5 MB pickled, grows) |
+| Fix 2 only | 76.6% | 5.7% | 96.8% | 69,109 | 26,156 | 177,285 exact overrides |
+| Fixes 3 + 4 | 90.5% | 9.7% | 95.4% | 36,805 | 7,900 | 6.3 MB fixed table |
+| **Fixes 2 + 3 + 4 (v1)** | **90.8%** | **10.0%** | **95.3%** | **36,296** | 8,059 | 6.3 MB fixed table |
+| v1, int8 compressed | 90.8% | 10.4% | 95.1% | 36,837 | 8,085 | 3.1 MB fixed table |
+| **v1, fully binary** | **94.2%** | **10.7%** | **95.2%** | **28,086** | 7,977 | 2.1 MB fixed table |
+
+**Size and memory (semantic store = the dominant state):**
+
+| | Hybrid / v1 (float32) | int8 compressed | Fully binary |
+|---|---|---|---|
+| Semantic store at fit (10,000 normal requests) | 72.9 MB | 19.4 MB values + codes (20.2 MB with IDF / gain tables) | **6.0 MB** (12.1× smaller) |
+| Per learned normal value | 16.4 KB | 4.35 KB | ~0.8 KB + exceptions |
+| Semantic store after lap 1 | ~159 MB (estimated: fit + ~5,240 learned values) | 42.2 MB | **18.0 MB** |
+| Distance fidelity vs float32 (`quant_check.py`) | exact | p99 error 0.012–0.013; 94–97% within 0.01 | **p99 error 0.0004; 100% within 0.01** |
+| Requests flagged by the semantic layer (normal / attack) | 1.4% / 19.1% | 1.4% / 19.2% | 1.4% / 19.1% |
+| Process RSS during lap 1 | 1.6 GB (v1) | 1.5–1.8 GB | — |
+
+*Per-request time was 0.43 ms for the hybrid's lap 1 run alone, and 0.73–1.76 ms for the prototype variants, but the prototype runs shared 4 cores with 1–2 other runs (load up to 8.9), so their times are not comparable with each other or with the hybrid; a timing run on an idle machine is still to do.*
+
+**Per class, lap 1** (detection; hybrid / v1 / int8 / binary): SQL Injection 78.4 / 92.4 / 92.4 / 94.9%; HTTP Response Splitting 42.5 / 79.0 / 78.3 / 86.8%; Path Traversal 86.2 / 92.9 / 95.2 / 97.0%; Code Injection 90.0 / 96.6 / 96.6 / 98.6%; Protocol Manipulation 65.8 / 58.7 / 58.5 / 82.8%; Fake the Source of Data 81.8 / 87.3 / 87.3 / 90.7%.
+
+**Conveyor belt, v1 (same 18–19 Jul stream, learning every lap; wrong verdicts, detection / false alarms):** lap 1 36,296 (90.8% / 10.0%), lap 2 40,466 (88.0% / 7.3%), lap 3 40,637 (87.2% / 5.5%), lap 4 38,634 (87.7% / 5.0%), lap 5 37,486 (88.0% / 4.7%); the hybrid's laps 2–5 (4.5): 42,265, 12,954, 10,723, 7,011.
+
+*Path-token thresholds are what generalise: 47% fewer mistakes than the hybrid on traffic never seen, with a fixed 2–6 MB table instead of a growing override table, but false alarms double (5.1% → 10%). Most of the extra false alarms fall at the start of 18 Jul, in the mid-day shift and in the attack-heavy evening, where tightening on shared tokens (`*`, first segment, `.php`) spills onto normal requests. Fix 2 adds nothing at lap 1. On a replayed stream the hybrid's exact overrides memorise each request and fall to 7,011 mistakes by lap 5, while the fixed token table plateaus near 37,000, trading detection for fewer false alarms lap by lap (laps 2+ are a convergence check only, Part V item 7). int8 compression costs 1.5% more mistakes for a 3.6–3.8× smaller semantic store. The fully binary store is 12× smaller and matches float32 distances to 0.0004, yet its lap 1 has 23% fewer mistakes than v1: it learns slightly differently (learned values are stored without their 3-gram gains, gains move in uint8 steps of ×1.0502 instead of ×1.05), and that difference, not the compression, accounts for the gain. It is a single run and not yet explained. Teacher = dataset label throughout.*
+
 ---
 
 # PART V: AUDIT & EXCLUSIONS RECORD
