@@ -1,0 +1,2 @@
+  kitsune_os_scan isolation_forest   tpr=1.0000 fpr=0.2251 prec=0.4783 f1=0.6471 wrong=37321 auc=0.8981 tpr@1%=0.0524
+done kitsune_os_scan ['isolation_forest']

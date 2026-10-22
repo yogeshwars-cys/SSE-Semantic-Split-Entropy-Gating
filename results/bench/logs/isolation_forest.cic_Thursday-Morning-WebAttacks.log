@@ -1,0 +1,2 @@
+  cic_Thursday-Morning-WebAttacks isolation_forest tpr=0.0000 fpr=0.0099 prec=0.0000 f1=0.0000 wrong=3123 auc=0.9341 tpr@1%=0.0005
+done cic_Thursday-Morning-WebAttacks ['isolation_forest']

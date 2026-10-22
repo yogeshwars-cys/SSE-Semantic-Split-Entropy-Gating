@@ -1,0 +1,2 @@
+  unsw ocsvm                         tpr=0.4528 fpr=0.0257 prec=0.9557 f1=0.6145 wrong=25758 auc=0.7589 tpr@1%=0.2886
+done unsw ['ocsvm']

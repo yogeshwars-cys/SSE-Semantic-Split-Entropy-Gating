@@ -1,0 +1,7 @@
+== srbh char_cnn
+/home/user/SSE-Semantic-Split-Entropy-Gating/bench/char_nn.py:86: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  tot += float(loss) * len(b)
+    epoch 1: loss 0.0984 (3865s)
+    epoch 2: loss 0.0248 (1718s)
+    epoch 3: loss 0.0162 (1424s)

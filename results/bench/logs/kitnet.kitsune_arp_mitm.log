@@ -1,0 +1,2 @@
+  kitsune_arp_mitm kitnet            tpr=0.0287 fpr=0.0523 prec=0.9140 f1=0.0557 wrong=185227 auc=0.5234 tpr@1%=0.0002
+done kitsune_arp_mitm ['kitnet']

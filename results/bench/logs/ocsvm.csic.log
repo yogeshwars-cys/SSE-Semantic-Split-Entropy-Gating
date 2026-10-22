@@ -1,0 +1,2 @@
+  csic ocsvm                         tpr=0.5218 fpr=0.0108 prec=0.9710 f1=0.6789 wrong=12375 auc=0.8450 tpr@1%=0.5159
+done csic ['ocsvm']

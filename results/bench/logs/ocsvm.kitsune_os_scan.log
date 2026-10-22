@@ -1,0 +1,2 @@
+  kitsune_os_scan ocsvm              tpr=1.0000 fpr=0.6746 prec=0.2343 f1=0.3796 wrong=111835 auc=0.8966 tpr@1%=0.0000
+done kitsune_os_scan ['ocsvm']

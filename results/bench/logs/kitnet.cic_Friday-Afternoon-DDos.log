@@ -1,0 +1,2 @@
+  cic_Friday-Afternoon-DDos kitnet   tpr=0.6359 fpr=0.0242 prec=0.9820 f1=0.7719 wrong=30424 auc=0.7483 tpr@1%=0.0002
+done cic_Friday-Afternoon-DDos ['kitnet']

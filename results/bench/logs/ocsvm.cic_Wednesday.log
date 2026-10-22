@@ -1,0 +1,2 @@
+  cic_Wednesday ocsvm                tpr=0.2173 fpr=0.0138 prec=0.9078 f1=0.3506 wrong=37144 auc=0.8960 tpr@1%=0.2162
+done cic_Wednesday ['ocsvm']

@@ -1,0 +1,41 @@
+Traceback (most recent call last):
+  File "/home/user/SSE-Semantic-Split-Entropy-Gating/bench/tabular_baselines.py", line 156, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/SSE-Semantic-Split-Entropy-Gating/bench/tabular_baselines.py", line 121, in main
+    unsup("kitnet", kit, lambda m, X: m.execute_batch(X))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/SSE-Semantic-Split-Entropy-Gating/bench/tabular_baselines.py", line 107, in unsup
+    out[name] = common.report(y, s, s > thr, cls, fit_seconds=fit_s, threshold=thr, model_bytes=len(pickle.dumps(m)),
+                ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              **latency(lambda X: score(m, X), t_))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/SSE-Semantic-Split-Entropy-Gating/bench/common.py", line 78, in report
+    out.update(ranking(y, score))
+               ~~~~~~~^^^^^^^^^^
+  File "/home/user/SSE-Semantic-Split-Entropy-Gating/bench/common.py", line 71, in ranking
+    return {"auc": auc(y, s), **{f"tpr@fpr{int(f * 100)}%": tpr_at_fpr(y, s, f) for f in (0.01, 0.05, 0.10)}}
+                                                            ~~~~~~~~~~^^^^^^^^^
+  File "/home/user/SSE-Semantic-Split-Entropy-Gating/bench/common.py", line 45, in tpr_at_fpr
+    thr = np.quantile(s[~y], 1 - fpr)
+  File "/usr/local/lib/python3.13/dist-packages/numpy/lib/_function_base_impl.py", line 4508, in quantile
+    return _quantile_unchecked(
+        a, q, axis, out, overwrite_input, method, keepdims, weights, weak_q)
+  File "/usr/local/lib/python3.13/dist-packages/numpy/lib/_function_base_impl.py", line 4522, in _quantile_unchecked
+    return _ureduce(a,
+                    func=_quantile_ureduce_func,
+    ...<6 lines>...
+                    method=method,
+                    weak_q=weak_q)
+  File "/usr/local/lib/python3.13/dist-packages/numpy/lib/_function_base_impl.py", line 3892, in _ureduce
+    r = func(a, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/numpy/lib/_function_base_impl.py", line 4681, in _quantile_ureduce_func
+    result = _quantile(arr,
+                       quantiles=q,
+    ...<3 lines>...
+                       weights=wgt,
+                       weak_q=weak_q)
+  File "/usr/local/lib/python3.13/dist-packages/numpy/lib/_function_base_impl.py", line 4805, in _quantile
+    slices_having_nans = np.isnan(arr[-1, ...])
+                                  ~~~^^^^^^^^^
+IndexError: index -1 is out of bounds for axis 0 with size 0

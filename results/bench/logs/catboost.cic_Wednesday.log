@@ -1,0 +1,2 @@
+  cic_Wednesday catboost             tpr=0.9998 fpr=0.0006 prec=0.9991 f1=0.9994 wrong=53 auc=1.0000 tpr@1%=0.9999
+done cic_Wednesday ['catboost']

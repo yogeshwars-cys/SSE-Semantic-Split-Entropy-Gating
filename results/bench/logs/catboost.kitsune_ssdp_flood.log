@@ -1,0 +1,2 @@
+  kitsune_ssdp_flood catboost        tpr=1.0000 fpr=0.0018 prec=1.0000 f1=1.0000 wrong=7 auc=1.0000 tpr@1%=1.0000
+done kitsune_ssdp_flood ['catboost']

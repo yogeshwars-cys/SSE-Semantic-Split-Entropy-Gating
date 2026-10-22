@@ -1,0 +1,2 @@
+  unsw kitnet                        tpr=0.1341 fpr=0.0261 prec=0.8628 f1=0.2321 wrong=40220 auc=0.7560 tpr@1%=0.1341
+done unsw ['kitnet']

@@ -1,0 +1,2 @@
+  srbh kitnet                        tpr=0.6725 fpr=0.2079 prec=0.8792 f1=0.7620 wrong=111816 auc=0.7524 tpr@1%=0.0119
+done srbh ['kitnet']

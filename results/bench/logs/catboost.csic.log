@@ -1,0 +1,2 @@
+  csic catboost                      tpr=0.9229 fpr=0.0407 prec=0.9404 f1=0.9316 wrong=3398 auc=0.9924 tpr@1%=0.8677
+done csic ['catboost']

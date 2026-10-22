@@ -1,0 +1,2 @@
+  unsw xgboost                       tpr=0.9803 fpr=0.2653 prec=0.8191 f1=0.8925 wrong=10709 auc=0.9820 tpr@1%=0.8547
+done unsw ['xgboost']

@@ -1,0 +1,2 @@
+  kitsune_os_scan kitnet             tpr=1.0000 fpr=0.2113 prec=0.4941 f1=0.6614 wrong=35027 auc=0.8968 tpr@1%=0.0495
+done kitsune_os_scan ['kitnet']

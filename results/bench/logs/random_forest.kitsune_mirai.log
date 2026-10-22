@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/user/SSE-Semantic-Split-Entropy-Gating/bench/tabular_baselines.py", line 156, in <module>
+    main()
+    ~~~~^^
+  File "/home/user/SSE-Semantic-Split-Entropy-Gating/bench/tabular_baselines.py", line 145, in main
+    sup("random_forest", lambda: RandomForestClassifier(n_estimators=300, n_jobs=THREADS, random_state=0))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/SSE-Semantic-Split-Entropy-Gating/bench/tabular_baselines.py", line 136, in sup
+    p[te] = m.predict_proba(z["test"][te])[:, 1]
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+IndexError: index 1 is out of bounds for axis 1 with size 1

@@ -1,0 +1,2 @@
+  kitsune_syn_dos ocsvm              tpr=0.2461 fpr=0.0428 prec=0.3307 f1=0.2822 wrong=8812 auc=0.6613 tpr@1%=0.2460
+done kitsune_syn_dos ['ocsvm']

@@ -1,0 +1,2 @@
+  kitsune_ssdp_flood ocsvm           tpr=1.0000 fpr=0.6391 prec=0.9894 f1=0.9947 wrong=2109 auc=0.9435 tpr@1%=0.0000
+done kitsune_ssdp_flood ['ocsvm']

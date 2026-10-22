@@ -1,0 +1,2 @@
+  kitsune_syn_dos random_forest      tpr=1.0000 fpr=0.0000 prec=0.9999 f1=0.9999 wrong=1 auc=1.0000 tpr@1%=1.0000
+done kitsune_syn_dos ['random_forest']

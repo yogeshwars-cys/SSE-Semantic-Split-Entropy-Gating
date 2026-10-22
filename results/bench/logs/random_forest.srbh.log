@@ -1,0 +1,2 @@
+  srbh random_forest                 tpr=0.9288 fpr=0.5701 prec=0.7856 f1=0.8512 wrong=86452 auc=0.8382 tpr@1%=0.1796
+done srbh ['random_forest']

@@ -1,0 +1,2 @@
+  kitsune_syn_dos kitnet             tpr=0.2460 fpr=0.0116 prec=0.6461 f1=0.3563 wrong=6255 auc=0.8522 tpr@1%=0.2460
+done kitsune_syn_dos ['kitnet']

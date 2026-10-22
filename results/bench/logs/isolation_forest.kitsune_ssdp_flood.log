@@ -1,0 +1,2 @@
+  kitsune_ssdp_flood isolation_forest tpr=1.0000 fpr=0.0612 prec=0.9990 f1=0.9995 wrong=202 auc=0.9789 tpr@1%=0.0968
+done kitsune_ssdp_flood ['isolation_forest']

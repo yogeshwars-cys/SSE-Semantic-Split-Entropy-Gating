@@ -1,0 +1,2 @@
+  kitsune_arp_mitm xgboost           tpr=1.0000 fpr=0.0004 prec=1.0000 f1=1.0000 wrong=11 auc=1.0000 tpr@1%=1.0000
+done kitsune_arp_mitm ['xgboost']

@@ -1,0 +1,2 @@
+  csic kitnet                        tpr=0.4843 fpr=0.0126 prec=0.9639 f1=0.6447 wrong=13380 auc=0.8920 tpr@1%=0.4687
+done csic ['kitnet']

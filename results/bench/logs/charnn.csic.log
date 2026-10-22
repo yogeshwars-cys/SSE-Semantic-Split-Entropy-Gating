@@ -1,0 +1,17 @@
+== csic char_cnn
+/home/user/SSE-Semantic-Split-Entropy-Gating/bench/char_nn.py:86: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+  tot += float(loss) * len(b)
+    epoch 1: loss 0.5105 (754s)
+    epoch 2: loss 0.1869 (706s)
+    epoch 3: loss 0.1069 (731s)
+    epoch 1: loss 0.5161 (722s)
+    epoch 2: loss 0.1778 (702s)
+    epoch 3: loss 0.1028 (529s)
+  csic char_cnn                      tpr=0.9661 fpr=0.0150 prec=0.9782 f1=0.9721 wrong=1390 auc=0.9977 tpr@1%=0.9599
+== csic char_bilstm
+    epoch 1: loss 0.5064 (103s)
+    epoch 2: loss 0.1332 (104s)
+    epoch 1: loss 0.5146 (105s)
+    epoch 2: loss 0.1529 (102s)
+  csic char_bilstm                   tpr=0.9402 fpr=0.0262 prec=0.9615 f1=0.9508 wrong=2441 auc=0.9946 tpr@1%=0.9112

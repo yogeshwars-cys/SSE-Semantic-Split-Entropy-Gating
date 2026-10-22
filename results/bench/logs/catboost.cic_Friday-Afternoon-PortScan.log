@@ -1,0 +1,2 @@
+  cic_Friday-Afternoon-PortScan catboost tpr=0.9998 fpr=0.0001 prec=1.0000 f1=0.9999 wrong=19 auc=1.0000 tpr@1%=0.9999
+done cic_Friday-Afternoon-PortScan ['catboost']

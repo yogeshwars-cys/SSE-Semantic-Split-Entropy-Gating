@@ -1,0 +1,2 @@
+  csic random_forest                 tpr=0.9309 fpr=0.0454 prec=0.9346 f1=0.9327 wrong=3366 auc=0.9924 tpr@1%=0.8644
+done csic ['random_forest']

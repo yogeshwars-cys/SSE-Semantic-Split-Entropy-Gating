@@ -1,0 +1,2 @@
+  cic_Friday-Afternoon-PortScan kitnet tpr=0.0000 fpr=0.0196 prec=0.0000 f1=0.0000 wrong=76998 auc=0.7373 tpr@1%=0.0000
+done cic_Friday-Afternoon-PortScan ['kitnet']

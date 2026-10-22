@@ -1,0 +1,2 @@
+  cic_Wednesday isolation_forest     tpr=0.0198 fpr=0.0085 prec=0.5940 f1=0.0384 wrong=45863 auc=0.8288 tpr@1%=0.0211
+done cic_Wednesday ['isolation_forest']

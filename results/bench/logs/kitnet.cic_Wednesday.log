@@ -1,0 +1,2 @@
+  cic_Wednesday kitnet               tpr=0.2326 fpr=0.0123 prec=0.9219 f1=0.3715 wrong=36328 auc=0.7489 tpr@1%=0.2301
+done cic_Wednesday ['kitnet']

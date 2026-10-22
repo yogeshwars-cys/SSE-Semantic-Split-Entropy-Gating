@@ -1,0 +1,2 @@
+  kitsune_arp_mitm ocsvm             tpr=0.6418 fpr=0.8599 prec=0.9353 f1=0.7613 wrong=76561 auc=0.3108 tpr@1%=0.0001
+done kitsune_arp_mitm ['ocsvm']

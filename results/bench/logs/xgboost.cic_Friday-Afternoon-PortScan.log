@@ -1,0 +1,2 @@
+  cic_Friday-Afternoon-PortScan xgboost tpr=0.9999 fpr=0.0001 prec=1.0000 f1=0.9999 wrong=11 auc=1.0000 tpr@1%=1.0000
+done cic_Friday-Afternoon-PortScan ['xgboost']

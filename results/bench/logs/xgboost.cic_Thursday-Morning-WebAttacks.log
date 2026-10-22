@@ -1,0 +1,2 @@
+  cic_Thursday-Morning-WebAttacks xgboost tpr=0.9928 fpr=0.0000 prec=0.9985 f1=0.9956 wrong=17 auc=1.0000 tpr@1%=1.0000
+done cic_Thursday-Morning-WebAttacks ['xgboost']

@@ -1,0 +1,2 @@
+  kitsune_arp_mitm catboost          tpr=1.0000 fpr=0.0003 prec=1.0000 f1=1.0000 wrong=9 auc=1.0000 tpr@1%=1.0000
+done kitsune_arp_mitm ['catboost']

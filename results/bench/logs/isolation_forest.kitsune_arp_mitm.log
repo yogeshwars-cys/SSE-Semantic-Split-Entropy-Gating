@@ -1,0 +1,2 @@
+  kitsune_arp_mitm isolation_forest  tpr=0.0002 fpr=0.2048 prec=0.0157 f1=0.0003 wrong=192158 auc=0.0002 tpr@1%=0.0001
+done kitsune_arp_mitm ['isolation_forest']

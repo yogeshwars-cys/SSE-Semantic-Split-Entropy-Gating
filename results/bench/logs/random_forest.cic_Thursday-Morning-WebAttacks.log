@@ -1,0 +1,2 @@
+  cic_Thursday-Morning-WebAttacks random_forest tpr=0.9729 fpr=0.0000 prec=0.9984 f1=0.9855 wrong=56 auc=1.0000 tpr@1%=0.9985
+done cic_Thursday-Morning-WebAttacks ['random_forest']

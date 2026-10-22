@@ -1,0 +1,2 @@
+  srbh ocsvm                         tpr=0.6688 fpr=0.2077 prec=0.8786 f1=0.7595 wrong=112768 auc=0.7820 tpr@1%=0.0415
+done srbh ['ocsvm']

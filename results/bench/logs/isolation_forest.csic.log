@@ -1,0 +1,2 @@
+  csic isolation_forest              tpr=0.0888 fpr=0.0114 prec=0.8448 f1=0.1608 wrong=23247 auc=0.7776 tpr@1%=0.0823
+done csic ['isolation_forest']

@@ -1,0 +1,2 @@
+  cic_Thursday-Morning-WebAttacks kitnet tpr=0.0000 fpr=0.0070 prec=0.0000 f1=0.0000 wrong=2784 auc=0.8266 tpr@1%=0.0000
+done cic_Thursday-Morning-WebAttacks ['kitnet']

@@ -1,0 +1,2 @@
+  kitsune_ssdp_flood kitnet          tpr=1.0000 fpr=0.6585 prec=0.9891 f1=0.9945 wrong=2173 auc=0.9638 tpr@1%=0.1678
+done kitsune_ssdp_flood ['kitnet']

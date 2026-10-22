@@ -1,0 +1,2 @@
+  cic_Friday-Afternoon-PortScan ocsvm tpr=0.0318 fpr=0.0166 prec=0.7687 f1=0.0610 wrong=74445 auc=0.8018 tpr@1%=0.0077
+done cic_Friday-Afternoon-PortScan ['ocsvm']

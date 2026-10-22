@@ -1,0 +1,2 @@
+  cic_Friday-Afternoon-DDos catboost tpr=0.9999 fpr=0.0003 prec=0.9999 f1=0.9999 wrong=15 auc=1.0000 tpr@1%=1.0000
+done cic_Friday-Afternoon-DDos ['catboost']

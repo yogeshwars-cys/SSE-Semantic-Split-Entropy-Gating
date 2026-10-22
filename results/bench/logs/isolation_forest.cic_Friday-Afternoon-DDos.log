@@ -1,0 +1,2 @@
+  cic_Friday-Afternoon-DDos isolation_forest tpr=0.0081 fpr=0.0265 prec=0.3890 f1=0.0159 wrong=81345 auc=0.8836 tpr@1%=0.0000
+done cic_Friday-Afternoon-DDos ['isolation_forest']

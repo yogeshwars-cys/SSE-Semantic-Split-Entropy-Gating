@@ -1,0 +1,2 @@
+  unsw random_forest                 tpr=0.9857 fpr=0.2703 prec=0.8171 f1=0.8936 wrong=10646 auc=0.9795 tpr@1%=0.7853
+done unsw ['random_forest']

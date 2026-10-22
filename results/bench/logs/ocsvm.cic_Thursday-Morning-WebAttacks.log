@@ -1,0 +1,2 @@
+  cic_Thursday-Morning-WebAttacks ocsvm tpr=0.0394 fpr=0.0071 prec=0.0842 f1=0.0537 wrong=2715 auc=0.9367 tpr@1%=0.0399
+done cic_Thursday-Morning-WebAttacks ['ocsvm']

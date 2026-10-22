@@ -1,0 +1,2 @@
+  unsw catboost                      tpr=0.9797 fpr=0.2665 prec=0.8183 f1=0.8918 wrong=10779 auc=0.9817 tpr@1%=0.8486
+done unsw ['catboost']

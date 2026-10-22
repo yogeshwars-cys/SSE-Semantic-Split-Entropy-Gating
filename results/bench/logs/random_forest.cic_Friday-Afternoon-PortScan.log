@@ -1,0 +1,2 @@
+  cic_Friday-Afternoon-PortScan random_forest tpr=0.9998 fpr=0.0000 prec=1.0000 f1=0.9999 wrong=13 auc=1.0000 tpr@1%=1.0000
+done cic_Friday-Afternoon-PortScan ['random_forest']

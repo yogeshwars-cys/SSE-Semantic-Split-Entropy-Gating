@@ -1,0 +1,2 @@
+  srbh isolation_forest              tpr=0.0349 fpr=0.0065 prec=0.9234 f1=0.0673 wrong=257723 auc=0.7259 tpr@1%=0.0389
+done srbh ['isolation_forest']

@@ -1,0 +1,2 @@
+  kitsune_syn_dos isolation_forest   tpr=0.2458 fpr=0.0052 prec=0.8035 f1=0.3765 wrong=5731 auc=0.6863 tpr@1%=0.2460
+done kitsune_syn_dos ['isolation_forest']

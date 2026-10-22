@@ -1,0 +1,2 @@
+  cic_Friday-Afternoon-DDos ocsvm    tpr=0.6364 fpr=0.0195 prec=0.9854 f1=0.7734 wrong=30203 auc=0.8241 tpr@1%=0.6360
+done cic_Friday-Afternoon-DDos ['ocsvm']

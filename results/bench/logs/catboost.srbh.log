@@ -1,0 +1,2 @@
+  srbh catboost                      tpr=0.9207 fpr=0.4397 prec=0.8248 f1=0.8701 wrong=73169 auc=0.8162 tpr@1%=0.0056
+done srbh ['catboost']

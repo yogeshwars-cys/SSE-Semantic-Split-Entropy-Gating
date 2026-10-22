@@ -1,0 +1,2 @@
+  kitsune_os_scan catboost           tpr=0.9999 fpr=0.0000 prec=1.0000 f1=0.9999 wrong=6 auc=1.0000 tpr@1%=1.0000
+done kitsune_os_scan ['catboost']

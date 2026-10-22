@@ -1,0 +1,2 @@
+  kitsune_mirai isolation_forest     tpr=0.0045 fpr=0.0000 prec=1.0000 f1=0.0090 wrong=199099 auc=nan tpr@1%=nan
+done kitsune_mirai ['isolation_forest']

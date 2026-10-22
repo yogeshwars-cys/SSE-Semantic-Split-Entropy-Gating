@@ -1,0 +1,2 @@
+  unsw isolation_forest              tpr=0.1036 fpr=0.0156 prec=0.8904 f1=0.1857 wrong=41212 auc=0.8015 tpr@1%=0.0387
+done unsw ['isolation_forest']

@@ -1,0 +1,2 @@
+  cic_Friday-Afternoon-PortScan isolation_forest tpr=0.0013 fpr=0.0111 prec=0.1655 f1=0.0025 wrong=76529 auc=0.7733 tpr@1%=0.0012
+done cic_Friday-Afternoon-PortScan ['isolation_forest']
