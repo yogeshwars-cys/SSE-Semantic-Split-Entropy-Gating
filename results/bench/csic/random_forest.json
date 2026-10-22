@@ -1,0 +1,30 @@
+{
+ "dataset": "csic",
+ "test_records": 61065,
+ "test_attacks": 25065,
+ "dims": 145,
+ "threads": 1,
+ "random_forest": {
+  "tpr": 0.9308597646120088,
+  "fpr": 0.04536111111111111,
+  "precision": 0.9345884237933106,
+  "f1": 0.9327203677793323,
+  "wrong": 3366,
+  "tp": 23332,
+  "fp": 1633,
+  "fn": 1733,
+  "tn": 34367,
+  "per_class_tpr": {
+   "csic_attack": 0.9308597646120088
+  },
+  "auc": 0.9924088309284749,
+  "tpr@fpr1%": 0.8644324755635349,
+  "tpr@fpr5%": 0.935048872930381,
+  "tpr@fpr10%": 0.9817674047476561,
+  "train_seconds": 81.18781795899997,
+  "protocol": "2-fold cross-validation over the test stream",
+  "model_bytes": 84438406,
+  "us_per_record_batch": 111.94799424999928,
+  "us_per_record_single": 57219.04132666661
+ }
+}

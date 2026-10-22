@@ -1,0 +1,38 @@
+{
+ "dataset": "unsw",
+ "test_records": 82332,
+ "test_attacks": 45332,
+ "dims": 91,
+ "threads": 1,
+ "random_forest": {
+  "tpr": 0.9857495808700256,
+  "fpr": 0.2702702702702703,
+  "precision": 0.8171378414950811,
+  "f1": 0.8935591593513169,
+  "wrong": 10646,
+  "tp": 44686,
+  "fp": 10000,
+  "fn": 646,
+  "tn": 27000,
+  "per_class_tpr": {
+   "Analysis": 1.0,
+   "Backdoor": 1.0,
+   "DoS": 0.9987772071411103,
+   "Exploits": 0.9962270930650378,
+   "Fuzzers": 0.9021774991751897,
+   "Generic": 0.9998940172751841,
+   "Reconnaissance": 0.9994279176201373,
+   "Shellcode": 0.9947089947089947,
+   "Worms": 1.0
+  },
+  "auc": 0.9795188477324055,
+  "tpr@fpr1%": 0.7852510367951998,
+  "tpr@fpr5%": 0.8890849730874437,
+  "tpr@fpr10%": 0.9289243801288273,
+  "train_seconds": 236.10516400099982,
+  "protocol": "trained on the labelled training traffic",
+  "model_bytes": 311485430,
+  "us_per_record_batch": 155.28300995000563,
+  "us_per_record_single": 59969.995356666455
+ }
+}

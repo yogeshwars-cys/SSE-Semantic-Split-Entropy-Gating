@@ -1,0 +1,25 @@
+loaded 210000 rows in 3.6s
+fit in 1.5s: gate thr 3.243097, semantic thr 2.566450, semantic store 11.26 MB
+full precal: tpr=0.000 fpr=0.000 wrong=0
+    full lap1 50000/200000 tpr=0.999 fpr=0.043 7s
+    full lap1 100000/200000 tpr=0.999 fpr=0.026 14s
+    full lap1 150000/200000 tpr=1.000 fpr=0.020 21s
+== full lap 1: tpr=0.9996 fpr=0.0177 precision=0.9991 wrong=243 (28.8s, 0.144 ms/req)
+frozen pass: 25.0s, 124.8 us/req mean, p50 173.5 p99 406.6 us, 8013 req/s on one core
+    full lap2 50000/200000 tpr=1.000 fpr=0.011 6s
+    full lap2 100000/200000 tpr=1.000 fpr=0.011 13s
+    full lap2 150000/200000 tpr=1.000 fpr=0.009 20s
+== full lap 2: tpr=0.9999 fpr=0.0070 precision=0.9996 wrong=90 (26s)
+    full lap3 50000/200000 tpr=1.000 fpr=0.009 6s
+    full lap3 100000/200000 tpr=1.000 fpr=0.005 13s
+    full lap3 150000/200000 tpr=1.000 fpr=0.004 19s
+== full lap 3: tpr=1.0000 fpr=0.0032 precision=0.9998 wrong=38 (25s)
+    full lap4 50000/200000 tpr=1.000 fpr=0.005 6s
+    full lap4 100000/200000 tpr=1.000 fpr=0.003 13s
+    full lap4 150000/200000 tpr=1.000 fpr=0.002 19s
+== full lap 4: tpr=1.0000 fpr=0.0020 precision=0.9999 wrong=25 (26s)
+    full lap5 50000/200000 tpr=1.000 fpr=0.006 6s
+    full lap5 100000/200000 tpr=1.000 fpr=0.003 13s
+    full lap5 150000/200000 tpr=1.000 fpr=0.002 19s
+== full lap 5: tpr=1.0000 fpr=0.0016 precision=0.9999 wrong=19 (25s)
+wrote results/bench/kitsune_arp_mitm/sse_cpp_exact.json (161s)

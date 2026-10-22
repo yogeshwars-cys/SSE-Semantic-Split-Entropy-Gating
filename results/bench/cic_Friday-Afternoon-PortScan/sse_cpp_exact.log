@@ -1,0 +1,20 @@
+loaded 130000 rows in 0.7s
+fit in 0.7s: gate thr 2.785254, semantic thr 6.614694, semantic store 7.21 MB
+full precal: tpr=0.000 fpr=0.000 wrong=0
+    full lap1 50000/120000 tpr=0.998 fpr=0.006 4s
+    full lap1 100000/120000 tpr=0.998 fpr=0.009 5s
+== full lap 1: tpr=0.9980 fpr=0.0095 precision=0.9945 wrong=570 (6.3s, 0.053 ms/req)
+frozen pass: 3.7s, 30.9 us/req mean, p50 3.7 p99 288.9 us, 32393 req/s on one core
+    full lap2 50000/120000 tpr=0.998 fpr=0.004 3s
+    full lap2 100000/120000 tpr=0.998 fpr=0.007 4s
+== full lap 2: tpr=0.9980 fpr=0.0075 precision=0.9957 wrong=483 (6s)
+    full lap3 50000/120000 tpr=0.997 fpr=0.004 3s
+    full lap3 100000/120000 tpr=0.998 fpr=0.008 4s
+== full lap 3: tpr=0.9975 fpr=0.0079 precision=0.9954 wrong=540 (6s)
+    full lap4 50000/120000 tpr=0.997 fpr=0.004 3s
+    full lap4 100000/120000 tpr=0.998 fpr=0.007 4s
+== full lap 4: tpr=0.9975 fpr=0.0077 precision=0.9956 wrong=528 (6s)
+    full lap5 50000/120000 tpr=0.997 fpr=0.004 3s
+    full lap5 100000/120000 tpr=0.998 fpr=0.007 4s
+== full lap 5: tpr=0.9975 fpr=0.0075 precision=0.9957 wrong=517 (6s)
+wrote results/bench/cic_Friday-Afternoon-PortScan/sse_cpp_exact.json (35s)
