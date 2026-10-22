@@ -1,0 +1,20 @@
+loaded 130000 rows in 0.7s
+fit in 0.7s: gate thr 3.000353, semantic thr 6.540432, semantic store 7.23 MB
+full precal: tpr=0.000 fpr=0.000 wrong=0
+    full lap1 50000/120000 tpr=0.891 fpr=0.018 7s
+    full lap1 100000/120000 tpr=0.885 fpr=0.014 12s
+== full lap 1: tpr=0.8854 fpr=0.0115 precision=0.5606 wrong=1580 (14.1s, 0.117 ms/req)
+frozen pass: 7.6s, 62.9 us/req mean, p50 10.3 p99 343.1 us, 15893 req/s on one core
+    full lap2 50000/120000 tpr=0.840 fpr=0.019 6s
+    full lap2 100000/120000 tpr=0.817 fpr=0.014 11s
+== full lap 2: tpr=0.8173 fpr=0.0117 precision=0.5355 wrong=1742 (12s)
+    full lap3 50000/120000 tpr=0.856 fpr=0.011 5s
+    full lap3 100000/120000 tpr=0.863 fpr=0.008 10s
+== full lap 3: tpr=0.8634 fpr=0.0067 precision=0.6819 wrong=1054 (12s)
+    full lap4 50000/120000 tpr=0.860 fpr=0.011 6s
+    full lap4 100000/120000 tpr=0.869 fpr=0.007 10s
+== full lap 4: tpr=0.8695 fpr=0.0061 precision=0.7029 wrong=973 (12s)
+    full lap5 50000/120000 tpr=0.849 fpr=0.010 5s
+    full lap5 100000/120000 tpr=0.858 fpr=0.006 9s
+== full lap 5: tpr=0.8582 fpr=0.0055 precision=0.7225 wrong=921 (11s)
+wrote results/bench/cic_Thursday-Morning-WebAttacks/sse_cpp.json (70s)

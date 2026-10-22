@@ -1,0 +1,14 @@
+{
+ "implementation": "cpp/replay_srbh.cpp (C++20, one core)",
+ "protocol": "harness/replay_hybrid2.py, HYB_VARIANT=full HYB_QUANT=3: fully binary semantic store, Hamming top-64 then uint8-count x int8-query int32 rescore and an exact refine of the int8 top 4; packed int8 path-token thresholds. Splits (fit / precal / test) and order from data/sse_streams/kitsune_arp_mitm.csv; laps 2+ replay the test stream; teacher = dataset label.",
+ "rows": 210000, "load_seconds": 2.883117064, "fit_seconds": 1.4678695,
+ "fit_requests": 10000, "precal_requests": 0, "replay_requests": 200000,
+ "gate_thr": 3.243096951, "semantic_thr": 2.566449894,
+ "precal": {"tpr": 0, "fpr": 0, "precision": 0, "wrong": 0, "tp": 0, "fn": 0, "fp": 0, "tn": 0, "corrected": 0, "flipped_rate": 0, "seconds": 9.7e-08, "ms_per_request": 0, "per_class_tpr": {}},
+ "lap1": {"tpr": 0.9996739896, "fpr": 0.03095092649, "precision": 0.998403529, "wrong": 366, "tp": 190116, "fn": 62, "fp": 304, "tn": 9518, "corrected": 366, "flipped_rate": 0.5, "seconds": 28.44567101, "ms_per_request": 0.142228355, "per_class_tpr": {"arp_mitm": 0.9996739896}},
+ "frozen_after_lap1": {"tpr": 0.9999842253, "fpr": 0.1270616982, "seconds": 23.45779545, "us_per_request_mean": 117.2889773, "us_p50": 171.019, "us_p95": 276.229, "us_p99": 370.543, "requests_per_second_one_core": 8525.950378},
+ "semantic_bytes_at_fit": 11264300, "semantic_bytes_after_lap1": 11463776,
+ "route_state": {"entries_set": 55, "entries_flipped": 20, "bytes": 2097152},
+ "gate_field_weights": {"user-agent": 0.6983372961, "referer": 0.857375, "host": 1, "origin": 1, "cookie": 0.7737809375, "content-type": 1, "accept": 2.193217187, "accept-language": 1, "accept-encoding": 1, "dnt": 1, "connection": 1, "@method": 1, "@path": 1, "@query": 1, "@body": 1.321850292},
+ "belt": {"2": {"tpr": 0.9998264784, "fpr": 0.02107513745, "precision": 0.998912541, "wrong": 240, "tp": 190145, "fn": 33, "fp": 207, "tn": 9615, "corrected": 240, "flipped_rate": 0.6666666667, "seconds": 25.3769207, "ms_per_request": 0.1268846035, "per_class_tpr": {"arp_mitm": 0.9998264784}}, "3": {"tpr": 0.999842253, "fpr": 0.02026063938, "precision": 0.9989545409, "wrong": 229, "tp": 190148, "fn": 30, "fp": 199, "tn": 9623, "corrected": 229, "flipped_rate": 1, "seconds": 24.77609896, "ms_per_request": 0.1238804948, "per_class_tpr": {"arp_mitm": 0.999842253}}, "4": {"tpr": 0.9998895771, "fpr": 0.01506821421, "precision": 0.999222301, "wrong": 169, "tp": 190157, "fn": 21, "fp": 148, "tn": 9674, "corrected": 169, "flipped_rate": 1, "seconds": 24.87178619, "ms_per_request": 0.124358931, "per_class_tpr": {"arp_mitm": 0.9998895771}}, "5": {"tpr": 0.9998843189, "fpr": 0.01547546325, "precision": 0.9992012947, "wrong": 174, "tp": 190156, "fn": 22, "fp": 152, "tn": 9670, "corrected": 174, "flipped_rate": 1, "seconds": 24.37866438, "ms_per_request": 0.1218933219, "per_class_tpr": {"arp_mitm": 0.9998843189}}}
+}

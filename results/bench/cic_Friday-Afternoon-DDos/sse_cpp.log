@@ -1,0 +1,20 @@
+loaded 130000 rows in 0.8s
+fit in 0.7s: gate thr 2.946906, semantic thr 7.802332, semantic store 7.00 MB
+full precal: tpr=0.000 fpr=0.000 wrong=0
+    full lap1 50000/120000 tpr=0.999 fpr=0.013 6s
+    full lap1 100000/120000 tpr=0.999 fpr=0.014 12s
+== full lap 1: tpr=0.9990 fpr=0.0100 precision=0.9952 wrong=472 (14.2s, 0.119 ms/req)
+frozen pass: 9.4s, 78.1 us/req mean, p50 112.8 p99 278.2 us, 12811 req/s on one core
+    full lap2 50000/120000 tpr=0.998 fpr=0.014 5s
+    full lap2 100000/120000 tpr=0.997 fpr=0.018 11s
+== full lap 2: tpr=0.9974 fpr=0.0133 precision=0.9936 wrong=734 (13s)
+    full lap3 50000/120000 tpr=0.997 fpr=0.014 6s
+    full lap3 100000/120000 tpr=0.997 fpr=0.015 11s
+== full lap 3: tpr=0.9974 fpr=0.0116 precision=0.9944 wrong=658 (14s)
+    full lap4 50000/120000 tpr=0.998 fpr=0.014 5s
+    full lap4 100000/120000 tpr=0.998 fpr=0.015 11s
+== full lap 4: tpr=0.9976 fpr=0.0106 precision=0.9949 wrong=608 (13s)
+    full lap5 50000/120000 tpr=0.998 fpr=0.013 6s
+    full lap5 100000/120000 tpr=0.997 fpr=0.014 12s
+== full lap 5: tpr=0.9975 fpr=0.0092 precision=0.9956 wrong=559 (14s)
+wrote results/bench/cic_Friday-Afternoon-DDos/sse_cpp.json (79s)

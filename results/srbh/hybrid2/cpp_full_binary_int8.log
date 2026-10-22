@@ -1,0 +1,16 @@
+loaded 907813 rows in 6.5s
+fit in 0.3s: gate thr 4.842084, semantic thr 7.653680, semantic store 6.03 MB
+    full precal 50000/150710 tpr=0.976 fpr=0.038 2s
+    full precal 100000/150710 tpr=0.987 fpr=0.038 4s
+    full precal 150000/150710 tpr=0.944 fpr=0.043 7s
+full precal: tpr=0.944 fpr=0.043 wrong=7968
+    full lap1 50000/384629 tpr=0.878 fpr=0.342 4s
+    full lap1 100000/384629 tpr=0.897 fpr=0.196 9s
+    full lap1 150000/384629 tpr=0.899 fpr=0.130 14s
+    full lap1 200000/384629 tpr=0.895 fpr=0.098 18s
+    full lap1 250000/384629 tpr=0.916 fpr=0.093 23s
+    full lap1 300000/384629 tpr=0.936 fpr=0.094 27s
+    full lap1 350000/384629 tpr=0.946 fpr=0.095 31s
+== full lap 1: tpr=0.9425 fpr=0.1067 precision=0.9521 wrong=27936 (32.4s, 0.084 ms/req)
+frozen pass: 16.6s, 43.2 us/req mean, p50 46.1 p99 150.1 us, 23172 req/s on one core
+wrote results/srbh/hybrid2/cpp_full_binary_int8.json (63s)

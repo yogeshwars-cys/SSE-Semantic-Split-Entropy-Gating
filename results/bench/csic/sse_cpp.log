@@ -1,0 +1,15 @@
+loaded 71065 rows in 0.3s
+fit in 1.2s: gate thr 2.984473, semantic thr 2.094274, semantic store 8.46 MB
+full precal: tpr=0.000 fpr=0.000 wrong=0
+    full lap1 50000/61065 tpr=0.916 fpr=0.164 13s
+== full lap 1: tpr=0.9157 fpr=0.1636 precision=0.7958 wrong=8001 (16.6s, 0.271 ms/req)
+frozen pass: 15.8s, 259.3 us/req mean, p50 240.3 p99 512.4 us, 3856 req/s on one core
+    full lap2 50000/61065 tpr=0.928 fpr=0.134 14s
+== full lap 2: tpr=0.9269 fpr=0.1356 precision=0.8264 wrong=6713 (17s)
+    full lap3 50000/61065 tpr=0.937 fpr=0.123 15s
+== full lap 3: tpr=0.9371 fpr=0.1233 precision=0.8411 wrong=6015 (18s)
+    full lap4 50000/61065 tpr=0.948 fpr=0.103 15s
+== full lap 4: tpr=0.9485 fpr=0.1026 precision=0.8656 wrong=4984 (19s)
+    full lap5 50000/61065 tpr=0.958 fpr=0.081 16s
+== full lap 5: tpr=0.9581 fpr=0.0793 precision=0.8937 wrong=3905 (19s)
+wrote results/bench/csic/sse_cpp.json (107s)

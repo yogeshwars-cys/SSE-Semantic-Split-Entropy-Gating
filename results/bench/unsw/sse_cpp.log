@@ -1,0 +1,18 @@
+loaded 267673 rows in 1.2s
+fit in 0.8s: gate thr 4.514629, semantic thr 6.119599, semantic store 8.16 MB
+    full precal 50000/175341 tpr=0.776 fpr=0.191 12s
+    full precal 100000/175341 tpr=0.783 fpr=0.218 24s
+    full precal 150000/175341 tpr=0.784 fpr=0.234 36s
+full precal: tpr=0.786 fpr=0.244 wrong=39123
+    full lap1 50000/82332 tpr=0.743 fpr=0.188 14s
+== full lap 1: tpr=0.7422 fpr=0.1852 precision=0.8308 wrong=18538 (22.7s, 0.276 ms/req)
+frozen pass: 3.2s, 39.4 us/req mean, p50 9.8 p99 309.0 us, 25372 req/s on one core
+    full lap2 50000/82332 tpr=0.736 fpr=0.169 13s
+== full lap 2: tpr=0.7379 fpr=0.1676 precision=0.8436 wrong=18081 (22s)
+    full lap3 50000/82332 tpr=0.737 fpr=0.167 14s
+== full lap 3: tpr=0.7386 fpr=0.1680 precision=0.8434 wrong=18068 (23s)
+    full lap4 50000/82332 tpr=0.738 fpr=0.168 14s
+== full lap 4: tpr=0.7398 fpr=0.1672 precision=0.8443 wrong=17983 (23s)
+    full lap5 50000/82332 tpr=0.741 fpr=0.165 14s
+== full lap 5: tpr=0.7423 fpr=0.1651 precision=0.8464 wrong=17789 (24s)
+wrote results/bench/unsw/sse_cpp.json (162s)

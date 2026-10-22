@@ -4,7 +4,7 @@ Fits the semantic layer on the same 10,000 normal 17 Jul requests as replay_lear
 compares per-field distances (compressed - exact) on 3,000 more normal 17 Jul requests and 3,000 17 Jul attacks,
 and the share of requests each version's semantic layer flags at its own 1% threshold.
 
-usage: python -I quant_check.py <data_capec_multilabel.csv> <sse dir> <int8|binary>
+usage: python -I quant_check.py <data_capec_multilabel.csv> <sse dir> <int8|binary|binary_int8>
 """
 import copy
 import os
@@ -31,7 +31,7 @@ def main():
     sem = base.Semantic(fpr=0.01)
     sem.fit(fit)
     exact = copy.deepcopy(sem)
-    before, after = quant_space.compress(sem, fit, binary=MODE == "binary")
+    before, after = quant_space.compress(sem, fit, binary=MODE.startswith("binary"), int8=MODE == "binary_int8")
     print(f"{MODE}: semantic store float32 {before / 1e6:.1f} MB -> {after / 1e6:.1f} MB ({before / after:.1f}x); "
           f"1% threshold exact {exact.thr:.3f}, compressed {sem.thr:.3f}")
     normal = [base.to_request(r[2], True)[0] for r in b1[base.N_FIT:base.N_FIT + 3000]]

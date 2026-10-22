@@ -1,0 +1,48 @@
+loaded 907813 rows in 7.1s
+fit in 0.7s: gate thr 4.842084, semantic thr 7.653680, semantic store 6.03 MB
+    full precal 50000/150710 tpr=0.976 fpr=0.038 6s
+    full precal 100000/150710 tpr=0.987 fpr=0.038 12s
+    full precal 150000/150710 tpr=0.944 fpr=0.043 20s
+full precal: tpr=0.944 fpr=0.043 wrong=7968
+    full lap1 50000/384629 tpr=0.878 fpr=0.342 10s
+    full lap1 100000/384629 tpr=0.897 fpr=0.196 20s
+    full lap1 150000/384629 tpr=0.899 fpr=0.130 33s
+    full lap1 200000/384629 tpr=0.895 fpr=0.098 44s
+    full lap1 250000/384629 tpr=0.916 fpr=0.093 56s
+    full lap1 300000/384629 tpr=0.936 fpr=0.094 67s
+    full lap1 350000/384629 tpr=0.946 fpr=0.095 79s
+== full lap 1: tpr=0.9425 fpr=0.1067 precision=0.9521 wrong=27936 (84.4s, 0.219 ms/req)
+frozen pass: 54.6s, 141.9 us/req mean, p50 165.8 p99 422.0 us, 7045 req/s on one core
+    full lap2 50000/384629 tpr=0.840 fpr=0.219 16s
+    full lap2 100000/384629 tpr=0.865 fpr=0.161 33s
+    full lap2 150000/384629 tpr=0.868 fpr=0.110 51s
+    full lap2 200000/384629 tpr=0.871 fpr=0.086 67s
+    full lap2 250000/384629 tpr=0.892 fpr=0.080 80s
+    full lap2 300000/384629 tpr=0.918 fpr=0.080 93s
+    full lap2 350000/384629 tpr=0.932 fpr=0.081 105s
+== full lap 2: tpr=0.9287 fpr=0.0873 precision=0.9599 wrong=29328 (111s)
+    full lap3 50000/384629 tpr=0.857 fpr=0.210 24s
+    full lap3 100000/384629 tpr=0.873 fpr=0.164 46s
+    full lap3 150000/384629 tpr=0.859 fpr=0.118 69s
+    full lap3 200000/384629 tpr=0.866 fpr=0.087 89s
+    full lap3 250000/384629 tpr=0.888 fpr=0.080 106s
+    full lap3 300000/384629 tpr=0.915 fpr=0.081 120s
+    full lap3 350000/384629 tpr=0.930 fpr=0.081 134s
+== full lap 3: tpr=0.9278 fpr=0.0776 precision=0.9642 wrong=28417 (142s)
+    full lap4 50000/384629 tpr=0.874 fpr=0.224 29s
+    full lap4 100000/384629 tpr=0.886 fpr=0.158 56s
+    full lap4 150000/384629 tpr=0.873 fpr=0.111 83s
+    full lap4 200000/384629 tpr=0.878 fpr=0.084 107s
+    full lap4 250000/384629 tpr=0.898 fpr=0.076 125s
+    full lap4 300000/384629 tpr=0.922 fpr=0.077 141s
+    full lap4 350000/384629 tpr=0.936 fpr=0.077 154s
+== full lap 4: tpr=0.9333 fpr=0.0748 precision=0.9656 wrong=26608 (162s)
+    full lap5 50000/384629 tpr=0.873 fpr=0.212 33s
+    full lap5 100000/384629 tpr=0.887 fpr=0.151 62s
+    full lap5 150000/384629 tpr=0.876 fpr=0.107 92s
+    full lap5 200000/384629 tpr=0.881 fpr=0.080 117s
+    full lap5 250000/384629 tpr=0.900 fpr=0.073 135s
+    full lap5 300000/384629 tpr=0.924 fpr=0.073 151s
+    full lap5 350000/384629 tpr=0.937 fpr=0.074 163s
+== full lap 5: tpr=0.9356 fpr=0.0716 precision=0.9671 wrong=25623 (172s)
+wrote results/bench/srbh/sse_cpp.json (754s)

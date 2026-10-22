@@ -1,0 +1,25 @@
+loaded 210000 rows in 2.0s
+fit in 2.0s: gate thr 3.355904, semantic thr 6.151813, semantic store 15.45 MB
+full precal: tpr=0.000 fpr=0.000 wrong=0
+    full lap1 50000/200000 tpr=1.000 fpr=0.018 1s
+    full lap1 100000/200000 tpr=1.000 fpr=0.017 1s
+    full lap1 150000/200000 tpr=1.000 fpr=0.015 2s
+== full lap 1: tpr=1.0000 fpr=0.0136 precision=0.9998 wrong=46 (2.1s, 0.011 ms/req)
+frozen pass: 1.6s, 8.2 us/req mean, p50 2.2 p99 217.2 us, 122176 req/s on one core
+    full lap2 50000/200000 tpr=1.000 fpr=0.002 0s
+    full lap2 100000/200000 tpr=1.000 fpr=0.002 1s
+    full lap2 150000/200000 tpr=1.000 fpr=0.002 1s
+== full lap 2: tpr=1.0000 fpr=0.0021 precision=1.0000 wrong=8 (1s)
+    full lap3 50000/200000 tpr=1.000 fpr=0.001 1s
+    full lap3 100000/200000 tpr=1.000 fpr=0.000 1s
+    full lap3 150000/200000 tpr=1.000 fpr=0.001 2s
+== full lap 3: tpr=1.0000 fpr=0.0009 precision=1.0000 wrong=4 (2s)
+    full lap4 50000/200000 tpr=1.000 fpr=0.001 1s
+    full lap4 100000/200000 tpr=1.000 fpr=0.000 1s
+    full lap4 150000/200000 tpr=1.000 fpr=0.001 2s
+== full lap 4: tpr=1.0000 fpr=0.0012 precision=1.0000 wrong=5 (2s)
+    full lap5 50000/200000 tpr=1.000 fpr=0.001 1s
+    full lap5 100000/200000 tpr=1.000 fpr=0.000 1s
+    full lap5 150000/200000 tpr=1.000 fpr=0.001 1s
+== full lap 5: tpr=1.0000 fpr=0.0009 precision=1.0000 wrong=4 (2s)
+wrote results/bench/kitsune_ssdp_flood/sse_cpp.json (14s)
