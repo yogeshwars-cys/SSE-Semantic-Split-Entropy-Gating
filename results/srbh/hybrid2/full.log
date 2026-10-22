@@ -1,0 +1,13 @@
+    full precal 50000/150710 tpr=0.975 fpr=0.038 22s
+    full precal 100000/150710 tpr=0.987 fpr=0.038 50s
+    full precal 150000/150710 tpr=0.943 fpr=0.042 76s
+full precal: tpr=0.943 fpr=0.043 wrong=8059
+    full lap1 50000/384629 tpr=0.875 fpr=0.315 28s
+    full lap1 100000/384629 tpr=0.888 fpr=0.163 55s
+    full lap1 150000/384629 tpr=0.854 fpr=0.123 87s
+    full lap1 200000/384629 tpr=0.846 fpr=0.093 120s
+    full lap1 250000/384629 tpr=0.872 fpr=0.085 151s
+    full lap1 300000/384629 tpr=0.903 fpr=0.086 219s
+    full lap1 350000/384629 tpr=0.919 fpr=0.087 284s
+== full lap 1: tpr=0.9081 fpr=0.0999 precision=0.9534 wrong=36296 route_state={'entries_set': 84651, 'entries_flipped': 3726, 'bytes': 6291456} (332s, 0.86 ms/req)
+wrote results/srbh/hybrid2/full.json (453s)

@@ -1,0 +1,14 @@
+compressed semantic store: {'semantic_float32_bytes': 72908800, 'semantic_compressed_bytes': 6025924, 'compress_seconds': 6.1}
+    full precal 50000/150710 tpr=0.976 fpr=0.039 54s
+    full precal 100000/150710 tpr=0.987 fpr=0.039 107s
+    full precal 150000/150710 tpr=0.944 fpr=0.043 184s
+full precal: tpr=0.944 fpr=0.044 wrong=7977
+    full lap1 50000/384629 tpr=0.879 fpr=0.343 85s
+    full lap1 100000/384629 tpr=0.898 fpr=0.196 170s
+    full lap1 150000/384629 tpr=0.900 fpr=0.130 269s
+    full lap1 200000/384629 tpr=0.896 fpr=0.098 358s
+    full lap1 250000/384629 tpr=0.916 fpr=0.093 447s
+    full lap1 300000/384629 tpr=0.936 fpr=0.095 537s
+    full lap1 350000/384629 tpr=0.946 fpr=0.095 625s
+== full lap 1: tpr=0.9423 fpr=0.1074 precision=0.9518 wrong=28086 route_state={'entries_set': 65677, 'entries_flipped': 3568, 'bytes': 2097152} (677s, 1.76 ms/req)
+wrote results/srbh/hybrid2/full_binary.json (890s)

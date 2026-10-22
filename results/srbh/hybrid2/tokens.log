@@ -1,0 +1,13 @@
+    tokens precal 50000/150710 tpr=0.975 fpr=0.035 22s
+    tokens precal 100000/150710 tpr=0.987 fpr=0.035 50s
+    tokens precal 150000/150710 tpr=0.944 fpr=0.039 76s
+tokens precal: tpr=0.944 fpr=0.039 wrong=7900
+    tokens lap1 50000/384629 tpr=0.878 fpr=0.292 28s
+    tokens lap1 100000/384629 tpr=0.891 fpr=0.148 54s
+    tokens lap1 150000/384629 tpr=0.854 fpr=0.107 85s
+    tokens lap1 200000/384629 tpr=0.847 fpr=0.081 117s
+    tokens lap1 250000/384629 tpr=0.871 fpr=0.077 147s
+    tokens lap1 300000/384629 tpr=0.902 fpr=0.078 215s
+    tokens lap1 350000/384629 tpr=0.917 fpr=0.079 281s
+== tokens lap 1: tpr=0.9051 fpr=0.0974 precision=0.9543 wrong=36805 route_state={'entries_set': 84612, 'entries_flipped': 3720, 'bytes': 6291456} (327s, 0.85 ms/req)
+wrote results/srbh/hybrid2/tokens.json (448s)

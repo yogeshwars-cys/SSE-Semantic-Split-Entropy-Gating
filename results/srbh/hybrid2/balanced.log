@@ -1,0 +1,13 @@
+    balanced precal 50000/150710 tpr=0.884 fpr=0.030 14s
+    balanced precal 100000/150710 tpr=0.859 fpr=0.032 34s
+    balanced precal 150000/150710 tpr=0.784 fpr=0.031 53s
+balanced precal: tpr=0.785 fpr=0.032 wrong=26156
+    balanced lap1 50000/384629 tpr=0.615 fpr=0.109 22s
+    balanced lap1 100000/384629 tpr=0.664 fpr=0.077 42s
+    balanced lap1 150000/384629 tpr=0.608 fpr=0.056 65s
+    balanced lap1 200000/384629 tpr=0.591 fpr=0.049 91s
+    balanced lap1 250000/384629 tpr=0.658 fpr=0.052 197s
+    balanced lap1 300000/384629 tpr=0.739 fpr=0.054 260s
+    balanced lap1 350000/384629 tpr=0.778 fpr=0.054 318s
+== balanced lap 1: tpr=0.7660 fpr=0.0574 precision=0.9677 wrong=69109 route_state={'route_overrides': 177285} (359s, 0.93 ms/req)
+wrote results/srbh/hybrid2/balanced.json (456s)

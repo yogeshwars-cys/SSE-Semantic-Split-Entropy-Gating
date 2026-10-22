@@ -1,0 +1,45 @@
+    full precal 50000/150710 tpr=0.975 fpr=0.038 21s
+    full precal 100000/150710 tpr=0.987 fpr=0.038 47s
+    full precal 150000/150710 tpr=0.943 fpr=0.042 73s
+full precal: tpr=0.943 fpr=0.043 wrong=8059
+    full lap1 50000/384629 tpr=0.875 fpr=0.315 30s
+    full lap1 100000/384629 tpr=0.888 fpr=0.163 57s
+    full lap1 150000/384629 tpr=0.854 fpr=0.123 89s
+    full lap1 200000/384629 tpr=0.846 fpr=0.093 119s
+    full lap1 250000/384629 tpr=0.872 fpr=0.085 149s
+    full lap1 300000/384629 tpr=0.903 fpr=0.086 196s
+    full lap1 350000/384629 tpr=0.919 fpr=0.087 243s
+== full lap 1: tpr=0.9081 fpr=0.0999 precision=0.9534 wrong=36296 route_state={'entries_set': 84651, 'entries_flipped': 3726, 'bytes': 6291456} (280s, 0.73 ms/req)
+    full lap2 50000/384629 tpr=0.820 fpr=0.204 244s
+    full lap2 100000/384629 tpr=0.824 fpr=0.119 448s
+    full lap2 150000/384629 tpr=0.790 fpr=0.097 812s
+    full lap2 200000/384629 tpr=0.792 fpr=0.073 957s
+    full lap2 250000/384629 tpr=0.824 fpr=0.069 1023s
+    full lap2 300000/384629 tpr=0.867 fpr=0.069 1056s
+    full lap2 350000/384629 tpr=0.890 fpr=0.070 1086s
+== full lap 2: tpr=0.8804 fpr=0.0729 precision=0.9645 wrong=40466 (1107s)
+    full lap3 50000/384629 tpr=0.790 fpr=0.131 54s
+    full lap3 100000/384629 tpr=0.799 fpr=0.086 117s
+    full lap3 150000/384629 tpr=0.761 fpr=0.074 200s
+    full lap3 200000/384629 tpr=0.767 fpr=0.058 332s
+    full lap3 250000/384629 tpr=0.807 fpr=0.054 419s
+    full lap3 300000/384629 tpr=0.854 fpr=0.054 478s
+    full lap3 350000/384629 tpr=0.879 fpr=0.055 531s
+== full lap 3: tpr=0.8719 fpr=0.0552 precision=0.9726 wrong=40637 (569s)
+    full lap4 50000/384629 tpr=0.792 fpr=0.117 194s
+    full lap4 100000/384629 tpr=0.801 fpr=0.075 352s
+    full lap4 150000/384629 tpr=0.766 fpr=0.063 512s
+    full lap4 200000/384629 tpr=0.771 fpr=0.050 554s
+    full lap4 250000/384629 tpr=0.811 fpr=0.046 590s
+    full lap4 300000/384629 tpr=0.857 fpr=0.047 623s
+    full lap4 350000/384629 tpr=0.882 fpr=0.048 654s
+== full lap 4: tpr=0.8771 fpr=0.0499 precision=0.9753 wrong=38634 (673s)
+    full lap5 50000/384629 tpr=0.793 fpr=0.107 57s
+    full lap5 100000/384629 tpr=0.803 fpr=0.067 102s
+    full lap5 150000/384629 tpr=0.769 fpr=0.057 153s
+    full lap5 200000/384629 tpr=0.775 fpr=0.046 192s
+    full lap5 250000/384629 tpr=0.814 fpr=0.043 227s
+    full lap5 300000/384629 tpr=0.859 fpr=0.043 260s
+    full lap5 350000/384629 tpr=0.884 fpr=0.045 290s
+== full lap 5: tpr=0.8801 fpr=0.0471 precision=0.9768 wrong=37486 (308s)
+wrote results/srbh/hybrid2/belt_full.json (3033s)

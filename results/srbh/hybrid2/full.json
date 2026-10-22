@@ -1,0 +1,249 @@
+{
+ "protocol": "Prototype hybrid: balanced gate learning, path-token route thresholds, damped threshold moves. SR-BH lap 1.\n\nThree changes to replay_learn.py's gates_learn_route hybrid (sse/ itself is untouched):\n  balanced   a miss sharpens every above-normal field (z >= half the threshold), statistical weights and semantic\n             rare 3-grams, at lr_miss (0.15, 3x the false-alarm rate) instead of one field at 0.05\n  tokens     route thresholds keyed by path tokens instead of the exact path: each segment (digits folded), the\n             first one and two segments, the extension, the depth, the exact path and a global token. A field's\n             threshold on a path = the global 1% threshold + the mean shift of its tokens, so a correction learned on\n             /wp-admin/a.php also moves /wp-admin/b.php. Shifts live in a fixed hashed table (2^20 entries)\n  damped     a correction moves the threshold halfway (eta 0.5) to its target, so it takes two corrections in the\n             same direction to commit; an entry that flips direction gets eta / (1 + flips); shifts capped at +-4\nVariants (HYB_VARIANT): balanced (exact overrides kept), tokens (tokens + damped, original gate learning), full.\nSame split, seed, precalibration (17 Jul) and teacher (dataset label) as replay_learn.py, so lap 1 (18-19 Jul,\ntraffic never seen) compares directly with its gates_learn_route: 76.7% / 5.1%, 67,953 wrong, 171,034 overrides.\nSettings are fixed in advance, not tuned on the replay.",
+ "variant": "full",
+ "reference_gates_learn_route": {
+  "precal": {
+   "tpr": 0.803,
+   "fpr": 0.027,
+   "wrong": 23835
+  },
+  "lap1": {
+   "tpr": 0.7673,
+   "fpr": 0.0507,
+   "precision": 0.9714,
+   "wrong": 67953,
+   "route_overrides": 171034
+  }
+ },
+ "precal": {
+  "tpr": 0.9433631512464231,
+  "fpr": 0.04275271572938812,
+  "wrong": 8059
+ },
+ "lap1": {
+  "tpr": 0.9080850040939582,
+  "fpr": 0.09987920562918662,
+  "precision": 0.9533750266169292,
+  "wrong": 36296,
+  "flipped_rate": 0.27548209366391185,
+  "per_class_tpr": {
+   "126 - Path Traversal": 0.9288762446657184,
+   "153 - Input Data Manipulation": 0.9826388888888888,
+   "16 - Dictionary-based Password Attack": 0.9575208913649025,
+   "194 - Fake the Source of Data": 0.8733944954128441,
+   "242 - Code Injection": 0.9658938622353257,
+   "272 - Protocol Manipulation": 0.5873996294008648,
+   "274 - HTTP Verb Tampering": 1.0,
+   "310 - Scanning for Vulnerable Software": 1.0,
+   "33 - HTTP Request Smuggling": 0.9716713881019831,
+   "34 - HTTP Response Splitting": 0.7901509778093019,
+   "66 - SQL Injection": 0.9241912485729309,
+   "88 - OS Command Injection": 0.9641155922515084
+  },
+  "hourly": {
+   "0": {
+    "tpr": 0.8775111607142857,
+    "fpr": 0.33730974907445493
+   },
+   "1": {
+    "tpr": 0.8662908166590627,
+    "fpr": 0.1737327188940092
+   },
+   "2": {
+    "tpr": 0.9618943184154616,
+    "fpr": 0.07438117302767955
+   },
+   "3": {
+    "tpr": 0.8499173857169083,
+    "fpr": 0.0667981591058514
+   },
+   "4": {
+    "tpr": 0.6724322778929311,
+    "fpr": 0.1716260162601626
+   },
+   "5": {
+    "tpr": 0.8071359691417551,
+    "fpr": 0.01621889315339854
+   },
+   "6": {
+    "tpr": 0.8622828784119106,
+    "fpr": 0.013959822948586994
+   },
+   "7": {
+    "tpr": 0.7748715553479683,
+    "fpr": 0.11931212905189469
+   },
+   "8": {
+    "tpr": 0.44594594594594594,
+    "fpr": 0.05270798436627582
+   },
+   "9": {
+    "tpr": 0.6818181818181818,
+    "fpr": 0.21978021978021978
+   },
+   "10": {
+    "tpr": 0.737171464330413,
+    "fpr": 0.04805491990846682
+   },
+   "11": {
+    "tpr": 0.9581668433499144,
+    "fpr": 0.03976548559775682
+   },
+   "12": {
+    "tpr": 0.9899943630214205,
+    "fpr": 0.02094972067039106
+   },
+   "13": {
+    "tpr": 0.995367242544156,
+    "fpr": 0.11529411764705882
+   },
+   "14": {
+    "tpr": 0.9987380298418825,
+    "fpr": 0.4375
+   },
+   "15": {
+    "tpr": 0.9980720236865661,
+    "fpr": 0.4176470588235294
+   },
+   "16": {
+    "tpr": 0.9972836941759208,
+    "fpr": 0.3235294117647059
+   },
+   "17": {
+    "tpr": 0.9981629466335997,
+    "fpr": 0.2631578947368421
+   },
+   "18": {
+    "tpr": 0.9976010468159349,
+    "fpr": 0.25
+   },
+   "19": {
+    "tpr": 0.9984544049459042,
+    "fpr": 0.25925925925925924
+   },
+   "20": {
+    "tpr": 0.9981343283582089,
+    "fpr": 0.25
+   },
+   "21": {
+    "tpr": 0.9974059662775616,
+    "fpr": 0.2
+   },
+   "22": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "23": {
+    "tpr": 0.9993498049414824,
+    "fpr": 0.125
+   },
+   "24": {
+    "tpr": 0.9981000633312223,
+    "fpr": 0.42857142857142855
+   },
+   "25": {
+    "tpr": 0.9980645161290322,
+    "fpr": 0.2
+   },
+   "26": {
+    "tpr": 0.9980392156862745,
+    "fpr": 0.3333333333333333
+   },
+   "27": {
+    "tpr": 0.9968886123210952,
+    "fpr": 0.375
+   },
+   "28": {
+    "tpr": 0.9980732177263969,
+    "fpr": 0.2222222222222222
+   },
+   "29": {
+    "tpr": 0.9987293519695044,
+    "fpr": 0.5
+   },
+   "30": {
+    "tpr": 0.9987253027405991,
+    "fpr": 0.4
+   },
+   "31": {
+    "tpr": 0.9980379332897319,
+    "fpr": 0.3076923076923077
+   },
+   "32": {
+    "tpr": 0.9987593052109182,
+    "fpr": 0.4
+   },
+   "33": {
+    "tpr": 0.8201798201798202,
+    "fpr": 0.09621451104100946
+   },
+   "34": {
+    "tpr": 0.738601637941572,
+    "fpr": 0.17391069596674047
+   },
+   "35": {
+    "tpr": 0.14285714285714285,
+    "fpr": 0.020361990950226245
+   },
+   "36": {
+    "tpr": 1.0,
+    "fpr": 0.8333333333333334
+   },
+   "37": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "39": {
+    "tpr": 0.0,
+    "fpr": 0.0
+   },
+   "41": {
+    "tpr": 0.5714285714285714,
+    "fpr": 0.29411764705882354
+   },
+   "42": {
+    "tpr": 1.0,
+    "fpr": 0.14285714285714285
+   },
+   "43": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "44": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "45": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "47": {
+    "tpr": 0.0,
+    "fpr": 0.040632054176072234
+   }
+  }
+ },
+ "seconds": 331.8,
+ "ms_per_request": 0.86,
+ "route_state": {
+  "entries_set": 84651,
+  "entries_flipped": 3726,
+  "bytes": 6291456
+ },
+ "gate_field_weights": {
+  "user-agent": 0.562,
+  "@path": 1.54,
+  "cookie": 3.0,
+  "host": 0.561,
+  "accept": 2.321,
+  "@body": 2.707,
+  "referer": 1.443,
+  "origin": 3.0,
+  "@query": 2.732,
+  "content-type": 1.99,
+  "accept-language": 1.952,
+  "dnt": 2.707,
+  "connection": 2.85,
+  "@method": 2.85
+ }
+}

@@ -1,0 +1,256 @@
+{
+ "protocol": "Prototype hybrid: balanced gate learning, path-token route thresholds, damped threshold moves. SR-BH lap 1.\n\nThree changes to replay_learn.py's gates_learn_route hybrid (sse/ itself is untouched):\n  balanced   a miss sharpens every above-normal field (z >= half the threshold), statistical weights and semantic\n             rare 3-grams, at lr_miss (0.15, 3x the false-alarm rate) instead of one field at 0.05\n  tokens     route thresholds keyed by path tokens instead of the exact path: each segment (digits folded), the\n             first one and two segments, the extension, the depth, the exact path and a global token. A field's\n             threshold on a path = the global 1% threshold + the mean shift of its tokens, so a correction learned on\n             /wp-admin/a.php also moves /wp-admin/b.php. Shifts live in a fixed hashed table (2^20 entries)\n  damped     a correction moves the threshold halfway (eta 0.5) to its target, so it takes two corrections in the\n             same direction to commit; an entry that flips direction gets eta / (1 + flips); shifts capped at +-4\nVariants (HYB_VARIANT): balanced (exact overrides kept), tokens (tokens + damped, original gate learning), full.\nHYB_QUANT=2 goes fully binary: the semantic layer keeps 3-gram presence bitsets + norms instead of int8 vectors\n(gains as uint8 log levels) and each token entry packs its direction and flip count into one byte.\nHYB_QUANT=1 compresses both stores: the semantic layer's stored values become binary Hadamard codes + int8 rescore\n(quant_space.py, thresholds re-set with compressed distances) and the token shifts become int8 (stochastic rounding).\nSame split, seed, precalibration (17 Jul) and teacher (dataset label) as replay_learn.py, so lap 1 (18-19 Jul,\ntraffic never seen) compares directly with its gates_learn_route: 76.7% / 5.1%, 67,953 wrong, 171,034 overrides.\nSettings are fixed in advance, not tuned on the replay. HYB_LAPS=N then re-runs the same 18-19 Jul stream as\nbelt laps 2..N, learning every lap (belt.py's protocol: convergence on traffic already seen, not unseen traffic).",
+ "variant": "full",
+ "reference_gates_learn_route": {
+  "precal": {
+   "tpr": 0.803,
+   "fpr": 0.027,
+   "wrong": 23835
+  },
+  "lap1": {
+   "tpr": 0.7673,
+   "fpr": 0.0507,
+   "precision": 0.9714,
+   "wrong": 67953,
+   "route_overrides": 171034
+  }
+ },
+ "precal": {
+  "tpr": 0.9443427599185378,
+  "fpr": 0.04368465503684073,
+  "wrong": 7977
+ },
+ "lap1": {
+  "tpr": 0.9422564094859641,
+  "fpr": 0.10738028264193339,
+  "precision": 0.9517724899842176,
+  "wrong": 28086,
+  "flipped_rate": 0.43416370106761565,
+  "per_class_tpr": {
+   "126 - Path Traversal": 0.9695590327169274,
+   "153 - Input Data Manipulation": 0.9835069444444444,
+   "16 - Dictionary-based Password Attack": 0.9484679665738162,
+   "194 - Fake the Source of Data": 0.9073394495412844,
+   "242 - Code Injection": 0.9857276869471991,
+   "272 - Protocol Manipulation": 0.8276714021000617,
+   "274 - HTTP Verb Tampering": 1.0,
+   "310 - Scanning for Vulnerable Software": 1.0,
+   "33 - HTTP Request Smuggling": 0.9782813975448537,
+   "34 - HTTP Response Splitting": 0.867514439152903,
+   "66 - SQL Injection": 0.9488434226919378,
+   "88 - OS Command Injection": 0.9830104795173071
+  },
+  "hourly": {
+   "0": {
+    "tpr": 0.8812081473214286,
+    "fpr": 0.3517071164129988
+   },
+   "1": {
+    "tpr": 0.8760998500945056,
+    "fpr": 0.24254992319508448
+   },
+   "2": {
+    "tpr": 0.9722431635939963,
+    "fpr": 0.09352517985611511
+   },
+   "3": {
+    "tpr": 0.905085368092528,
+    "fpr": 0.1178172255095332
+   },
+   "4": {
+    "tpr": 0.9107997998713458,
+    "fpr": 0.11682926829268293
+   },
+   "5": {
+    "tpr": 0.8649951783992286,
+    "fpr": 0.01708555156617556
+   },
+   "6": {
+    "tpr": 0.909153570443893,
+    "fpr": 0.014470548178413346
+   },
+   "7": {
+    "tpr": 0.8740074731433909,
+    "fpr": 0.12570385025110334
+   },
+   "8": {
+    "tpr": 0.45795795795795796,
+    "fpr": 0.0513679508654383
+   },
+   "9": {
+    "tpr": 0.7045454545454546,
+    "fpr": 0.26373626373626374
+   },
+   "10": {
+    "tpr": 0.9138923654568211,
+    "fpr": 0.10264792415822165
+   },
+   "11": {
+    "tpr": 0.9852401533066949,
+    "fpr": 0.04766760132551619
+   },
+   "12": {
+    "tpr": 0.9902762119503946,
+    "fpr": 0.04329608938547486
+   },
+   "13": {
+    "tpr": 0.9927613164752437,
+    "fpr": 0.14
+   },
+   "14": {
+    "tpr": 0.9984410956870314,
+    "fpr": 0.6354166666666666
+   },
+   "15": {
+    "tpr": 0.9984851614680162,
+    "fpr": 0.3941176470588235
+   },
+   "16": {
+    "tpr": 0.9974434768714548,
+    "fpr": 0.4117647058823529
+   },
+   "17": {
+    "tpr": 0.9978873886286397,
+    "fpr": 0.2807017543859649
+   },
+   "18": {
+    "tpr": 0.9976010468159349,
+    "fpr": 0.2916666666666667
+   },
+   "19": {
+    "tpr": 0.9986476043276662,
+    "fpr": 0.37037037037037035
+   },
+   "20": {
+    "tpr": 0.9975124378109452,
+    "fpr": 0.25
+   },
+   "21": {
+    "tpr": 0.9961089494163424,
+    "fpr": 0.3
+   },
+   "22": {
+    "tpr": 0.9992887624466572,
+    "fpr": 0.3333333333333333
+   },
+   "23": {
+    "tpr": 0.9986996098829649,
+    "fpr": 0.25
+   },
+   "24": {
+    "tpr": 0.9974667511082964,
+    "fpr": 0.14285714285714285
+   },
+   "25": {
+    "tpr": 0.9961290322580645,
+    "fpr": 0.2
+   },
+   "26": {
+    "tpr": 0.9993464052287582,
+    "fpr": 0.2222222222222222
+   },
+   "27": {
+    "tpr": 0.9962663347853142,
+    "fpr": 0.5
+   },
+   "28": {
+    "tpr": 0.9974309569685292,
+    "fpr": 0.3333333333333333
+   },
+   "29": {
+    "tpr": 0.9955527318932655,
+    "fpr": 0.2
+   },
+   "30": {
+    "tpr": 0.9987253027405991,
+    "fpr": 0.2
+   },
+   "31": {
+    "tpr": 0.9980379332897319,
+    "fpr": 0.3076923076923077
+   },
+   "32": {
+    "tpr": 0.9987593052109182,
+    "fpr": 0.4
+   },
+   "33": {
+    "tpr": 0.8566433566433567,
+    "fpr": 0.10015772870662461
+   },
+   "34": {
+    "tpr": 0.8772154993277106,
+    "fpr": 0.17790616057448302
+   },
+   "35": {
+    "tpr": 0.42857142857142855,
+    "fpr": 0.016968325791855202
+   },
+   "36": {
+    "tpr": 1.0,
+    "fpr": 0.8333333333333334
+   },
+   "37": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "39": {
+    "tpr": 0.0,
+    "fpr": 0.0
+   },
+   "41": {
+    "tpr": 0.5714285714285714,
+    "fpr": 0.23529411764705882
+   },
+   "42": {
+    "tpr": 1.0,
+    "fpr": 0.14285714285714285
+   },
+   "43": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "44": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "45": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "47": {
+    "tpr": 0.0,
+    "fpr": 0.03160270880361174
+   }
+  }
+ },
+ "seconds": 677.3,
+ "ms_per_request": 1.76,
+ "route_state": {
+  "entries_set": 65677,
+  "entries_flipped": 3568,
+  "bytes": 2097152
+ },
+ "quantised": "binary",
+ "semantic_sizes_at_fit": {
+  "semantic_float32_bytes": 72908800,
+  "semantic_compressed_bytes": 6025924,
+  "compress_seconds": 6.1
+ },
+ "semantic_bytes_after_lap1": 17952464,
+ "gate_field_weights": {
+  "user-agent": 0.542,
+  "@path": 1.54,
+  "cookie": 2.205,
+  "host": 0.561,
+  "accept": 2.321,
+  "@body": 2.707,
+  "referer": 1.54,
+  "origin": 3.0,
+  "@query": 3.0,
+  "content-type": 1.99,
+  "accept-language": 2.289,
+  "dnt": 2.707,
+  "connection": 3.0,
+  "@method": 2.707
+ }
+}
