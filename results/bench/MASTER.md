@@ -10,15 +10,15 @@ Same test rows for every method on a dataset. SSE learns online from the label o
 | SSE C++ binary, exact routes, lap 5 | 0.985 | 0.910 | 0.999 | 0.997 | 0.823 | 0.994 | 0.792 | 1.000 | 1.000 | 1.000 | 1.000 | 0.967 |
 | SSE C++ binary, token routes only, lap 1 | 0.947 | 0.852 | 0.997 | 0.996 | 0.687 | 0.970 | 0.784 | 0.999 | 1.000 | 0.998 | 1.000 | 0.912 |
 | ModSecurity + CRS 3.3.5 (best PL) | 0.629 | 0.631 | - | - | - | - | - | - | - | - | - | - |
-| Coraza + CRS 4.25 (best PL) | - | - | - | - | - | - | - | - | - | - | - | - |
-| char-CNN (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
-| char-BiLSTM (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
-| Isolation Forest | - | - | - | - | - | - | - | - | - | - | - | - |
+| Coraza + CRS 4.25 (best PL) | 0.763 | 0.521 | - | - | - | - | - | - | - | - | - | - |
+| char-CNN (supervised) | - | 0.972 | - | - | - | - | - | - | - | - | - | - |
+| char-BiLSTM (supervised) | - | 0.951 | - | - | - | - | - | - | - | - | - | - |
+| Isolation Forest | 0.067 | 0.161 | 0.016 | 0.003 | 0.000 | 0.038 | 0.186 | 0.000 | 0.009 | 0.647 | 0.999 | 0.376 |
 | One-Class SVM | 0.760 | 0.679 | 0.773 | 0.061 | 0.054 | 0.351 | 0.614 | 0.761 | - | 0.380 | 0.995 | 0.282 |
 | KitNET (Kitsune) | 0.762 | 0.645 | 0.772 | 0.000 | 0.000 | 0.371 | 0.232 | 0.056 | - | 0.661 | 0.995 | 0.356 |
-| Random Forest (supervised) | 0.851 | 0.933 | 1.000 | 1.000 | 0.985 | 0.999 | 0.894 | - | - | - | - | - |
-| XGBoost (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
-| CatBoost (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
+| Random Forest (supervised) | 0.851 | 0.933 | 1.000 | 1.000 | 0.985 | 0.999 | 0.894 | 1.000 | - | 1.000 | 1.000 | 1.000 |
+| XGBoost (supervised) | 0.874 | 0.932 | 1.000 | 1.000 | 0.996 | 0.999 | 0.892 | 1.000 | - | 1.000 | 1.000 | 1.000 |
+| CatBoost (supervised) | 0.870 | 0.932 | 1.000 | 1.000 | 0.994 | 0.999 | 0.892 | 1.000 | - | 1.000 | 1.000 | 1.000 |
 
 ## Detection / false alarms
 
@@ -28,15 +28,15 @@ Same test rows for every method on a dataset. SSE learns online from the label o
 | SSE C++ binary, exact routes, lap 5 | 98.8% / 3.8% | 92.8% / 7.7% | 100.0% / 0.2% | 99.8% / 0.7% | 88.1% / 0.4% | 99.6% / 0.5% | 80.3% / 27.4% | 100.0% / 0.2% | 100.0% / 0.0% | 100.0% / 0.0% | 100.0% / 0.1% | 98.1% / 0.4% |
 | SSE C++ binary, token routes only, lap 1 | 94.2% / 10.7% | 91.6% / 16.4% | 99.9% / 1.0% | 99.9% / 1.1% | 88.5% / 1.1% | 97.5% / 2.2% | 74.2% / 18.5% | 100.0% / 3.1% | 100.0% / 0.0% | 100.0% / 0.1% | 100.0% / 1.4% | 94.4% / 1.1% |
 | ModSecurity + CRS 3.3.5 (best PL) | 49.1% / 15.5% (PL3) | 55.6% / 14.3% (PL3) | - | - | - | - | - | - | - | - | - | - |
-| Coraza + CRS 4.25 (best PL) | - | - | - | - | - | - | - | - | - | - | - | - |
-| char-CNN (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
-| char-BiLSTM (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
-| Isolation Forest | - | - | - | - | - | - | - | - | - | - | - | - |
+| Coraza + CRS 4.25 (best PL) | 72.8% / 40.6% (PL3) | 37.3% / 4.2% (PL2) | - | - | - | - | - | - | - | - | - | - |
+| char-CNN (supervised) | - | 96.6% / 1.5% | - | - | - | - | - | - | - | - | - | - |
+| char-BiLSTM (supervised) | - | 94.0% / 2.6% | - | - | - | - | - | - | - | - | - | - |
+| Isolation Forest | 3.5% / 0.7% | 8.9% / 1.1% | 0.8% / 2.7% | 0.1% / 1.1% | 0.0% / 1.0% | 2.0% / 0.8% | 10.4% / 1.6% | 0.0% / 20.5% | 0.5% / 0.0% | 100.0% / 22.5% | 100.0% / 6.1% | 24.6% / 0.5% |
 | One-Class SVM | 66.9% / 20.8% | 52.2% / 1.1% | 63.6% / 2.0% | 3.2% / 1.7% | 3.9% / 0.7% | 21.7% / 1.4% | 45.3% / 2.6% | 64.2% / 86.0% | - | 100.0% / 67.5% | 100.0% / 63.9% | 24.6% / 4.3% |
 | KitNET (Kitsune) | 67.2% / 20.8% | 48.4% / 1.3% | 63.6% / 2.4% | 0.0% / 2.0% | 0.0% / 0.7% | 23.3% / 1.2% | 13.4% / 2.6% | 2.9% / 5.2% | - | 100.0% / 21.1% | 100.0% / 65.8% | 24.6% / 1.2% |
-| Random Forest (supervised) | 92.9% / 57.0% | 93.1% / 4.5% | 100.0% / 0.0% | 100.0% / 0.0% | 97.3% / 0.0% | 99.9% / 0.1% | 98.6% / 27.0% | - | - | - | - | - |
-| XGBoost (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
-| CatBoost (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
+| Random Forest (supervised) | 92.9% / 57.0% | 93.1% / 4.5% | 100.0% / 0.0% | 100.0% / 0.0% | 97.3% / 0.0% | 99.9% / 0.1% | 98.6% / 27.0% | 100.0% / 0.0% | - | 100.0% / 0.0% | 100.0% / 0.2% | 100.0% / 0.0% |
+| XGBoost (supervised) | 93.0% / 44.6% | 92.8% / 4.5% | 100.0% / 0.0% | 100.0% / 0.0% | 99.3% / 0.0% | 100.0% / 0.0% | 98.0% / 26.5% | 100.0% / 0.0% | - | 100.0% / 0.0% | 100.0% / 0.2% | 100.0% / 0.0% |
+| CatBoost (supervised) | 92.1% / 44.0% | 92.3% / 4.1% | 100.0% / 0.0% | 100.0% / 0.0% | 98.9% / 0.0% | 100.0% / 0.1% | 98.0% / 26.6% | 100.0% / 0.0% | - | 100.0% / 0.0% | 100.0% / 0.2% | 100.0% / 0.0% |
 
 ## Wrong verdicts
 
@@ -46,15 +46,15 @@ Same test rows for every method on a dataset. SSE learns online from the label o
 | SSE C++ binary, exact routes, lap 5 | 7,827 | 4,581 | 114 | 517 | 742 | 582 | 19,082 | 19 | 0 | 0 | 5 | 477 |
 | SSE C++ binary, token routes only, lap 1 | 27,936 | 8,001 | 472 | 584 | 1,580 | 2,789 | 18,538 | 366 | 9 | 122 | 46 | 1,277 |
 | ModSecurity + CRS 3.3.5 (best PL) | 153,914 | 16,288 | - | - | - | - | - | - | - | - | - | - |
-| Coraza + CRS 4.25 (best PL) | - | - | - | - | - | - | - | - | - | - | - | - |
-| char-CNN (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
-| char-BiLSTM (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
-| Isolation Forest | - | - | - | - | - | - | - | - | - | - | - | - |
+| Coraza + CRS 4.25 (best PL) | 120,639 | 17,214 | - | - | - | - | - | - | - | - | - | - |
+| char-CNN (supervised) | - | 1,390 | - | - | - | - | - | - | - | - | - | - |
+| char-BiLSTM (supervised) | - | 2,441 | - | - | - | - | - | - | - | - | - | - |
+| Isolation Forest | 257,723 | 23,247 | 81,345 | 76,529 | 3,123 | 45,863 | 41,212 | 192,158 | 199,099 | 37,321 | 202 | 5,731 |
 | One-Class SVM | 112,768 | 12,375 | 30,203 | 74,445 | 2,715 | 37,144 | 25,758 | 76,561 | - | 111,835 | 2,109 | 8,812 |
 | KitNET (Kitsune) | 111,816 | 13,380 | 30,424 | 76,998 | 2,784 | 36,328 | 40,220 | 185,227 | - | 35,027 | 2,173 | 6,255 |
-| Random Forest (supervised) | 86,452 | 3,366 | 28 | 13 | 56 | 121 | 10,646 | - | - | - | - | - |
-| XGBoost (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
-| CatBoost (supervised) | - | - | - | - | - | - | - | - | - | - | - | - |
+| Random Forest (supervised) | 86,452 | 3,366 | 28 | 13 | 56 | 121 | 10,646 | 6 | - | 5 | 6 | 1 |
+| XGBoost (supervised) | 71,558 | 3,419 | 10 | 11 | 17 | 49 | 10,709 | 11 | - | 4 | 6 | 4 |
+| CatBoost (supervised) | 73,169 | 3,398 | 15 | 19 | 23 | 53 | 10,779 | 9 | - | 6 | 7 | 2 |
 
 ## Size and speed (median over the datasets a method ran on)
 
@@ -64,14 +64,14 @@ Same test rows for every method on a dataset. SSE learns online from the label o
 | SSE C++ binary, exact routes, lap 5 | 18.21 MB | 62 | 12 |
 | SSE C++ binary, token routes only, lap 1 | 13.05 MB | 60 | 12 |
 | ModSecurity + CRS 3.3.5 (best PL) | 26.24 MB | 2262 | 2 |
-| Coraza + CRS 4.25 (best PL) | - | - | 0 |
-| char-CNN (supervised) | - | - | 0 |
-| char-BiLSTM (supervised) | - | - | 0 |
-| Isolation Forest | - | - | 0 |
+| Coraza + CRS 4.25 (best PL) | 61.31 MB | 8250 | 2 |
+| char-CNN (supervised) | 0.48 MB | 3318 | 1 |
+| char-BiLSTM (supervised) | 0.27 MB | 1929 | 1 |
+| Isolation Forest | 3.89 MB | 23914 | 12 |
 | One-Class SVM | 0.07 MB | 524 | 11 |
 | KitNET (Kitsune) | 0.25 MB | 4730 | 11 |
-| Random Forest (supervised) | 10.35 MB | 59096 | 7 |
-| XGBoost (supervised) | - | - | 0 |
-| CatBoost (supervised) | - | - | 0 |
+| Random Forest (supervised) | 2.79 MB | 57416 | 11 |
+| XGBoost (supervised) | 0.50 MB | 895 | 11 |
+| CatBoost (supervised) | 3.38 MB | 775 | 11 |
 
 SSE size = semantic store after lap 1 + threshold tables; its time = inference only (frozen pass), one core. CRS size = process peak RSS, time = ms/request x 1000. Others: pickled / saved model, one record at a time. Runs shared the machine, so times carry contention.

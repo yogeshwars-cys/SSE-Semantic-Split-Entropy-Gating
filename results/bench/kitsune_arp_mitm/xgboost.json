@@ -1,0 +1,30 @@
+{
+ "dataset": "kitsune_arp_mitm",
+ "test_records": 200000,
+ "test_attacks": 190178,
+ "dims": 115,
+ "threads": 1,
+ "xgboost": {
+  "tpr": 0.9999631923776673,
+  "fpr": 0.00040724903278354713,
+  "precision": 0.9999789667411595,
+  "f1": 0.9999710794972039,
+  "wrong": 11,
+  "tp": 190171,
+  "fp": 4,
+  "fn": 7,
+  "tn": 9818,
+  "per_class_tpr": {
+   "arp_mitm": 0.9999631923776673
+  },
+  "auc": 0.9999998147680523,
+  "tpr@fpr1%": 0.9999947417682382,
+  "tpr@fpr5%": 1.0,
+  "tpr@fpr10%": 1.0,
+  "train_seconds": 81.15155375199993,
+  "protocol": "2-fold cross-validation over the test stream",
+  "model_bytes": 422544,
+  "us_per_record_batch": 8.864999000002172,
+  "us_per_record_single": 462.9064466674511
+ }
+}

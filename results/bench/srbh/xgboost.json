@@ -1,0 +1,41 @@
+{
+ "dataset": "srbh",
+ "test_records": 384629,
+ "test_attacks": 266246,
+ "dims": 145,
+ "threads": 1,
+ "xgboost": {
+  "tpr": 0.9296627930560459,
+  "fpr": 0.4462718464644417,
+  "precision": 0.8241018811386716,
+  "f1": 0.8737054267944002,
+  "wrong": 71558,
+  "tp": 247519,
+  "fp": 52831,
+  "fn": 18727,
+  "tn": 65552,
+  "per_class_tpr": {
+   "126 - Path Traversal": 0.8893314366998577,
+   "153 - Input Data Manipulation": 0.9982638888888888,
+   "16 - Dictionary-based Password Attack": 0.9979108635097493,
+   "194 - Fake the Source of Data": 0.12110091743119267,
+   "242 - Code Injection": 0.9025730367193782,
+   "272 - Protocol Manipulation": 0.24768375540457072,
+   "274 - HTTP Verb Tampering": 0.2018027961736571,
+   "310 - Scanning for Vulnerable Software": 1.0,
+   "33 - HTTP Request Smuggling": 0.6855524079320113,
+   "34 - HTTP Response Splitting": 0.9690444827236802,
+   "66 - SQL Injection": 0.9766173844251694,
+   "88 - OS Command Injection": 0.9436328993331217
+  },
+  "auc": 0.8300403497589138,
+  "tpr@fpr1%": 0.0,
+  "tpr@fpr5%": 0.16929080624685441,
+  "tpr@fpr10%": 0.4832185272267001,
+  "train_seconds": 97.76804418899997,
+  "protocol": "trained on the labelled training traffic",
+  "model_bytes": 2352995,
+  "us_per_record_batch": 34.684983249997,
+  "us_per_record_single": 1444.1543533333363
+ }
+}

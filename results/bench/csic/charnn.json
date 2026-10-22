@@ -1,0 +1,51 @@
+{
+ "dataset": "csic",
+ "test_records": 61065,
+ "threads": 1,
+ "char_cnn": {
+  "tpr": 0.9660881707560343,
+  "fpr": 0.015,
+  "precision": 0.9781862250050495,
+  "f1": 0.972099558410277,
+  "wrong": 1390,
+  "tp": 24215,
+  "fp": 540,
+  "fn": 850,
+  "tn": 35460,
+  "per_class_tpr": {
+   "csic_attack": 0.9660881707560343
+  },
+  "auc": 0.9977342387570095,
+  "tpr@fpr1%": 0.9599441452224217,
+  "tpr@fpr5%": 0.9845202473568722,
+  "tpr@fpr10%": 0.9953321364452423,
+  "train_seconds": 4467.13048307,
+  "protocol": "2-fold cross-validation over the test stream",
+  "model_bytes": 481602,
+  "us_per_record_batch": 2637.7937658000064,
+  "us_per_record_single": 3317.862829999285
+ },
+ "char_bilstm": {
+  "tpr": 0.9402353879912229,
+  "fpr": 0.026194444444444444,
+  "precision": 0.9615259077927376,
+  "f1": 0.9507614725163893,
+  "wrong": 2441,
+  "tp": 23567,
+  "fp": 943,
+  "fn": 1498,
+  "tn": 35057,
+  "per_class_tpr": {
+   "csic_attack": 0.9402353879912229
+  },
+  "auc": 0.9945907401866259,
+  "tpr@fpr1%": 0.9111510073808099,
+  "tpr@fpr5%": 0.9622581288649511,
+  "tpr@fpr10%": 0.9871932974266906,
+  "train_seconds": 468.22896574599963,
+  "protocol": "2-fold cross-validation over the test stream",
+  "model_bytes": 271164,
+  "us_per_record_batch": 923.423618950028,
+  "us_per_record_single": 1928.8735466670914
+ }
+}

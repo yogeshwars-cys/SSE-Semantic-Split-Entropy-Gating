@@ -1,0 +1,10 @@
+  srbh coraza PL1                    tpr=0.3426 fpr=0.0992 prec=0.8859 f1=0.4942 wrong=186765 auc=0.6256 tpr@1%=0.0589
+  srbh coraza PL2                    tpr=0.6950 fpr=0.3626 prec=0.8117 f1=0.7488 wrong=124137 auc=0.6534 tpr@1%=0.1107
+  srbh coraza PL3                    tpr=0.7275 fpr=0.4062 prec=0.8011 f1=0.7625 wrong=120639 auc=0.6828 tpr@1%=0.1101
+  srbh coraza PL4                    tpr=0.8577 fpr=0.7816 prec=0.7117 f1=0.7779 wrong=130407 auc=0.6336 tpr@1%=0.0923
+  best: pl4
+  csic coraza PL1                    tpr=0.2808 fpr=0.0001 prec=0.9994 f1=0.4385 wrong=18030 auc=0.6404 tpr@1%=0.2808
+  csic coraza PL2                    tpr=0.3729 fpr=0.0416 prec=0.8620 f1=0.5206 wrong=17214 auc=0.7005 tpr@1%=0.1799
+  csic coraza PL3                    tpr=0.6464 fpr=0.2562 prec=0.6372 f1=0.6418 wrong=18086 auc=0.7196 tpr@1%=0.1955
+  csic coraza PL4                    tpr=0.8192 fpr=0.4178 prec=0.5772 f1=0.6773 wrong=19571 auc=0.7540 tpr@1%=0.1593
+  best: pl4

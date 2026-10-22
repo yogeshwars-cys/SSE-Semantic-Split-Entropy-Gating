@@ -1,0 +1,30 @@
+{
+ "dataset": "kitsune_mirai",
+ "test_records": 200000,
+ "test_attacks": 200000,
+ "dims": 115,
+ "threads": 1,
+ "isolation_forest": {
+  "tpr": 0.004505,
+  "fpr": 0.0,
+  "precision": 1.0,
+  "f1": 0.008969591988093639,
+  "wrong": 199099,
+  "tp": 901,
+  "fp": 0,
+  "fn": 199099,
+  "tn": 0,
+  "per_class_tpr": {
+   "mirai": 0.004505
+  },
+  "auc": NaN,
+  "tpr@fpr1%": NaN,
+  "tpr@fpr5%": NaN,
+  "tpr@fpr10%": NaN,
+  "fit_seconds": 0.35312861199963663,
+  "threshold": 0.6061552186912281,
+  "model_bytes": 3326659,
+  "us_per_record_batch": 15.88050515001669,
+  "us_per_record_single": 24118.107843332837
+ }
+}
