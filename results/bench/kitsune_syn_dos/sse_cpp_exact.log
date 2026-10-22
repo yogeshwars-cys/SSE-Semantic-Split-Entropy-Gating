@@ -1,0 +1,15 @@
+loaded 98927 rows in 1.0s
+fit in 1.7s: gate thr 2.356041, semantic thr 2.449412, semantic store 14.31 MB
+full precal: tpr=0.000 fpr=0.000 wrong=0
+    full lap1 50000/88927 tpr=0.956 fpr=0.017 4s
+== full lap 1: tpr=0.9592 fpr=0.0097 precision=0.8950 wrong=1079 (5.6s, 0.063 ms/req)
+frozen pass: 3.3s, 37.1 us/req mean, p50 4.2 p99 369.9 us, 26965 req/s on one core
+    full lap2 50000/88927 tpr=0.969 fpr=0.012 3s
+== full lap 2: tpr=0.9719 fpr=0.0067 precision=0.9258 wrong=746 (4s)
+    full lap3 50000/88927 tpr=0.974 fpr=0.010 3s
+== full lap 3: tpr=0.9764 fpr=0.0053 precision=0.9405 wrong=601 (4s)
+    full lap4 50000/88927 tpr=0.978 fpr=0.008 3s
+== full lap 4: tpr=0.9795 fpr=0.0046 precision=0.9485 wrong=518 (5s)
+    full lap5 50000/88927 tpr=0.979 fpr=0.008 3s
+== full lap 5: tpr=0.9805 fpr=0.0042 precision=0.9530 wrong=477 (5s)
+wrote results/bench/kitsune_syn_dos/sse_cpp_exact.json (29s)

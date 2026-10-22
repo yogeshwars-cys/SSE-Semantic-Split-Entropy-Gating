@@ -1,0 +1,34 @@
+{
+ "dataset": "cic_Wednesday",
+ "test_records": 120000,
+ "test_attacks": 46153,
+ "dims": 78,
+ "threads": 1,
+ "kitnet": {
+  "tpr": 0.2325959309254003,
+  "fpr": 0.01232277546819776,
+  "precision": 0.9218548733361958,
+  "f1": 0.3714661406969099,
+  "wrong": 36328,
+  "tp": 10735,
+  "fp": 910,
+  "fn": 35418,
+  "tn": 72937,
+  "per_class_tpr": {
+   "DoS GoldenEye": 0.0,
+   "DoS Hulk": 0.254359776324519,
+   "DoS Slowhttptest": 0.0,
+   "DoS slowloris": 0.0,
+   "Heartbleed": 0.0
+  },
+  "auc": 0.7489448209272799,
+  "tpr@fpr1%": 0.23008255151344442,
+  "tpr@fpr5%": 0.3261109787012762,
+  "tpr@fpr10%": 0.3584815721621563,
+  "fit_seconds": 18.63086168399991,
+  "threshold": 0.17986827371788314,
+  "model_bytes": 249675,
+  "us_per_record_batch": 148.01633559999914,
+  "us_per_record_single": 6855.142590000014
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "dataset": "kitsune_os_scan",
+ "test_records": 200000,
+ "test_attacks": 34212,
+ "dims": 115,
+ "threads": 1,
+ "kitnet": {
+  "tpr": 1.0,
+  "fpr": 0.21127584626149057,
+  "precision": 0.494114588598911,
+  "f1": 0.6614145827493209,
+  "wrong": 35027,
+  "tp": 34212,
+  "fp": 35027,
+  "fn": 0,
+  "tn": 130761,
+  "per_class_tpr": {
+   "os_scan": 1.0
+  },
+  "auc": 0.8968120397237216,
+  "tpr@fpr1%": 0.04951479013211738,
+  "tpr@fpr5%": 0.2427803110019876,
+  "tpr@fpr10%": 0.4822284578510464,
+  "fit_seconds": 11.79975393799998,
+  "threshold": 0.2356372839855983,
+  "model_bytes": 241095,
+  "us_per_record_batch": 31.043504449996817,
+  "us_per_record_single": 2337.9596900000856
+ }
+}

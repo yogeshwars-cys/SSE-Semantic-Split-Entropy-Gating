@@ -1,0 +1,30 @@
+{
+ "dataset": "cic_Friday-Afternoon-PortScan",
+ "test_records": 120000,
+ "test_attacks": 76137,
+ "dims": 78,
+ "threads": 1,
+ "random_forest": {
+  "tpr": 0.9998423893770441,
+  "fpr": 2.279825821307252e-05,
+  "precision": 0.9999868638835615,
+  "f1": 0.9999146214116366,
+  "wrong": 13,
+  "tp": 76125,
+  "fp": 1,
+  "fn": 12,
+  "tn": 43862,
+  "per_class_tpr": {
+   "PortScan": 0.9998423893770441
+  },
+  "auc": 0.9999927148400489,
+  "tpr@fpr1%": 0.9999737315628406,
+  "tpr@fpr5%": 0.9999868657814204,
+  "tpr@fpr10%": 0.9999868657814204,
+  "train_seconds": 79.07806364499993,
+  "protocol": "2-fold cross-validation over the test stream",
+  "model_bytes": 2070916,
+  "us_per_record_batch": 70.6338546999973,
+  "us_per_record_single": 59252.34355999995
+ }
+}

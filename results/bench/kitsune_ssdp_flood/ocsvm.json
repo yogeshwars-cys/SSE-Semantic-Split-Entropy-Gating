@@ -1,0 +1,30 @@
+{
+ "dataset": "kitsune_ssdp_flood",
+ "test_records": 200000,
+ "test_attacks": 196700,
+ "dims": 115,
+ "threads": 1,
+ "ocsvm": {
+  "tpr": 1.0,
+  "fpr": 0.639090909090909,
+  "precision": 0.9893918283377513,
+  "f1": 0.9946676308250887,
+  "wrong": 2109,
+  "tp": 196700,
+  "fp": 2109,
+  "fn": 0,
+  "tn": 1191,
+  "per_class_tpr": {
+   "ssdp_flood": 1.0
+  },
+  "auc": 0.9435112515598281,
+  "tpr@fpr1%": 0.0,
+  "tpr@fpr5%": 0.0,
+  "tpr@fpr10%": 0.0,
+  "fit_seconds": 0.1591572770000198,
+  "threshold": 0.892906260909351,
+  "model_bytes": 100812,
+  "us_per_record_batch": 23.88748385000099,
+  "us_per_record_single": 425.0563033332355
+ }
+}

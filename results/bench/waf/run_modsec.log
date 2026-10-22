@@ -1,0 +1,10 @@
+  srbh modsec PL1                    tpr=0.2135 fpr=0.0359 prec=0.9304 f1=0.3473 wrong=213652 auc=0.6176 tpr@1%=0.0482
+  srbh modsec PL2                    tpr=0.2983 fpr=0.0742 prec=0.9004 f1=0.4482 wrong=195604 auc=0.6150 tpr@1%=0.0461
+  srbh modsec PL3                    tpr=0.4908 fpr=0.1550 prec=0.8769 f1=0.6294 wrong=153914 auc=0.6817 tpr@1%=0.0436
+  srbh modsec PL4                    tpr=0.6814 fpr=0.7167 prec=0.6814 f1=0.6814 wrong=169665 auc=0.5768 tpr@1%=0.0691
+  best: pl4
+  csic modsec PL1                    tpr=0.3156 fpr=0.0000 prec=1.0000 f1=0.4798 wrong=17155 auc=0.6578 tpr@1%=0.3156
+  csic modsec PL2                    tpr=0.3532 fpr=0.0096 prec=0.9626 f1=0.5167 wrong=16557 auc=0.6932 tpr@1%=0.3945
+  csic modsec PL3                    tpr=0.5558 fpr=0.1432 prec=0.7299 f1=0.6311 wrong=16288 auc=0.7199 tpr@1%=0.2277
+  csic modsec PL4                    tpr=0.7922 fpr=0.3180 prec=0.6343 f1=0.7045 wrong=16656 auc=0.7611 tpr@1%=0.1639
+  best: pl4

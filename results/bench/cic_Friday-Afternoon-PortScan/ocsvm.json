@@ -1,0 +1,30 @@
+{
+ "dataset": "cic_Friday-Afternoon-PortScan",
+ "test_records": 120000,
+ "test_attacks": 76137,
+ "dims": 78,
+ "threads": 1,
+ "ocsvm": {
+  "tpr": 0.03178480896279076,
+  "fpr": 0.016597131979116796,
+  "precision": 0.7687420584498094,
+  "f1": 0.061045595005360415,
+  "wrong": 74445,
+  "tp": 2420,
+  "fp": 728,
+  "fn": 73717,
+  "tn": 43135,
+  "per_class_tpr": {
+   "PortScan": 0.03178480896279076
+  },
+  "auc": 0.8017882947514038,
+  "tpr@fpr1%": 0.0077491889620027055,
+  "tpr@fpr5%": 0.17288571916413834,
+  "tpr@fpr10%": 0.5094500702680694,
+  "fit_seconds": 0.048185460000013336,
+  "threshold": 0.10256272478800803,
+  "model_bytes": 67868,
+  "us_per_record_batch": 26.50943394999956,
+  "us_per_record_single": 785.512170000023
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "dataset": "cic_Friday-Afternoon-DDos",
+ "test_records": 120000,
+ "test_attacks": 80969,
+ "dims": 78,
+ "threads": 1,
+ "random_forest": {
+  "tpr": 0.9997529918857835,
+  "fpr": 0.00020496528400502166,
+  "precision": 0.9999011821090208,
+  "f1": 0.999827081506367,
+  "wrong": 28,
+  "tp": 80949,
+  "fp": 8,
+  "fn": 20,
+  "tn": 39023,
+  "per_class_tpr": {
+   "DDoS": 0.9997529918857835
+  },
+  "auc": 0.9999868629603675,
+  "tpr@fpr1%": 0.9999629487828675,
+  "tpr@fpr5%": 0.9999752991885783,
+  "tpr@fpr10%": 0.9999752991885783,
+  "train_seconds": 149.88206513500006,
+  "protocol": "2-fold cross-validation over the test stream",
+  "model_bytes": 2788286,
+  "us_per_record_batch": 23.425355250003577,
+  "us_per_record_single": 51054.79306000007
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "dataset": "cic_Thursday-Morning-WebAttacks",
+ "test_records": 120000,
+ "test_attacks": 1954,
+ "dims": 78,
+ "threads": 1,
+ "ocsvm": {
+  "tpr": 0.03940634595701126,
+  "fpr": 0.007098927536722972,
+  "precision": 0.08415300546448087,
+  "f1": 0.053677239456256534,
+  "wrong": 2715,
+  "tp": 77,
+  "fp": 838,
+  "fn": 1877,
+  "tn": 117208,
+  "per_class_tpr": {
+   "Web Attack - Brute Force": 0.047267355982274745,
+   "Web Attack - Sql Injection": 0.0,
+   "Web Attack - XSS": 0.022336769759450172
+  },
+  "auc": 0.936704128368257,
+  "tpr@fpr1%": 0.03991811668372569,
+  "tpr@fpr5%": 0.6755373592630501,
+  "tpr@fpr10%": 0.913510747185261,
+  "fit_seconds": 0.1601259349999964,
+  "threshold": 0.3196644309642117,
+  "model_bytes": 65959,
+  "us_per_record_batch": 36.72998515000074,
+  "us_per_record_single": 201.57463333343154
+ }
+}

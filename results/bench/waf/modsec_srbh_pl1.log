@@ -1,0 +1,20 @@
+  20000 requests, 593 req/s
+  40000 requests, 573 req/s
+  60000 requests, 572 req/s
+  80000 requests, 572 req/s
+  100000 requests, 593 req/s
+  120000 requests, 582 req/s
+  140000 requests, 580 req/s
+  160000 requests, 579 req/s
+  180000 requests, 579 req/s
+  200000 requests, 583 req/s
+  220000 requests, 586 req/s
+  240000 requests, 580 req/s
+  260000 requests, 587 req/s
+  280000 requests, 593 req/s
+  300000 requests, 599 req/s
+  320000 requests, 604 req/s
+  340000 requests, 609 req/s
+  360000 requests, 617 req/s
+  380000 requests, 624 req/s
+384629 requests in 615.3s (1.600 ms/request), peak RSS 26788 kB

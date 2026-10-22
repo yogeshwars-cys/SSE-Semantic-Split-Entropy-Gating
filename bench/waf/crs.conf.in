@@ -1,0 +1,22 @@
+# libmodsecurity v3 + OWASP CRS (Ubuntu modsecurity-crs 3.3.5), detection only, paranoia level @PL@.
+# Base settings follow modsecurity.conf-recommended (request body access and body processors).
+SecRuleEngine DetectionOnly
+SecRequestBodyAccess On
+SecRequestBodyLimit 13107200
+SecRequestBodyNoFilesLimit 131072
+SecRequestBodyLimitAction ProcessPartial
+SecResponseBodyAccess Off
+SecArgumentSeparator &
+SecCookieFormat 0
+SecAuditEngine Off
+SecTmpDir /tmp/
+SecDataDir /tmp/
+SecRule REQUEST_HEADERS:Content-Type "(?:application(?:/soap\+|/)|text/)xml" \
+     "id:'200000',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=XML"
+SecRule REQUEST_HEADERS:Content-Type "application/json" \
+     "id:'200001',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=JSON"
+SecAction "id:900000,phase:1,nolog,pass,t:none,setvar:tx.paranoia_level=@PL@"
+Include /etc/modsecurity/crs/crs-setup.conf
+Include /etc/modsecurity/crs/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+Include /usr/share/modsecurity-crs/rules/REQUEST-9*.conf
+SecAction "id:9999001,phase:2,pass,log,t:none,msg:'SSEBENCH %{tx.anomaly_score}'"

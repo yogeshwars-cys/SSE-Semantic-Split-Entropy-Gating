@@ -1,0 +1,15 @@
+{
+ "implementation": "cpp/replay_srbh.cpp (C++20, one core)",
+ "protocol": "harness/replay_hybrid2.py, HYB_VARIANT=full HYB_QUANT=3: fully binary semantic store, Hamming top-64 then uint8-count x int8-query int32 rescore and an exact refine of the int8 top 4; packed int8 path-token thresholds. Splits (fit / precal / test) and order from data/sse_streams/cic_Friday-Afternoon-PortScan.csv; laps 2+ replay the test stream; teacher = dataset label.",
+ "rows": 130000, "load_seconds": 0.727173188, "fit_seconds": 0.660629883,
+ "fit_requests": 10000, "precal_requests": 0, "replay_requests": 120000,
+ "gate_thr": 2.785254409, "semantic_thr": 6.614694167,
+ "precal": {"tpr": 0, "fpr": 0, "precision": 0, "wrong": 0, "tp": 0, "fn": 0, "fp": 0, "tn": 0, "corrected": 0, "flipped_rate": 0, "seconds": 5e-08, "ms_per_request": 0, "per_class_tpr": {}},
+ "lap1": {"tpr": 0.9979904646, "fpr": 0.009506873675, "precision": 0.9945419563, "wrong": 570, "tp": 75984, "fn": 153, "fp": 417, "tn": 43446, "corrected": 570, "flipped_rate": 1, "seconds": 6.329648426, "ms_per_request": 0.05274707022, "per_class_tpr": {"PortScan": 0.9979904646}},
+ "frozen_after_lap1": {"tpr": 0.4935445316, "fpr": 0.0002735790986, "seconds": 3.704451945, "us_per_request_mean": 30.87043287, "us_p50": 3.743, "us_p95": 181.539, "us_p99": 288.899, "requests_per_second_one_core": 32393.45571},
+ "semantic_bytes_at_fit": 7205890, "semantic_bytes_after_lap1": 7582768,
+ "exact_route_layer": true,
+ "route_state": {"exact_entries_set": 40, "entries_set": 115, "entries_flipped": 60, "bytes": 6291456},
+ "gate_field_weights": {"user-agent": 2.85, "referer": 1, "host": 1, "origin": 1, "cookie": 1.730985383, "content-type": 1, "accept": 0.95, "accept-language": 1, "accept-encoding": 1, "dnt": 1, "connection": 1, "@method": 1, "@path": 2.85, "@query": 1, "@body": 2.85},
+ "belt": {"2": {"tpr": 0.9980035988, "fpr": 0.007546223469, "precision": 0.9956627706, "wrong": 483, "tp": 75985, "fn": 152, "fp": 331, "tn": 43532, "corrected": 483, "flipped_rate": 1, "seconds": 5.556393058, "ms_per_request": 0.04630327548, "per_class_tpr": {"PortScan": 0.9980035988}}, "3": {"tpr": 0.99747823, "fpr": 0.007933793858, "precision": 0.9954386379, "wrong": 540, "tp": 75945, "fn": 192, "fp": 348, "tn": 43515, "corrected": 540, "flipped_rate": 1, "seconds": 5.732531202, "ms_per_request": 0.04777109335, "per_class_tpr": {"PortScan": 0.99747823}}, "4": {"tpr": 0.9974913643, "fpr": 0.007683013018, "precision": 0.9955822398, "wrong": 528, "tp": 75946, "fn": 191, "fp": 337, "tn": 43526, "corrected": 528, "flipped_rate": 1, "seconds": 6.025078689, "ms_per_request": 0.05020898908, "per_class_tpr": {"PortScan": 0.9974913643}}, "5": {"tpr": 0.9975044985, "fpr": 0.007455030436, "precision": 0.9957128248, "wrong": 517, "tp": 75947, "fn": 190, "fp": 327, "tn": 43536, "corrected": 517, "flipped_rate": 1, "seconds": 6.114116661, "ms_per_request": 0.05095097217, "per_class_tpr": {"PortScan": 0.9975044985}}}
+}
