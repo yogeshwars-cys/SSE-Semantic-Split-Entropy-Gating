@@ -3,3 +3,5 @@ __pycache__/
 *.pkl
 data/*
 !data/README.md
+catboost_info/
+results/bench/waf/*.done
