@@ -15,6 +15,14 @@ HYB_QUANT=1 compresses both stores: the semantic layer's stored values become bi
 HYB_QUANT=2 goes fully binary: the semantic layer keeps two 3-gram count bit planes + an exact-count exception list +
 a float16 norm per value instead of int8 vectors (gains as uint8 log levels), and each token entry packs its
 direction and flip count into one byte.
+HYB_QUANT=3 is HYB_QUANT=2 with an int8 rescore (quant_space.py, int8=True): Hamming top-k on the binary codes, then a
+uint8-count x int8-query int32 dot instead of a float rescore. Every random draw (SRHT signs and permutation, the
+token table's stochastic rounding) comes from splitmix64 and token thresholds sum their int8 shifts as integers, so
+cpp/ reproduces this run request by request. HYB_TRACE=<file> writes one verdict per request (precal then lap 1).
+HYB_EXACT=1 (with HYB_QUANT=3) adds an exact layer to the token thresholds: one int8 correction per (layer, field,
+exact path) in a fixed hashed table (2^22 entries, step 8/127), set in full after each token move so the threshold
+lands just past the misjudged score (rounded to the safe side). Tokens generalise across paths; the exact entry is
+the published hybrid's per-route override at a fixed size (cpp/: SSE_EXACT=1).
 Same split, seed, precalibration (17 Jul) and teacher (dataset label) as replay_learn.py, so lap 1 (18-19 Jul,
 traffic never seen) compares directly with its gates_learn_route: 76.7% / 5.1%, 67,953 wrong, 171,034 overrides.
 Settings are fixed in advance, not tuned on the replay. HYB_LAPS=N then re-runs the same 18-19 Jul stream as
@@ -23,6 +31,7 @@ belt laps 2..N, learning every lap (belt.py's protocol: convergence on traffic a
 usage: python -I replay_hybrid2.py <data_capec_multilabel.csv> <sse dir> <out.json>
 """
 import json
+import math
 import os
 import random
 import re
@@ -59,7 +68,8 @@ def route_tokens(rt):
 class TokenThresholds:
     """Route thresholds as a fixed hashed table of per-(layer, field, path token) shifts, damped moves."""
 
-    def __init__(self, bits=20, eta=0.5, margin=0.25, cap=4.0, int8=False, packed=False, seed=0):
+    def __init__(self, bits=20, eta=0.5, margin=0.25, cap=4.0, int8=False, packed=False, seed=0, portable=False,
+                 exact=False):
         self.mask, self.eta, self.margin, self.cap = (1 << bits) - 1, eta, margin, cap
         self.int8, self.step, self.packed = int8, cap / 127, packed
         self.d = np.zeros(1 << bits, np.int8 if int8 else np.float32)
@@ -68,8 +78,18 @@ class TokenThresholds:
         else:
             self.last = np.zeros(1 << bits, np.int8)
             self.flips = np.zeros(1 << bits, np.uint8)
-        self.rng = np.random.default_rng(seed)
+        self.portable = portable                                 # splitmix64 draws, integer shift sums (cpp/ parity)
+        if portable:
+            import quant_space
+            g = quant_space.splitmix64(seed)
+            self.uniform = lambda n: np.array([(next(g) >> 11) * 2.0 ** -53 for _ in range(n)])
+        else:
+            self.rng = np.random.default_rng(seed)
+            self.uniform = self.rng.random
         self._rt, self._toks = None, None                       # one-path memo: a request asks for one path
+        self.exact = exact
+        if exact:
+            self.E, self.emask, self.estep = np.zeros(1 << 22, np.int8), (1 << 22) - 1, 8.0 / 127
 
     def ids(self, rt, layer, field):
         if rt != self._rt:
@@ -81,6 +101,12 @@ class TokenThresholds:
         return self.d[i] * self.step if self.int8 else self.d[i]
 
     def thr(self, rt, layer, field, base):
+        if self.portable:
+            i = self.ids(rt, layer, field)
+            t = base + float(self.d[i].astype(np.int64).sum()) * self.step / len(i)
+            if self.exact:
+                t = t + float(self.E[self.eid(rt, layer, field)]) * self.estep
+            return t
         return base + float(self.shift(self.ids(rt, layer, field)).mean())
 
     def over(self, rt, layer, zs, base):
@@ -103,31 +129,51 @@ class TokenThresholds:
         if self.int8:                                            # stochastic rounding: small moves still add up
             x = x / self.step
             f = np.floor(x)
-            x = np.clip(f + (self.rng.random(len(x)) < x - f), -127, 127)
+            x = np.clip(f + (self.uniform(len(x)) < x - f), -127, 127)
         self.d[i] = x
+
+    def eid(self, rt, layer, field):
+        return zlib.crc32(f"{layer}|{field}|x:{rt}".encode()) & self.emask
+
+    def pin(self, rt, layer, field, target, base, down):
+        """Exact layer: after the token move, set this path's entry so the threshold lands on target."""
+        t2 = self.thr(rt, layer, field, base)
+        if not (target < t2 if down else target > t2):
+            return
+        e = self.eid(rt, layer, field)
+        x = float(self.E[e]) + (target - t2) / self.estep
+        self.E[e] = max(-127.0, min(127.0, math.floor(x) if down else math.ceil(x)))
 
     def tighten(self, rt, layer, field, z, base):
         t = self.thr(rt, layer, field, base)
         if z - self.margin < t:
             self.move(rt, layer, field, z - self.margin - t)
+            if self.exact:
+                self.pin(rt, layer, field, z - self.margin, base, True)
 
     def loosen(self, rt, layer, field, z, base):
         t = self.thr(rt, layer, field, base)
         if z + self.margin > t:
             self.move(rt, layer, field, z + self.margin - t)
+            if self.exact:
+                self.pin(rt, layer, field, z + self.margin, base, False)
 
     def stats(self):
         flipped = (self.st & 63) > 0 if self.packed else self.flips > 0
         side = self.st.nbytes if self.packed else self.last.nbytes + self.flips.nbytes
-        return {"entries_set": int((self.d != 0).sum()), "entries_flipped": int(flipped.sum()),
-                "bytes": int(self.d.nbytes + side)}
+        out = {"entries_set": int((self.d != 0).sum()), "entries_flipped": int(flipped.sum()),
+               "bytes": int(self.d.nbytes + side + (self.E.nbytes if self.exact else 0))}
+        if self.exact:
+            out["exact_entries_set"] = int((self.E != 0).sum())
+        return out
 
 
 class Hybrid2(rl.Detector):
-    def __init__(self, gate, sem, balanced, tokens, lr_miss=0.15, int8=False, packed=False):
+    def __init__(self, gate, sem, balanced, tokens, lr_miss=0.15, int8=False, packed=False, portable=False, exact=False):
         super().__init__(gate, sem, route_overrides=not tokens)
         self.balanced, self.lr_miss = balanced, lr_miss
-        self.tok = TokenThresholds(int8=int8, packed=packed) if tokens else None
+        self.tok = TokenThresholds(int8=int8, packed=packed, portable=portable, exact=exact) if tokens else None
+        self.trace = None
 
     def verdict(self, rt, zg, zs, now):
         if self.tok is None:
@@ -138,6 +184,8 @@ class Hybrid2(rl.Detector):
         h, pnames, zg, zs = self.features(row)
         og, os_ = self.verdict(rt, zg, zs, now)
         flagged = bool(og or os_)
+        if self.trace is not None:
+            self.trace.append("1" if flagged else "0")
         if flagged == attack or not learn:
             return flagged
         tl["corrected"] += 1
@@ -200,16 +248,20 @@ def main():
     gate.fit(fit)
     sem.fit(fit)
     level = os.environ.get("HYB_QUANT", "0")
-    quant = level in ("1", "2")
+    quant = level in ("1", "2", "3")
     sizes = {"semantic_float32_bytes": sum(sp.MT.nbytes for sp in sem.space.values())}
     if quant:
         import quant_space
         t = time.perf_counter()
-        sizes["semantic_float32_bytes"], sizes["semantic_compressed_bytes"] = quant_space.compress(sem, fit, binary=level == "2")
+        sizes["semantic_float32_bytes"], sizes["semantic_compressed_bytes"] = quant_space.compress(
+            sem, fit, binary=level in ("2", "3"), int8=level == "3")
         sizes["compress_seconds"] = round(time.perf_counter() - t, 1)
         print("compressed semantic store:", sizes, flush=True)
     balanced, tokens = {"balanced": (True, False), "tokens": (False, True), "full": (True, True)}[VARIANT]
-    det = Hybrid2(gate, sem, balanced, tokens, int8=quant, packed=level == "2")
+    det = Hybrid2(gate, sem, balanced, tokens, int8=quant, packed=level in ("2", "3"), portable=level == "3",
+                  exact=level == "3" and os.environ.get("HYB_EXACT") == "1")
+    if os.environ.get("HYB_TRACE"):
+        det.trace = []
     pre = rl.run(det, precal_stream, label=f"{VARIANT} precal")
     print(f"{VARIANT} precal: tpr={pre['tpr']:.3f} fpr={pre['fpr']:.3f} wrong={pre['wrong']}", flush=True)
     t = time.perf_counter()
@@ -223,12 +275,15 @@ def main():
            "lap1": {k: p1[k] for k in ("tpr", "fpr", "precision", "wrong", "flipped_rate", "per_class_tpr", "hourly")},
            "seconds": round(sec, 1), "ms_per_request": round(sec / len(replay) * 1e3, 2),
            "route_state": det.tok.stats() if det.tok is not None else {"route_overrides": len(det.cal.o)},
-           "quantised": {"0": "none", "1": "int8", "2": "binary"}[level], "semantic_sizes_at_fit": sizes,
+           "quantised": {"0": "none", "1": "int8", "2": "binary", "3": "binary_int8_rescore"}[level], "semantic_sizes_at_fit": sizes,
            "semantic_bytes_after_lap1": sum(sp.nbytes() if hasattr(sp, "nbytes") else sp.MT.nbytes + sp._dense()[:, :sp.nL].nbytes
                                             for sp in det.sem.space.values()),
            "gate_field_weights": {k: round(v, 3) for k, v in det.gate.w.items()}}
     with open(OUT, "w") as f:
         json.dump(out, f, indent=1)
+    if det.trace is not None:
+        with open(os.environ["HYB_TRACE"], "w") as f:
+            f.write("".join(det.trace))
     print(f"== {VARIANT} lap 1: tpr={p1['tpr']:.4f} fpr={p1['fpr']:.4f} precision={p1['precision']:.4f} "
           f"wrong={p1['wrong']} route_state={out['route_state']} ({sec:.0f}s, {out['ms_per_request']} ms/req)", flush=True)
     out["belt"] = {}

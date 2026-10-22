@@ -1,0 +1,14 @@
+{
+ "implementation": "cpp/replay_srbh.cpp (C++20, one core)",
+ "protocol": "harness/replay_hybrid2.py, HYB_VARIANT=full HYB_QUANT=3: fully binary semantic store, Hamming top-64 then uint8-count x int8-query int32 rescore and an exact refine of the int8 top 4; packed int8 path-token thresholds. Splits (fit / precal / test) and order from data/csic_stream.csv; laps 2+ replay the test stream; teacher = dataset label.",
+ "rows": 71065, "load_seconds": 0.346685282, "fit_seconds": 1.226388466,
+ "fit_requests": 10000, "precal_requests": 0, "replay_requests": 61065,
+ "gate_thr": 2.98447333, "semantic_thr": 2.094273995,
+ "precal": {"tpr": 0, "fpr": 0, "precision": 0, "wrong": 0, "tp": 0, "fn": 0, "fp": 0, "tn": 0, "corrected": 0, "flipped_rate": 0, "seconds": 1.93e-07, "ms_per_request": 0, "per_class_tpr": {}},
+ "lap1": {"tpr": 0.9157390784, "fpr": 0.1635833333, "precision": 0.7958185979, "wrong": 8001, "tp": 22953, "fn": 2112, "fp": 5889, "tn": 30111, "corrected": 8001, "flipped_rate": 0.6049382716, "seconds": 16.55716812, "ms_per_request": 0.2711400658, "per_class_tpr": {"csic_attack": 0.9157390784}},
+ "frozen_after_lap1": {"tpr": 0.9027328945, "fpr": 0.1151388889, "seconds": 15.83594998, "us_per_request_mean": 259.3294028, "us_p50": 240.3, "us_p95": 381.659, "us_p99": 512.448, "requests_per_second_one_core": 3856.099575},
+ "semantic_bytes_at_fit": 8463514, "semantic_bytes_after_lap1": 11558148,
+ "route_state": {"entries_set": 264, "entries_flipped": 128, "bytes": 2097152},
+ "gate_field_weights": {"user-agent": 1, "referer": 1, "host": 1, "origin": 1, "cookie": 3, "content-type": 1, "accept": 1, "accept-language": 1, "accept-encoding": 1, "dnt": 1, "connection": 1, "@method": 2.85, "@path": 1, "@query": 2.85, "@body": 2.85},
+ "belt": {"2": {"tpr": 0.9269100339, "fpr": 0.1355833333, "precision": 0.8263854307, "wrong": 6713, "tp": 23233, "fn": 1832, "fp": 4881, "tn": 31119, "corrected": 6713, "flipped_rate": 0.7794117647, "seconds": 17.08039895, "ms_per_request": 0.2797084902, "per_class_tpr": {"csic_attack": 0.9269100339}}, "3": {"tpr": 0.9370835827, "fpr": 0.1232777778, "precision": 0.8410799971, "wrong": 6015, "tp": 23488, "fn": 1577, "fp": 4438, "tn": 31562, "corrected": 6015, "flipped_rate": 0.6885245902, "seconds": 18.13828496, "ms_per_request": 0.2970324238, "per_class_tpr": {"csic_attack": 0.9370835827}}, "4": {"tpr": 0.9484540195, "fpr": 0.1025555556, "precision": 0.8655743674, "wrong": 4984, "tp": 23773, "fn": 1292, "fp": 3692, "tn": 32308, "corrected": 4984, "flipped_rate": 0.68, "seconds": 18.50917822, "ms_per_request": 0.3031061691, "per_class_tpr": {"csic_attack": 0.9484540195}}, "5": {"tpr": 0.9581488131, "fpr": 0.07933333333, "precision": 0.8937183686, "wrong": 3905, "tp": 24016, "fn": 1049, "fp": 2856, "tn": 33144, "corrected": 3905, "flipped_rate": 0.85, "seconds": 19.49648886, "ms_per_request": 0.319274361, "per_class_tpr": {"csic_attack": 0.9581488131}}}
+}

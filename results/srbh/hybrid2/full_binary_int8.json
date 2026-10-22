@@ -1,0 +1,257 @@
+{
+ "protocol": "Prototype hybrid: balanced gate learning, path-token route thresholds, damped threshold moves. SR-BH lap 1.\n\nThree changes to replay_learn.py's gates_learn_route hybrid (sse/ itself is untouched):\n  balanced   a miss sharpens every above-normal field (z >= half the threshold), statistical weights and semantic\n             rare 3-grams, at lr_miss (0.15, 3x the false-alarm rate) instead of one field at 0.05\n  tokens     route thresholds keyed by path tokens instead of the exact path: each segment (digits folded), the\n             first one and two segments, the extension, the depth, the exact path and a global token. A field's\n             threshold on a path = the global 1% threshold + the mean shift of its tokens, so a correction learned on\n             /wp-admin/a.php also moves /wp-admin/b.php. Shifts live in a fixed hashed table (2^20 entries)\n  damped     a correction moves the threshold halfway (eta 0.5) to its target, so it takes two corrections in the\n             same direction to commit; an entry that flips direction gets eta / (1 + flips); shifts capped at +-4\nVariants (HYB_VARIANT): balanced (exact overrides kept), tokens (tokens + damped, original gate learning), full.\nHYB_QUANT=1 compresses both stores: the semantic layer's stored values become binary Hadamard codes + int8 rescore\n(quant_space.py, thresholds re-set with compressed distances) and the token shifts become int8 (stochastic rounding).\nHYB_QUANT=2 goes fully binary: the semantic layer keeps two 3-gram count bit planes + an exact-count exception list +\na float16 norm per value instead of int8 vectors (gains as uint8 log levels), and each token entry packs its\ndirection and flip count into one byte.\nHYB_QUANT=3 is HYB_QUANT=2 with an int8 rescore (quant_space.py, int8=True): Hamming top-k on the binary codes, then a\nuint8-count x int8-query int32 dot instead of a float rescore. Every random draw (SRHT signs and permutation, the\ntoken table's stochastic rounding) comes from splitmix64 and token thresholds sum their int8 shifts as integers, so\ncpp/ reproduces this run request by request. HYB_TRACE=<file> writes one verdict per request (precal then lap 1).\nSame split, seed, precalibration (17 Jul) and teacher (dataset label) as replay_learn.py, so lap 1 (18-19 Jul,\ntraffic never seen) compares directly with its gates_learn_route: 76.7% / 5.1%, 67,953 wrong, 171,034 overrides.\nSettings are fixed in advance, not tuned on the replay. HYB_LAPS=N then re-runs the same 18-19 Jul stream as\nbelt laps 2..N, learning every lap (belt.py's protocol: convergence on traffic already seen, not unseen traffic).",
+ "variant": "full",
+ "reference_gates_learn_route": {
+  "precal": {
+   "tpr": 0.803,
+   "fpr": 0.027,
+   "wrong": 23835
+  },
+  "lap1": {
+   "tpr": 0.7673,
+   "fpr": 0.0507,
+   "precision": 0.9714,
+   "wrong": 67953,
+   "route_overrides": 171034
+  }
+ },
+ "precal": {
+  "tpr": 0.9443341668600105,
+  "fpr": 0.04339342400326179,
+  "wrong": 7968
+ },
+ "lap1": {
+  "tpr": 0.9424967886841492,
+  "fpr": 0.10665382698529349,
+  "precision": 0.9520947632815049,
+  "wrong": 27936,
+  "flipped_rate": 0.4642857142857143,
+  "per_class_tpr": {
+   "126 - Path Traversal": 0.9669985775248933,
+   "153 - Input Data Manipulation": 0.9826388888888888,
+   "16 - Dictionary-based Password Attack": 0.9477715877437326,
+   "194 - Fake the Source of Data": 0.9100917431192661,
+   "242 - Code Injection": 0.9851246314660949,
+   "272 - Protocol Manipulation": 0.8329833230389129,
+   "274 - HTTP Verb Tampering": 1.0,
+   "310 - Scanning for Vulnerable Software": 1.0,
+   "33 - HTTP Request Smuggling": 0.9792256846081209,
+   "34 - HTTP Response Splitting": 0.8678690850136792,
+   "66 - SQL Injection": 0.9487392051995054,
+   "88 - OS Command Injection": 0.9911082883455065
+  },
+  "hourly": {
+   "0": {
+    "tpr": 0.8822195870535714,
+    "fpr": 0.35417523652817773
+   },
+   "1": {
+    "tpr": 0.8745030306980381,
+    "fpr": 0.23794162826420892
+   },
+   "2": {
+    "tpr": 0.9715578096086629,
+    "fpr": 0.09535422509450067
+   },
+   "3": {
+    "tpr": 0.9049017807967689,
+    "fpr": 0.11676528599605522
+   },
+   "4": {
+    "tpr": 0.9108712743906797,
+    "fpr": 0.11658536585365854
+   },
+   "5": {
+    "tpr": 0.863066538090646,
+    "fpr": 0.017147455738516774
+   },
+   "6": {
+    "tpr": 0.910394265232975,
+    "fpr": 0.01421518556350017
+   },
+   "7": {
+    "tpr": 0.8744745446053246,
+    "fpr": 0.12646476944148533
+   },
+   "8": {
+    "tpr": 0.46996996996997,
+    "fpr": 0.051032942490228925
+   },
+   "9": {
+    "tpr": 0.6818181818181818,
+    "fpr": 0.26373626373626374
+   },
+   "10": {
+    "tpr": 0.9158948685857322,
+    "fpr": 0.09643674403399805
+   },
+   "11": {
+    "tpr": 0.9842615999347631,
+    "fpr": 0.04537343869487637
+   },
+   "12": {
+    "tpr": 0.9906285231116122,
+    "fpr": 0.043645251396648044
+   },
+   "13": {
+    "tpr": 0.9921822217932632,
+    "fpr": 0.14823529411764705
+   },
+   "14": {
+    "tpr": 0.9982926286096058,
+    "fpr": 0.65625
+   },
+   "15": {
+    "tpr": 0.9986917303587413,
+    "fpr": 0.4
+   },
+   "16": {
+    "tpr": 0.99784293361029,
+    "fpr": 0.38235294117647056
+   },
+   "17": {
+    "tpr": 0.9981629466335997,
+    "fpr": 0.3157894736842105
+   },
+   "18": {
+    "tpr": 0.9981099156731608,
+    "fpr": 0.2638888888888889
+   },
+   "19": {
+    "tpr": 0.9988408037094282,
+    "fpr": 0.3333333333333333
+   },
+   "20": {
+    "tpr": 0.9975124378109452,
+    "fpr": 0.25
+   },
+   "21": {
+    "tpr": 0.9961089494163424,
+    "fpr": 0.3
+   },
+   "22": {
+    "tpr": 0.9992887624466572,
+    "fpr": 0.3333333333333333
+   },
+   "23": {
+    "tpr": 0.9986996098829649,
+    "fpr": 0.25
+   },
+   "24": {
+    "tpr": 0.9974667511082964,
+    "fpr": 0.14285714285714285
+   },
+   "25": {
+    "tpr": 0.9974193548387097,
+    "fpr": 0.3
+   },
+   "26": {
+    "tpr": 0.9993464052287582,
+    "fpr": 0.2222222222222222
+   },
+   "27": {
+    "tpr": 0.9962663347853142,
+    "fpr": 0.5
+   },
+   "28": {
+    "tpr": 0.9987154784842646,
+    "fpr": 0.2222222222222222
+   },
+   "29": {
+    "tpr": 0.9949174078780177,
+    "fpr": 0.3
+   },
+   "30": {
+    "tpr": 0.9974506054811982,
+    "fpr": 0.4
+   },
+   "31": {
+    "tpr": 0.9973839110529757,
+    "fpr": 0.38461538461538464
+   },
+   "32": {
+    "tpr": 0.9981389578163772,
+    "fpr": 0.4
+   },
+   "33": {
+    "tpr": 0.8561438561438561,
+    "fpr": 0.08990536277602523
+   },
+   "34": {
+    "tpr": 0.881310353257548,
+    "fpr": 0.17553047891582527
+   },
+   "35": {
+    "tpr": 0.42857142857142855,
+    "fpr": 0.019230769230769232
+   },
+   "36": {
+    "tpr": 1.0,
+    "fpr": 0.8333333333333334
+   },
+   "37": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "39": {
+    "tpr": 0.0,
+    "fpr": 0.0
+   },
+   "41": {
+    "tpr": 0.5714285714285714,
+    "fpr": 0.23529411764705882
+   },
+   "42": {
+    "tpr": 1.0,
+    "fpr": 0.14285714285714285
+   },
+   "43": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "44": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "45": {
+    "tpr": 1.0,
+    "fpr": 0.0
+   },
+   "47": {
+    "tpr": 0.0,
+    "fpr": 0.02708803611738149
+   }
+  }
+ },
+ "seconds": 614.2,
+ "ms_per_request": 1.6,
+ "route_state": {
+  "entries_set": 65469,
+  "entries_flipped": 3542,
+  "bytes": 2097152
+ },
+ "quantised": "binary_int8_rescore",
+ "semantic_sizes_at_fit": {
+  "semantic_float32_bytes": 72908800,
+  "semantic_compressed_bytes": 6025924,
+  "compress_seconds": 5.5
+ },
+ "semantic_bytes_after_lap1": 17843294,
+ "gate_field_weights": {
+  "user-agent": 0.542,
+  "@path": 1.482,
+  "cookie": 2.205,
+  "host": 0.561,
+  "accept": 2.321,
+  "@body": 2.707,
+  "referer": 1.54,
+  "origin": 3.0,
+  "@query": 2.732,
+  "content-type": 1.99,
+  "accept-language": 2.321,
+  "dnt": 2.707,
+  "connection": 3.0,
+  "@method": 2.572,
+  "accept-encoding": 1.15
+ }
+}

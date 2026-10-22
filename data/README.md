@@ -8,7 +8,9 @@ Each dataset stays under its own licence and terms. Download them into this fold
 |---|---|---|
 | SR-BH 2020 | `harness/run_sse_srbh.py`, `replay_*.py`, `belt.py` | Harvard Dataverse, doi:10.7910/DVN/OGOIXX (`data_capec_multilabel.csv`, 436 MB) |
 | CSIC 2010 | `harness/csic_*.py`, cache benchmarks (Part I, 1.3) | `normalTrafficTraining.txt`, `normalTrafficTest.txt`, `anomalousTrafficTest.txt` |
-| CIC-IDS2017 | `ids/benchmark_sse_cic.py` | official CSVs (`c01dsnap/CIC-IDS2017`) |
+| CIC-IDS2017 | `ids/benchmark_sse_cic.py`, `bench/flow_prepare.py cic` | official MachineLearningCSV files (Hugging Face `c01dsnap/CIC-IDS2017`) into `data/cic-ids2017/` |
+| UNSW-NB15 | `bench/flow_prepare.py unsw` | official partition (Hugging Face `Mireu-Lab/UNSW-NB15`; its `test.csv` is the official training set and `train.csv` the testing set) into `data/unsw-nb15/` |
+| Kitsune Network Attack | `bench/flow_prepare.py kitsune` | UCI dataset 516; per-packet features and labels of ARP MitM, Mirai, OS Scan, SSDP Flood, SYN DoS into `data/kitsune/` (`bench/zip_stream_extract.py`, pcaps skipped) |
 | BEIR SciFact, NQ-100k | `retrieval/benchmark_sse*.py` | BEIR; NQ slice built with bqboost (`SSE_NQ_DATA` points at it) |
 
 ## Cache benchmarks (BENCHMARKS.md, Part I)
@@ -36,6 +38,18 @@ curl -L -o data/cache/cache-t-00.gz "https://analytics.wikimedia.org/published/d
 curl -L -o data/cache/user-agents.json.gz "https://raw.githubusercontent.com/intoli/user-agents/master/src/user-agents.json.gz"
 curl -L -o data/cache/lowercase-headers \
   "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/BurpSuite-ParamMiner/lowercase-headers"
+
+# IDS benchmark streams (bench/run_sse.sh)
+for f in Monday-WorkingHours Tuesday-WorkingHours Wednesday-workingHours Thursday-WorkingHours-Morning-WebAttacks \
+         Thursday-WorkingHours-Afternoon-Infilteration Friday-WorkingHours-Morning \
+         Friday-WorkingHours-Afternoon-PortScan Friday-WorkingHours-Afternoon-DDos; do
+  curl -L -o "data/cic-ids2017/$f.pcap_ISCX.csv" "https://huggingface.co/datasets/c01dsnap/CIC-IDS2017/resolve/main/$f.pcap_ISCX.csv"
+done
+for f in train.csv test.csv; do
+  curl -L -o data/unsw-nb15/$f "https://huggingface.co/datasets/Mireu-Lab/UNSW-NB15/resolve/main/$f"
+done
+curl -sS "https://archive.ics.uci.edu/static/public/516/kitsune+network+attack+dataset.zip" |
+  python -I bench/zip_stream_extract.py data/kitsune mirai/ syn_dos/ ssdp_flood/ os_scan/ arp_mitm/
 ```
 
 Expected sizes: SR-BH 907,814 rows; CSIC 36,000 / 36,000 / 25,065 requests; SecLists 1,084 header names.

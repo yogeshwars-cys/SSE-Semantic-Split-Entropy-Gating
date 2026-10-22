@@ -1,0 +1,14 @@
+{
+ "implementation": "cpp/replay_srbh.cpp (C++20, one core)",
+ "protocol": "harness/replay_hybrid2.py, HYB_VARIANT=full HYB_QUANT=3: fully binary semantic store, Hamming top-64 then uint8-count x int8-query int32 rescore and an exact refine of the int8 top 4; packed int8 path-token thresholds. Splits (fit / precal / test) and order from data/sse_streams/kitsune_mirai.csv; laps 2+ replay the test stream; teacher = dataset label.",
+ "rows": 210000, "load_seconds": 2.642843835, "fit_seconds": 2.353786358,
+ "fit_requests": 10000, "precal_requests": 0, "replay_requests": 200000,
+ "gate_thr": 3.072861788, "semantic_thr": 4.336785839,
+ "precal": {"tpr": 0, "fpr": 0, "precision": 0, "wrong": 0, "tp": 0, "fn": 0, "fp": 0, "tn": 0, "corrected": 0, "flipped_rate": 0, "seconds": 1.25e-07, "ms_per_request": 0, "per_class_tpr": {}},
+ "lap1": {"tpr": 0.999955, "fpr": 0, "precision": 1, "wrong": 9, "tp": 199991, "fn": 9, "fp": 0, "tn": 0, "corrected": 9, "flipped_rate": 0, "seconds": 12.06623628, "ms_per_request": 0.06033118141, "per_class_tpr": {"mirai": 0.999955}},
+ "frozen_after_lap1": {"tpr": 1, "fpr": 0, "seconds": 11.45782669, "us_per_request_mean": 57.28913344, "us_p50": 3.648, "us_p95": 394.822, "us_p99": 647.815, "requests_per_second_one_core": 17455.31726},
+ "semantic_bytes_at_fit": 19089956, "semantic_bytes_after_lap1": 19089956,
+ "route_state": {"entries_set": 30, "entries_flipped": 0, "bytes": 2097152},
+ "gate_field_weights": {"user-agent": 1.74900625, "referer": 1, "host": 1, "origin": 1, "cookie": 1.15, "content-type": 1, "accept": 1.74900625, "accept-language": 1, "accept-encoding": 1, "dnt": 1, "connection": 1, "@method": 1, "@path": 1, "@query": 1, "@body": 1},
+ "belt": {"2": {"tpr": 1, "fpr": 0, "precision": 1, "wrong": 0, "tp": 200000, "fn": 0, "fp": 0, "tn": 0, "corrected": 0, "flipped_rate": 0, "seconds": 0.707353212, "ms_per_request": 0.00353676606, "per_class_tpr": {"mirai": 1}}, "3": {"tpr": 1, "fpr": 0, "precision": 1, "wrong": 0, "tp": 200000, "fn": 0, "fp": 0, "tn": 0, "corrected": 0, "flipped_rate": 0, "seconds": 0.666703199, "ms_per_request": 0.003333515995, "per_class_tpr": {"mirai": 1}}, "4": {"tpr": 1, "fpr": 0, "precision": 1, "wrong": 0, "tp": 200000, "fn": 0, "fp": 0, "tn": 0, "corrected": 0, "flipped_rate": 0, "seconds": 0.663886097, "ms_per_request": 0.003319430485, "per_class_tpr": {"mirai": 1}}, "5": {"tpr": 1, "fpr": 0, "precision": 1, "wrong": 0, "tp": 200000, "fn": 0, "fp": 0, "tn": 0, "corrected": 0, "flipped_rate": 0, "seconds": 0.618911382, "ms_per_request": 0.00309455691, "per_class_tpr": {"mirai": 1}}}
+}

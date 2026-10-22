@@ -1,0 +1,14 @@
+{
+ "implementation": "cpp/replay_srbh.cpp (C++20, one core)",
+ "protocol": "harness/replay_hybrid2.py, HYB_VARIANT=full HYB_QUANT=3: fully binary semantic store, Hamming top-64 then uint8-count x int8-query int32 rescore and an exact refine of the int8 top 4; packed int8 path-token thresholds. Splits (fit / precal / test) and order from data/sse_streams/kitsune_syn_dos.csv; laps 2+ replay the test stream; teacher = dataset label.",
+ "rows": 98927, "load_seconds": 0.826492455, "fit_seconds": 1.492905469,
+ "fit_requests": 10000, "precal_requests": 0, "replay_requests": 88927,
+ "gate_thr": 2.356041184, "semantic_thr": 2.449411754,
+ "precal": {"tpr": 0, "fpr": 0, "precision": 0, "wrong": 0, "tp": 0, "fn": 0, "fp": 0, "tn": 0, "corrected": 0, "flipped_rate": 0, "seconds": 1.51e-07, "ms_per_request": 0, "per_class_tpr": {}},
+ "lap1": {"tpr": 0.9435919295, "fpr": 0.01074625408, "precision": 0.8829942827, "wrong": 1277, "tp": 6641, "fn": 397, "fp": 880, "tn": 81009, "corrected": 1277, "flipped_rate": 0.6923076923, "seconds": 5.052845124, "ms_per_request": 0.05682014601, "per_class_tpr": {"syn_dos": 0.9435919295}},
+ "frozen_after_lap1": {"tpr": 0.2603012219, "fpr": 3.663495708e-05, "seconds": 3.069403984, "us_per_request_mean": 34.51599609, "us_p50": 3.61, "us_p95": 185.74, "us_p99": 373.968, "requests_per_second_one_core": 28972.07421},
+ "semantic_bytes_at_fit": 14308144, "semantic_bytes_after_lap1": 15071224,
+ "route_state": {"entries_set": 55, "entries_flipped": 10, "bytes": 2097152},
+ "gate_field_weights": {"user-agent": 0.857375, "referer": 0.9025, "host": 1, "origin": 1, "cookie": 1.133878437, "content-type": 1, "accept": 0.95, "accept-language": 1, "accept-encoding": 1, "dnt": 1, "connection": 1, "@method": 1, "@path": 1, "@query": 1, "@body": 1.65889243},
+ "belt": {"2": {"tpr": 0.9671781756, "fpr": 0.006740832102, "precision": 0.9249898084, "wrong": 783, "tp": 6807, "fn": 231, "fp": 552, "tn": 81337, "corrected": 783, "flipped_rate": 0.375, "seconds": 3.962181452, "ms_per_request": 0.04455543819, "per_class_tpr": {"syn_dos": 0.9671781756}}, "3": {"tpr": 0.9745666382, "fpr": 0.005373127038, "precision": 0.9397177696, "wrong": 619, "tp": 6859, "fn": 179, "fp": 440, "tn": 81449, "corrected": 619, "flipped_rate": 0.5714285714, "seconds": 4.816741313, "ms_per_request": 0.05416511648, "per_class_tpr": {"syn_dos": 0.9745666382}}, "4": {"tpr": 0.9801079852, "fpr": 0.004286289978, "precision": 0.9515795282, "wrong": 491, "tp": 6898, "fn": 140, "fp": 351, "tn": 81538, "corrected": 491, "flipped_rate": 0.8, "seconds": 4.564203508, "ms_per_request": 0.05132528375, "per_class_tpr": {"syn_dos": 0.9801079852}}, "5": {"tpr": 0.984228474, "fpr": 0.003529167532, "precision": 0.9599501109, "wrong": 400, "tp": 6927, "fn": 111, "fp": 289, "tn": 81600, "corrected": 400, "flipped_rate": 0, "seconds": 4.80836499, "ms_per_request": 0.05407092323, "per_class_tpr": {"syn_dos": 0.984228474}}}
+}

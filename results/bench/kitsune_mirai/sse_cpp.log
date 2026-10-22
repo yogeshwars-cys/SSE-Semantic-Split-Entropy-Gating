@@ -1,0 +1,25 @@
+loaded 210000 rows in 2.6s
+fit in 2.4s: gate thr 3.072862, semantic thr 4.336786, semantic store 19.09 MB
+full precal: tpr=0.000 fpr=0.000 wrong=0
+    full lap1 50000/200000 tpr=1.000 fpr=0.000 6s
+    full lap1 100000/200000 tpr=1.000 fpr=0.000 8s
+    full lap1 150000/200000 tpr=1.000 fpr=0.000 10s
+== full lap 1: tpr=1.0000 fpr=0.0000 precision=1.0000 wrong=9 (12.1s, 0.060 ms/req)
+frozen pass: 11.5s, 57.3 us/req mean, p50 3.6 p99 647.8 us, 17455 req/s on one core
+    full lap2 50000/200000 tpr=1.000 fpr=0.000 0s
+    full lap2 100000/200000 tpr=1.000 fpr=0.000 0s
+    full lap2 150000/200000 tpr=1.000 fpr=0.000 1s
+== full lap 2: tpr=1.0000 fpr=0.0000 precision=1.0000 wrong=0 (1s)
+    full lap3 50000/200000 tpr=1.000 fpr=0.000 0s
+    full lap3 100000/200000 tpr=1.000 fpr=0.000 0s
+    full lap3 150000/200000 tpr=1.000 fpr=0.000 1s
+== full lap 3: tpr=1.0000 fpr=0.0000 precision=1.0000 wrong=0 (1s)
+    full lap4 50000/200000 tpr=1.000 fpr=0.000 0s
+    full lap4 100000/200000 tpr=1.000 fpr=0.000 0s
+    full lap4 150000/200000 tpr=1.000 fpr=0.000 1s
+== full lap 4: tpr=1.0000 fpr=0.0000 precision=1.0000 wrong=0 (1s)
+    full lap5 50000/200000 tpr=1.000 fpr=0.000 0s
+    full lap5 100000/200000 tpr=1.000 fpr=0.000 0s
+    full lap5 150000/200000 tpr=1.000 fpr=0.000 0s
+== full lap 5: tpr=1.0000 fpr=0.0000 precision=1.0000 wrong=0 (1s)
+wrote results/bench/kitsune_mirai/sse_cpp.json (31s)
